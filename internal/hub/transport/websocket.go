@@ -5,9 +5,9 @@ import (
 	"errors"
 
 	"github.com/fxamacker/cbor/v2"
-	"github.com/henrygd/beszel"
-	"github.com/henrygd/beszel/internal/common"
-	"github.com/henrygd/beszel/internal/hub/ws"
+	"bantay"
+	"bantay/internal/common"
+	"bantay/internal/hub/ws"
 )
 
 // ErrWebSocketNotConnected indicates a WebSocket transport is not currently connected.
@@ -41,7 +41,7 @@ func (t *WebSocketTransport) Request(ctx context.Context, action common.WebSocke
 		defer pendingReq.Cancel()
 
 		// Legacy agents (< MinVersionAgentResponse) respond with a raw payload instead of an AgentResponse wrapper.
-		if t.wsConn.AgentVersion().LT(beszel.MinVersionAgentResponse) {
+		if t.wsConn.AgentVersion().LT(bantay.MinVersionAgentResponse) {
 			return cbor.Unmarshal(message.Data.Bytes(), dest)
 		}
 

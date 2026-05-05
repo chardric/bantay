@@ -5,7 +5,7 @@ import (
 	"errors"
 
 	"github.com/fxamacker/cbor/v2"
-	"github.com/henrygd/beszel/internal/common"
+	"bantay/internal/common"
 	"github.com/lxzan/gws"
 	"golang.org/x/crypto/ssh"
 )

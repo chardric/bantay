@@ -4,10 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"os"
+	"time"
 
 	"github.com/fxamacker/cbor/v2"
-	"github.com/henrygd/beszel/internal/common"
-	"github.com/henrygd/beszel/internal/entities/smart"
+	"bantay/internal/common"
+	"bantay/internal/entities/smart"
 
 	"log/slog"
 )
@@ -51,6 +53,7 @@ func NewHandlerRegistry() *HandlerRegistry {
 	registry.Register(common.GetContainerInfo, &GetContainerInfoHandler{})
 	registry.Register(common.GetSmartData, &GetSmartDataHandler{})
 	registry.Register(common.GetSystemdInfo, &GetSystemdInfoHandler{})
+	registry.Register(common.RestartAgent, &RestartAgentHandler{})
 
 	return registry
 }
@@ -202,4 +205,24 @@ func (h *GetSystemdInfoHandler) Handle(hctx *HandlerContext) error {
 	}
 
 	return hctx.SendResponse(details, hctx.RequestID)
+}
+
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
+// RestartAgentHandler exits the agent process cleanly so its supervisor restarts it.
+// We send the ack before exiting so the hub gets a successful response, then a brief
+// delay lets the SSH/WS session flush the response before os.Exit terminates the process.
+type RestartAgentHandler struct{}
+
+func (h *RestartAgentHandler) Handle(hctx *HandlerContext) error {
+	if err := hctx.SendResponse(true, hctx.RequestID); err != nil {
+		return err
+	}
+	slog.Info("restart requested by hub")
+	go func() {
+		time.Sleep(500 * time.Millisecond)
+		os.Exit(0)
+	}()
+	return nil
 }

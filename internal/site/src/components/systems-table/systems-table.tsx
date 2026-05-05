@@ -392,8 +392,9 @@ function SystemsTableHead({ table }: { table: TableType<SystemRecord> }) {
 			{table.getHeaderGroups().map((headerGroup) => (
 				<tr key={headerGroup.id}>
 					{headerGroup.headers.map((header) => {
+						const responsiveClass = (header.column.columnDef as { responsiveClass?: string }).responsiveClass
 						return (
-							<TableHead className="px-1.5" key={header.id}>
+							<TableHead className={cn("px-1.5", responsiveClass)} key={header.id}>
 								{flexRender(header.column.columnDef.header, header.getContext())}
 							</TableHead>
 						)
@@ -425,18 +426,21 @@ const SystemTableRow = memo(
 						"opacity-50": system.status === SystemStatus.Paused,
 					})}
 				>
-					{row.getVisibleCells().map((cell) => (
-						<TableCell
-							key={cell.id}
-							style={{
-								width: cell.column.getSize(),
-								height: virtualRow.size,
-							}}
-							className="py-0 ps-4.5"
-						>
-							{flexRender(cell.column.columnDef.cell, cell.getContext())}
-						</TableCell>
-					))}
+					{row.getVisibleCells().map((cell) => {
+						const responsiveClass = (cell.column.columnDef as { responsiveClass?: string }).responsiveClass
+						return (
+							<TableCell
+								key={cell.id}
+								style={{
+									width: cell.column.getSize(),
+									height: virtualRow.size,
+								}}
+								className={cn("py-0 ps-4.5", responsiveClass)}
+							>
+								{flexRender(cell.column.columnDef.cell, cell.getContext())}
+							</TableCell>
+						)
+					})}
 				</TableRow>
 			)
 		}, [system, system.status, colLength, t])

@@ -13,8 +13,7 @@ import {
 	useReactTable,
 	type VisibilityState,
 } from "@tanstack/react-table"
-import { useVirtualizer, type VirtualItem } from "@tanstack/react-virtual"
-import { memo, type RefObject, useEffect, useRef, useState } from "react"
+import { memo, type RefObject, useEffect, useMemo, useRef, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { pb } from "@/lib/api"
@@ -27,11 +26,33 @@ import { Sheet, SheetTitle, SheetHeader, SheetContent, SheetDescription } from "
 import { Dialog, DialogContent, DialogTitle } from "../ui/dialog"
 import { Button } from "@/components/ui/button"
 import { $allSystemsById } from "@/lib/stores"
-import { LoaderCircleIcon, MaximizeIcon, RefreshCwIcon, XIcon } from "lucide-react"
+import {
+	LayoutGridIcon,
+	LayoutListIcon,
+	LoaderCircleIcon,
+	MaximizeIcon,
+	RefreshCwIcon,
+	Settings2Icon,
+	XIcon,
+} from "lucide-react"
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuLabel,
+	DropdownMenuRadioGroup,
+	DropdownMenuRadioItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Badge } from "@/components/ui/badge"
+import { ContainerHealth as ContainerHealthEnum } from "@/lib/enums"
+import { decimalString, formatBytes } from "@/lib/utils"
 import { Separator } from "../ui/separator"
 import { $router, Link } from "../router"
 import { listenKeys } from "nanostores"
 import { getPagePath } from "@nanostores/router"
+
+type ContainersViewMode = "table" | "grid"
 
 const syntaxTheme = "github-dark-dimmed"
 
@@ -61,6 +82,10 @@ export default function ContainersTable({ systemId }: { systemId?: string }) {
 
 	const [rowSelection, setRowSelection] = useState({})
 	const [globalFilter, setGlobalFilter] = useState("")
+	const [viewMode, setViewMode] = useBrowserStorage<ContainersViewMode>(
+		`c-viewMode-${systemId ? 1 : 0}`,
+		typeof window !== "undefined" && window.innerWidth < 1024 ? "grid" : "table"
+	)
 
 	useEffect(() => {
 		function fetchData(systemId?: string) {
@@ -174,30 +199,68 @@ export default function ContainersTable({ systemId }: { systemId?: string }) {
 							<Trans>Click on a container to view more information.</Trans>
 						</CardDescription>
 					</div>
-					<div className="relative ms-auto w-full max-w-full md:w-64">
-						<Input
-							placeholder={t`Filter...`}
-							value={globalFilter}
-							onChange={(e) => setGlobalFilter(e.target.value)}
-							className="ps-4 pe-10 w-full"
-						/>
-						{globalFilter && (
-							<Button
-								type="button"
-								variant="ghost"
-								size="icon"
-								aria-label={t`Clear`}
-								className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-muted-foreground"
-								onClick={() => setGlobalFilter("")}
-							>
-								<XIcon className="h-4 w-4" />
-							</Button>
-						)}
+					<div className="flex gap-2 ms-auto w-full md:w-auto">
+						<div className="relative flex-1 md:w-64">
+							<Input
+								placeholder={t`Filter...`}
+								value={globalFilter}
+								onChange={(e) => setGlobalFilter(e.target.value)}
+								className="ps-4 pe-10 w-full"
+							/>
+							{globalFilter && (
+								<Button
+									type="button"
+									variant="ghost"
+									size="icon"
+									aria-label={t`Clear`}
+									className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-muted-foreground"
+									onClick={() => setGlobalFilter("")}
+								>
+									<XIcon className="h-4 w-4" />
+								</Button>
+							)}
+						</div>
+						<DropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<Button variant="outline">
+									<Settings2Icon className="me-1.5 size-4 opacity-80" />
+									<Trans>View</Trans>
+								</Button>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent align="end" className="min-w-44">
+								<DropdownMenuLabel className="pt-2 px-3.5 flex items-center gap-2">
+									<LayoutGridIcon className="size-4" />
+									<Trans>Layout</Trans>
+								</DropdownMenuLabel>
+								<DropdownMenuSeparator />
+								<DropdownMenuRadioGroup
+									className="px-1 pb-1"
+									value={viewMode}
+									onValueChange={(value) => setViewMode(value as ContainersViewMode)}
+								>
+									<DropdownMenuRadioItem value="table" onSelect={(e) => e.preventDefault()} className="gap-2">
+										<LayoutListIcon className="size-4" />
+										<Trans>Table</Trans>
+									</DropdownMenuRadioItem>
+									<DropdownMenuRadioItem value="grid" onSelect={(e) => e.preventDefault()} className="gap-2">
+										<LayoutGridIcon className="size-4" />
+										<Trans>Grid</Trans>
+									</DropdownMenuRadioItem>
+								</DropdownMenuRadioGroup>
+							</DropdownMenuContent>
+						</DropdownMenu>
 					</div>
 				</div>
 			</CardHeader>
 			<div className="rounded-md">
-				<AllContainersTable table={table} rows={rows} colLength={visibleColumns.length} data={data} />
+				<AllContainersTable
+					table={table}
+					rows={rows}
+					colLength={visibleColumns.length}
+					data={data}
+					viewMode={viewMode}
+					systemId={systemId}
+				/>
 			</div>
 		</Card>
 	)
@@ -206,16 +269,17 @@ export default function ContainersTable({ systemId }: { systemId?: string }) {
 const AllContainersTable = memo(function AllContainersTable({
 	table,
 	rows,
-	colLength,
 	data,
+	viewMode,
+	systemId,
 }: {
 	table: TableType<ContainerRecord>
 	rows: Row<ContainerRecord>[]
 	colLength: number
 	data: ContainerRecord[] | undefined
+	viewMode: ContainersViewMode
+	systemId: string | undefined
 }) {
-	// The virtualizer will need a reference to the scrollable container element
-	const scrollRef = useRef<HTMLDivElement>(null)
 	const activeContainer = useRef<ContainerRecord | null>(null)
 	const [sheetOpen, setSheetOpen] = useState(false)
 	const openSheet = (container: ContainerRecord) => {
@@ -223,52 +287,188 @@ const AllContainersTable = memo(function AllContainersTable({
 		setSheetOpen(true)
 	}
 
-	const virtualizer = useVirtualizer<HTMLDivElement, HTMLTableRowElement>({
-		count: rows.length,
-		estimateSize: () => 54,
-		getScrollElement: () => scrollRef.current,
-		overscan: 5,
-	})
-	const virtualRows = virtualizer.getVirtualItems()
+	const groups = useMemo(() => {
+		if (systemId) {
+			return [{ id: systemId, name: "", rows }]
+		}
+		const allSystems = $allSystemsById.get()
+		const map = new Map<string, Row<ContainerRecord>[]>()
+		for (const row of rows) {
+			const sysId = row.original.system
+			let bucket = map.get(sysId)
+			if (!bucket) {
+				bucket = []
+				map.set(sysId, bucket)
+			}
+			bucket.push(row)
+		}
+		return Array.from(map, ([id, groupRows]) => ({
+			id,
+			name: allSystems[id]?.name ?? id,
+			rows: groupRows,
+		})).sort((a, b) => a.name.localeCompare(b.name))
+	}, [rows, systemId])
 
-	const paddingTop = Math.max(0, virtualRows[0]?.start ?? 0 - virtualizer.options.scrollMargin)
-	const paddingBottom = Math.max(0, virtualizer.getTotalSize() - (virtualRows[virtualRows.length - 1]?.end ?? 0))
+	if (!rows.length) {
+		return (
+			<div className="text-center py-12 text-muted-foreground">
+				{data ? <Trans>No results.</Trans> : <LoaderCircleIcon className="animate-spin size-10 opacity-60 mx-auto" />}
+			</div>
+		)
+	}
 
 	return (
-		<div
-			className={cn(
-				"h-min max-h-[calc(100dvh-17rem)] max-w-full relative overflow-auto border rounded-md",
-				// don't set min height if there are less than 2 rows, do set if we need to display the empty state
-				(!rows.length || rows.length > 2) && "min-h-50"
-			)}
-			ref={scrollRef}
-		>
-			{/* add header height to table size */}
-			<div style={{ height: `${virtualizer.getTotalSize() + 48}px`, paddingTop, paddingBottom }}>
-				<table className="text-sm w-full h-full text-nowrap">
-					<ContainersTableHead table={table} />
-					<TableBody>
-						{rows.length ? (
-							virtualRows.map((virtualRow) => {
-								const row = rows[virtualRow.index]
-								return <ContainerTableRow key={row.id} row={row} virtualRow={virtualRow} openSheet={openSheet} />
-							})
-						) : (
-							<TableRow>
-								<TableCell colSpan={colLength} className="h-37 text-center pointer-events-none">
-									{data ? (
-										<Trans>No results.</Trans>
-									) : (
-										<LoaderCircleIcon className="animate-spin size-10 opacity-60 mx-auto" />
-									)}
-								</TableCell>
-							</TableRow>
-						)}
-					</TableBody>
-				</table>
+		<>
+			<div className="flex flex-col gap-5">
+				{groups.map((group) => (
+					<SystemSection
+						key={group.id}
+						systemId={group.id}
+						systemName={group.name}
+						rows={group.rows}
+						table={table}
+						viewMode={viewMode}
+						showHeader={!systemId}
+						openSheet={openSheet}
+					/>
+				))}
 			</div>
 			<ContainerSheet sheetOpen={sheetOpen} setSheetOpen={setSheetOpen} activeContainer={activeContainer} />
+		</>
+	)
+})
+
+function SystemSection({
+	systemId,
+	systemName,
+	rows,
+	table,
+	viewMode,
+	showHeader,
+	openSheet,
+}: {
+	systemId: string
+	systemName: string
+	rows: Row<ContainerRecord>[]
+	table: TableType<ContainerRecord>
+	viewMode: ContainersViewMode
+	showHeader: boolean
+	openSheet: (c: ContainerRecord) => void
+}) {
+	return (
+		<div>
+			{showHeader && (
+				<div className="flex items-center gap-2 mb-2 px-1">
+					<Link
+						href={getPagePath($router, "system", { id: systemId })}
+						className="font-semibold text-base hover:underline"
+					>
+						{systemName}
+					</Link>
+					<Badge variant="outline" className="dark:border-white/12 text-xs">
+						{rows.length}
+					</Badge>
+				</div>
+			)}
+			{viewMode === "grid" ? (
+				<div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+					{rows.map((row) => (
+						<ContainerCard
+							key={row.id}
+							container={row.original}
+							openSheet={openSheet}
+							hideSystem={showHeader}
+						/>
+					))}
+				</div>
+			) : (
+				<div className="border rounded-md overflow-auto max-w-full">
+					<table className="text-sm w-full text-nowrap">
+						<ContainersTableHead table={table} hideSystem={showHeader} />
+						<TableBody>
+							{rows.map((row) => (
+								<ContainerTableRow
+									key={row.id}
+									row={row}
+									openSheet={openSheet}
+									hideSystem={showHeader}
+								/>
+							))}
+						</TableBody>
+					</table>
+				</div>
+			)}
 		</div>
+	)
+}
+
+const ContainerCard = memo(function ContainerCard({
+	container,
+	openSheet,
+	hideSystem,
+}: {
+	container: ContainerRecord
+	openSheet: (c: ContainerRecord) => void
+	hideSystem?: boolean
+}) {
+	const allSystems = $allSystemsById.get()
+	const systemName = allSystems[container.system]?.name ?? ""
+	const mem = formatBytes(container.memory ?? 0, false, undefined, true)
+	const net = formatBytes(container.net ?? 0, true, undefined, false)
+	const healthDot =
+		container.health === ContainerHealthEnum.Healthy
+			? "bg-green-500"
+			: container.health === ContainerHealthEnum.Unhealthy
+				? "bg-red-500"
+				: container.health === ContainerHealthEnum.Starting
+					? "bg-yellow-500"
+					: "bg-zinc-500"
+
+	return (
+		<button
+			type="button"
+			onClick={() => openSheet(container)}
+			className="group text-start w-full"
+			aria-label={container.name}
+		>
+			<Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
+				<CardHeader className="py-2 ps-4 pe-3 bg-muted/30 border-b border-border/60 flex-row items-center gap-2">
+					<span className={cn("size-2 shrink-0 rounded-full", healthDot)} aria-hidden />
+					<h3 className="font-semibold text-primary/90 truncate flex-1 min-w-0 text-[.95em]/normal">
+						{container.name}
+					</h3>
+					{!hideSystem && systemName && (
+						<Badge variant="outline" className="dark:border-white/12 shrink-0 max-w-32 truncate">
+							{systemName}
+						</Badge>
+					)}
+				</CardHeader>
+				<div className="text-sm px-4 py-3 grid gap-1.5" style={{ gridTemplateColumns: "minmax(70px, max-content) 1fr" }}>
+					<div className="text-muted-foreground"><Trans>CPU</Trans></div>
+					<div className="tabular-nums">{decimalString(container.cpu ?? 0, (container.cpu ?? 0) >= 10 ? 1 : 2)}%</div>
+					<div className="text-muted-foreground"><Trans>Memory</Trans></div>
+					<div className="tabular-nums">
+						{decimalString(mem.value, mem.value >= 10 ? 1 : 2)} {mem.unit}
+					</div>
+					<div className="text-muted-foreground"><Trans>Net</Trans></div>
+					<div className="tabular-nums">
+						{decimalString(net.value, net.value >= 10 ? 1 : 2)} {net.unit}
+					</div>
+					{container.ports && (
+						<>
+							<div className="text-muted-foreground"><Trans>Ports</Trans></div>
+							<div className="tabular-nums truncate" title={container.ports}>
+								{container.ports}
+							</div>
+						</>
+					)}
+					<div className="text-muted-foreground"><Trans>Image</Trans></div>
+					<div className="truncate" title={container.image}>
+						{container.image}
+					</div>
+				</div>
+			</Card>
+		</button>
 	)
 })
 
@@ -276,7 +476,7 @@ async function getLogsHtml(container: ContainerRecord): Promise<string> {
 	try {
 		const [{ highlighter }, logsHtml] = await Promise.all([
 			import("@/lib/shiki"),
-			pb.send<{ logs: string }>("/api/beszel/containers/logs", {
+			pb.send<{ logs: string }>("/api/bantay/containers/logs", {
 				system: container.system,
 				container: container.id,
 			}),
@@ -292,7 +492,7 @@ async function getInfoHtml(container: ContainerRecord): Promise<string> {
 	try {
 		let [{ highlighter }, { info }] = await Promise.all([
 			import("@/lib/shiki"),
-			pb.send<{ info: string }>("/api/beszel/containers/info", {
+			pb.send<{ info: string }>("/api/bantay/containers/info", {
 				system: container.system,
 				container: container.id,
 			}),
@@ -459,14 +659,26 @@ function ContainerSheet({
 	)
 }
 
-function ContainersTableHead({ table }: { table: TableType<ContainerRecord> }) {
+function ContainersTableHead({
+	table,
+	hideSystem,
+}: {
+	table: TableType<ContainerRecord>
+	hideSystem?: boolean
+}) {
 	return (
 		<TableHeader className="sticky top-0 z-50 w-full border-b-2">
 			{table.getHeaderGroups().map((headerGroup) => (
 				<tr key={headerGroup.id}>
 					{headerGroup.headers.map((header) => {
+						if (hideSystem && header.column.id === "system") return null
+						const responsiveClass = (header.column.columnDef as { responsiveClass?: string }).responsiveClass
 						return (
-							<TableHead className="px-2" key={header.id} style={{ width: header.getSize() }}>
+							<TableHead
+								className={cn("px-2", responsiveClass)}
+								key={header.id}
+								style={{ width: header.getSize() }}
+							>
 								{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
 							</TableHead>
 						)
@@ -479,12 +691,12 @@ function ContainersTableHead({ table }: { table: TableType<ContainerRecord> }) {
 
 const ContainerTableRow = memo(function ContainerTableRow({
 	row,
-	virtualRow,
 	openSheet,
+	hideSystem,
 }: {
 	row: Row<ContainerRecord>
-	virtualRow: VirtualItem
 	openSheet: (container: ContainerRecord) => void
+	hideSystem?: boolean
 }) {
 	return (
 		<TableRow
@@ -492,18 +704,21 @@ const ContainerTableRow = memo(function ContainerTableRow({
 			className="cursor-pointer transition-opacity"
 			onClick={() => openSheet(row.original)}
 		>
-			{row.getVisibleCells().map((cell) => (
-				<TableCell
-					key={cell.id}
-					className="py-0 ps-4.5"
-					style={{
-						height: virtualRow.size,
-						width: cell.column.getSize(),
-					}}
-				>
-					{flexRender(cell.column.columnDef.cell, cell.getContext())}
-				</TableCell>
-			))}
+			{row.getVisibleCells().map((cell) => {
+				if (hideSystem && cell.column.id === "system") return null
+				const responsiveClass = (cell.column.columnDef as { responsiveClass?: string }).responsiveClass
+				return (
+					<TableCell
+						key={cell.id}
+						className={cn("py-0 ps-4.5 h-13", responsiveClass)}
+						style={{
+							width: cell.column.getSize(),
+						}}
+					>
+						{flexRender(cell.column.columnDef.cell, cell.getContext())}
+					</TableCell>
+				)
+			})}
 		</TableRow>
 	)
 })

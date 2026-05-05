@@ -18,9 +18,9 @@ export default function () {
 	const { theme } = useTheme()
 
 	useEffect(() => {
-		document.title = t`Login` + " / Beszel"
+		document.title = t`Login` + " / Bantay"
 
-		pb.send("/api/beszel/first-run", {}).then(({ firstRun }) => {
+		pb.send("/api/bantay/first-run", {}).then(({ firstRun }) => {
 			setFirstRun(firstRun)
 		})
 	}, [])
@@ -61,8 +61,8 @@ export default function () {
 				</div>
 				<div className="text-center">
 					<h1 className="mb-3">
-						<Logo className="h-7 fill-foreground mx-auto" />
-						<span className="sr-only">Beszel</span>
+						<Logo className="h-12 text-foreground mx-auto" />
+						<span className="sr-only">Bantay</span>
 					</h1>
 					<p className="text-sm text-muted-foreground">{subtitle}</p>
 				</div>

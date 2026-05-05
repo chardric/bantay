@@ -9,12 +9,12 @@ import (
 
 	"github.com/blang/semver"
 	"github.com/google/uuid"
-	"github.com/henrygd/beszel"
-	"github.com/henrygd/beszel/internal/alerts"
-	"github.com/henrygd/beszel/internal/ghupdate"
-	"github.com/henrygd/beszel/internal/hub/config"
-	"github.com/henrygd/beszel/internal/hub/systems"
-	"github.com/henrygd/beszel/internal/hub/utils"
+	"bantay"
+	"bantay/internal/alerts"
+	"bantay/internal/ghupdate"
+	"bantay/internal/hub/config"
+	"bantay/internal/hub/systems"
+	"bantay/internal/hub/utils"
 	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
@@ -87,10 +87,10 @@ func (h *Hub) registerMiddlewares(se *core.ServeEvent) {
 // registerApiRoutes registers custom API routes
 func (h *Hub) registerApiRoutes(se *core.ServeEvent) error {
 	// auth protected routes
-	apiAuth := se.Router.Group("/api/beszel")
+	apiAuth := se.Router.Group("/api/bantay")
 	apiAuth.Bind(apis.RequireAuth())
 	// auth optional routes
-	apiNoAuth := se.Router.Group("/api/beszel")
+	apiNoAuth := se.Router.Group("/api/bantay")
 
 	// create first user endpoint only needed if no users exist
 	if totalUsers, _ := se.App.CountRecords("users"); totalUsers == 0 {
@@ -116,6 +116,22 @@ func (h *Hub) registerApiRoutes(se *core.ServeEvent) error {
 	apiAuth.POST("/test-heartbeat", h.testHeartbeat).BindFunc(requireAdminRole)
 	// get config.yml content
 	apiAuth.GET("/config-yaml", config.GetYamlConfig).BindFunc(requireAdminRole)
+	// admin-only friendly-dashboard proxies (replaces /_/ admin UI for non-IT users)
+	apiAuth.GET("/admin/users", h.listUsers).BindFunc(requireAdminRole)
+	apiAuth.POST("/admin/users", h.createUser).BindFunc(requireAdminRole)
+	apiAuth.PATCH("/admin/users/{id}", h.updateUser).BindFunc(requireAdminRole)
+	apiAuth.DELETE("/admin/users/{id}", h.deleteUser).BindFunc(requireAdminRole)
+	apiAuth.POST("/admin/users/{id}/reset-password", h.sendUserPasswordReset).BindFunc(requireAdminRole)
+	apiAuth.GET("/admin/backups", h.listBackups).BindFunc(requireAdminRole)
+	apiAuth.POST("/admin/backups", h.createBackup).BindFunc(requireAdminRole)
+	apiAuth.POST("/admin/backups/{key}/restore", h.restoreBackup).BindFunc(requireAdminRole)
+	apiAuth.DELETE("/admin/backups/{key}", h.deleteBackup).BindFunc(requireAdminRole)
+	apiAuth.GET("/admin/settings/smtp", h.getSMTP).BindFunc(requireAdminRole)
+	apiAuth.PUT("/admin/settings/smtp", h.updateSMTP).BindFunc(requireAdminRole)
+	apiAuth.POST("/admin/settings/smtp/test", h.testSMTP).BindFunc(requireAdminRole)
+	apiAuth.GET("/admin/logs", h.listLogs).BindFunc(requireAdminRole)
+	apiAuth.DELETE("/admin/logs", h.clearLogs).BindFunc(requireAdminRole)
+	apiAuth.POST("/admin/agents/restart", h.restartAgent).BindFunc(requireAdminRole)
 	// handle agent websocket connection
 	apiNoAuth.GET("/agent-connect", h.handleAgentConnect)
 	// get or create universal tokens
@@ -146,7 +162,7 @@ func (h *Hub) getInfo(e *core.RequestEvent) error {
 	}
 	info := infoResponse{
 		Key:     h.pubKey,
-		Version: beszel.Version,
+		Version: bantay.Version,
 	}
 	if optIn, _ := utils.GetEnv("CHECK_UPDATES"); optIn == "true" {
 		info.CheckUpdate = true
@@ -164,7 +180,7 @@ func (info *UpdateInfo) getUpdate(e *core.RequestEvent) error {
 	if err != nil {
 		return err
 	}
-	currentVersion, err := semver.Parse(strings.TrimPrefix(beszel.Version, "v"))
+	currentVersion, err := semver.Parse(strings.TrimPrefix(bantay.Version, "v"))
 	if err != nil {
 		return err
 	}
@@ -328,7 +344,7 @@ func (h *Hub) containerRequestHandler(e *core.RequestEvent, fetchFunc func(*syst
 	return e.JSON(http.StatusOK, map[string]string{responseKey: data})
 }
 
-// getContainerLogs handles GET /api/beszel/containers/logs requests
+// getContainerLogs handles GET /api/bantay/containers/logs requests
 func (h *Hub) getContainerLogs(e *core.RequestEvent) error {
 	return h.containerRequestHandler(e, func(system *systems.System, containerID string) (string, error) {
 		return system.FetchContainerLogsFromAgent(containerID)
@@ -341,7 +357,7 @@ func (h *Hub) getContainerInfo(e *core.RequestEvent) error {
 	}, "info")
 }
 
-// getSystemdInfo handles GET /api/beszel/systemd/info requests
+// getSystemdInfo handles GET /api/bantay/systemd/info requests
 func (h *Hub) getSystemdInfo(e *core.RequestEvent) error {
 	query := e.Request.URL.Query()
 	systemID := query.Get("system")
@@ -370,7 +386,7 @@ func (h *Hub) getSystemdInfo(e *core.RequestEvent) error {
 	return e.JSON(http.StatusOK, map[string]any{"details": details})
 }
 
-// refreshSmartData handles POST /api/beszel/smart/refresh requests
+// refreshSmartData handles POST /api/bantay/smart/refresh requests
 // Fetches fresh SMART data from the agent and updates the collection
 func (h *Hub) refreshSmartData(e *core.RequestEvent) error {
 	systemID := e.Request.URL.Query().Get("system")

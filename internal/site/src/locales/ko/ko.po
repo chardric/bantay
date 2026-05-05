@@ -18,11 +18,10 @@ msgstr ""
 "X-Crowdin-File: /main/internal/site/src/locales/en/en.po\n"
 "X-Crowdin-File-ID: 32\n"
 
-#. placeholder {0}: newVersion.v
 #: src/components/footer-repo-link.tsx
-msgctxt "New version available"
-msgid "{0} available"
-msgstr "{0} 사용 가능"
+#~ msgctxt "New version available"
+#~ msgid "{0} available"
+#~ msgstr "{0} 사용 가능"
 
 #. placeholder {0}: table.getFilteredSelectedRowModel().rows.length
 #. placeholder {1}: table.getFilteredRowModel().rows.length
@@ -89,9 +88,20 @@ msgstr "30일"
 msgid "5 min"
 msgstr "5분"
 
+#: src/components/routes/settings/about.tsx
+#: src/components/routes/settings/layout.tsx
+msgid "About"
+msgstr ""
+
+#: src/components/routes/settings/about.tsx
+msgid "About Bantay."
+msgstr ""
+
 #. Table column
+#: src/components/routes/settings/backups.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
+#: src/components/routes/settings/users.tsx
 #: src/components/routes/system/smart-table.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Actions"
@@ -112,6 +122,14 @@ msgstr "활성화된 알림들"
 msgid "Active state"
 msgstr "활성 상태"
 
+#: src/components/command-palette.tsx
+#: src/components/navbar.tsx
+#: src/components/routes/settings/layout.tsx
+#: src/components/routes/settings/logs.tsx
+#: src/components/sidebar.tsx
+msgid "Activity log"
+msgstr ""
+
 #: src/components/add-system.tsx
 #: src/components/add-system.tsx
 #: src/components/navbar.tsx
@@ -121,9 +139,27 @@ msgstr "활성 상태"
 msgid "Add {foo}"
 msgstr "{foo} 추가"
 
+#: src/components/routes/settings/users.tsx
+msgid "Add a new user"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Add people who can sign in. Admins can change settings; read-only users can view but not edit."
+msgstr ""
+
+#: src/components/sidebar.tsx
+#: src/components/sidebar.tsx
+#: src/components/sidebar.tsx
+msgid "Add System"
+msgstr ""
+
 #: src/components/routes/settings/notifications.tsx
-msgid "Add URL"
-msgstr "URL 추가"
+#~ msgid "Add URL"
+#~ msgstr "URL 추가"
+
+#: src/components/routes/settings/users.tsx
+msgid "Add user"
+msgstr ""
 
 #: src/components/routes/settings/general.tsx
 msgid "Adjust display options for charts."
@@ -136,20 +172,35 @@ msgstr "메인 레이아웃 너비 조정"
 #: src/components/command-palette.tsx
 #: src/components/command-palette.tsx
 #: src/components/navbar.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/sidebar.tsx
 msgid "Admin"
 msgstr "관리자"
+
+#: src/components/routes/settings/users.tsx
+msgid "Admin — full access"
+msgstr ""
 
 #: src/components/systemd-table/systemd-table.tsx
 msgid "After"
 msgstr "이후"
 
 #: src/components/routes/settings/heartbeat.tsx
-msgid "After setting the environment variables, restart your Beszel hub for changes to take effect."
-msgstr "환경 변수를 설정한 후, 변경 사항을 적용하려면 Beszel 허브를 재시작하세요."
+msgid "After setting the environment variables, restart your Bantay hub for changes to take effect."
+msgstr ""
+
+#: src/components/routes/settings/heartbeat.tsx
+#~ msgid "After setting the environment variables, restart your Beszel hub for changes to take effect."
+#~ msgstr "환경 변수를 설정한 후, 변경 사항을 적용하려면 Beszel 허브를 재시작하세요."
 
 #: src/components/systems-table/systems-table-columns.tsx
-msgid "Agent"
-msgstr "에이전트"
+#~ msgid "Agent"
+#~ msgstr "에이전트"
+
+#: src/components/routes/system/info-bar.tsx
+msgid "Agent did not respond."
+msgstr ""
 
 #: src/components/command-palette.tsx
 #: src/components/routes/settings/alerts-history-data-table.tsx
@@ -170,14 +221,21 @@ msgstr "알림"
 msgid "All Containers"
 msgstr "모든 컨테이너"
 
+#: src/components/routes/settings/logs.tsx
+msgid "All levels"
+msgstr ""
+
 #: src/components/alerts/alerts-sheet.tsx
-#: src/components/command-palette.tsx
 #: src/components/routes/home.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/systems-table/systems-table.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "All Systems"
 msgstr "모든 시스템"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Anonymous (no login)"
+msgstr ""
 
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Are you sure you want to delete {name}?"
@@ -186,6 +244,18 @@ msgstr "{name}을(를) 삭제하시겠습니까?"
 #: src/components/routes/settings/alerts-history-data-table.tsx
 msgid "Are you sure?"
 msgstr "확실합니까?"
+
+#: src/components/routes/settings/users.tsx
+msgid "At least 8 characters."
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Auth method"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Authenticated as"
+msgstr ""
 
 #: src/components/copy-to-clipboard.tsx
 msgid "Automatic copy requires a secure context."
@@ -217,6 +287,10 @@ msgstr "서비스를 기다리는 평균 I/O 작업 수"
 msgid "Average power consumption of GPUs"
 msgstr "GPU들의 평균 전원 사용량"
 
+#: src/components/systems-table/systems-table-columns.tsx
+msgid "Average processes using or waiting for CPU. Normalized: under 70% healthy, 70–90% busy, over 90% overloaded."
+msgstr ""
+
 #: src/components/routes/system/disk-io-sheet.tsx
 msgctxt "Disk I/O average operation time (iostat await)"
 msgid "Average queue to completion time per operation"
@@ -235,8 +309,35 @@ msgstr "평균 {0} 사용량"
 msgid "Average utilization of GPU engines"
 msgstr "GPU 엔진 평균 사용량"
 
+#: src/components/routes/dashboard.tsx
+msgid "Avg CPU"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Avg Disk"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Avg Memory"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Backup created"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Backup deleted"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Backup now"
+msgstr ""
+
 #: src/components/command-palette.tsx
 #: src/components/navbar.tsx
+#: src/components/routes/settings/backups.tsx
+#: src/components/routes/settings/layout.tsx
+#: src/components/sidebar.tsx
 msgid "Backups"
 msgstr "백업"
 
@@ -245,10 +346,18 @@ msgstr "백업"
 msgid "Bandwidth"
 msgstr "대역폭"
 
+#: src/components/routes/settings/about.tsx
+msgid "Bantay is a fork of <0>Beszel</0>, originally created by henrygd. All credit for the underlying monitoring platform belongs to the upstream project."
+msgstr ""
+
+#: src/components/login/auth-form.tsx
+msgid "Bantay supports OpenID Connect and many OAuth2 authentication providers."
+msgstr ""
+
 #. Battery label in systems table header
 #: src/components/systems-table/systems-table-columns.tsx
-msgid "Bat"
-msgstr "배터리"
+#~ msgid "Bat"
+#~ msgstr "배터리"
 
 #: src/components/routes/system/charts/sensor-charts.tsx
 #: src/lib/alerts.ts
@@ -275,12 +384,12 @@ msgid "Below {0}{1} in last {2, plural, one {# minute} other {# minutes}}"
 msgstr "마지막 {2, plural, one {# 분} other {# 분}} 동안 {0}{1} 미만"
 
 #: src/components/login/auth-form.tsx
-msgid "Beszel supports OpenID Connect and many OAuth2 authentication providers."
-msgstr "Beszel은 OpenID Connect 및 많은 OAuth2 인증 제공자를 지원합니다."
+#~ msgid "Beszel supports OpenID Connect and many OAuth2 authentication providers."
+#~ msgstr "Beszel은 OpenID Connect 및 많은 OAuth2 인증 제공자를 지원합니다."
 
 #: src/components/routes/settings/notifications.tsx
-msgid "Beszel uses <0>Shoutrrr</0> to integrate with popular notification services."
-msgstr "Beszel은 여러 인기 있는 알림 서비스와 연동하기 위해 <0>Shoutrrr</0>을 이용합니다."
+#~ msgid "Beszel uses <0>Shoutrrr</0> to integrate with popular notification services."
+#~ msgstr "Beszel은 여러 인기 있는 알림 서비스와 연동하기 위해 <0>Shoutrrr</0>을 이용합니다."
 
 #: src/components/add-system.tsx
 msgid "Binary"
@@ -295,6 +404,10 @@ msgstr "비트 (Kbps, Mbps, Gbps)"
 msgid "Boot state"
 msgstr "부팅 상태"
 
+#: src/components/routes/settings/logs.tsx
+msgid "Browser / agent"
+msgstr ""
+
 #: src/components/routes/settings/general.tsx
 #: src/components/routes/settings/general.tsx
 msgid "Bytes (KB/s, MB/s, GB/s)"
@@ -303,6 +416,10 @@ msgstr "바이트 (KB/s, MB/s, GB/s)"
 #: src/components/routes/system/charts/memory-charts.tsx
 msgid "Cache / Buffers"
 msgstr "캐시 / 버퍼"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Came from"
+msgstr ""
 
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Can reload"
@@ -317,7 +434,14 @@ msgid "Can stop"
 msgstr "중지 가능"
 
 #: src/components/routes/settings/alerts-history-data-table.tsx
+#: src/components/routes/settings/backups.tsx
+#: src/components/routes/settings/backups.tsx
+#: src/components/routes/settings/logs.tsx
 #: src/components/routes/settings/quiet-hours.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/system/info-bar.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Cancel"
 msgstr "취소"
@@ -376,14 +500,26 @@ msgid "Check your monitoring service"
 msgstr "모니터링 서비스 확인"
 
 #: src/components/routes/settings/notifications.tsx
-msgid "Check your notification service"
-msgstr "알림 서비스를 확인하세요."
+#~ msgid "Check your notification service"
+#~ msgstr "알림 서비스를 확인하세요."
 
 #: src/components/containers-table/containers-table.tsx
 #: src/components/routes/system/smart-table.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "Clear"
 msgstr "지우기"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Clear all"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Clear all log entries?"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Clear logs"
+msgstr ""
 
 #: src/components/containers-table/containers-table.tsx
 msgid "Click on a container to view more information."
@@ -401,10 +537,22 @@ msgstr "더 많은 정보를 보려면 시스템을 클릭하세요."
 msgid "Click to copy"
 msgstr "클릭하여 복사"
 
+#: src/components/routes/settings/logs.tsx
+msgid "Client IP"
+msgstr ""
+
+#: src/components/sidebar.tsx
+msgid "Collapse sidebar"
+msgstr ""
+
 #: src/components/login/forgot-pass-form.tsx
 #: src/components/login/forgot-pass-form.tsx
 msgid "Command line instructions"
 msgstr "명령어 사용 지침"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Configure how Bantay sends email — for password resets, alerts, and notifications. Ask your email provider or admin if you don't know these values."
+msgstr ""
 
 #: src/components/routes/settings/notifications.tsx
 msgid "Configure how you receive alert notifications."
@@ -424,6 +572,7 @@ msgid "Connection is down"
 msgstr "연결이 끊겼습니다"
 
 #: src/components/routes/system.tsx
+#: src/components/sidebar.tsx
 msgid "Containers"
 msgstr "컨테이너"
 
@@ -493,6 +642,7 @@ msgid "Core"
 msgstr "코어"
 
 #: src/components/containers-table/containers-table-columns.tsx
+#: src/components/containers-table/containers-table.tsx
 #: src/components/systemd-table/systemd-table-columns.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "CPU"
@@ -529,6 +679,10 @@ msgstr "생성"
 msgid "Create account"
 msgstr "계정 생성"
 
+#: src/components/routes/settings/users.tsx
+msgid "Create user"
+msgstr ""
+
 #. Context: date created
 #: src/components/alerts-history-columns.tsx
 msgid "Created"
@@ -561,6 +715,13 @@ msgstr "사이클"
 msgid "Daily"
 msgstr "매일"
 
+#: src/components/command-palette.tsx
+#: src/components/routes/dashboard.tsx
+#: src/components/routes/dashboard.tsx
+#: src/components/sidebar.tsx
+msgid "Dashboard"
+msgstr ""
+
 #: src/components/routes/system/info-bar.tsx
 msgctxt "Default system layout option"
 msgid "Default"
@@ -571,15 +732,33 @@ msgid "Default time period"
 msgstr "기본 기간"
 
 #: src/components/routes/settings/alerts-history-data-table.tsx
+#: src/components/routes/settings/backups.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/routes/system/smart-table.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Delete"
 msgstr "삭제"
 
+#: src/components/routes/settings/backups.tsx
+msgid "Delete backup"
+msgstr ""
+
 #: src/components/routes/settings/tokens-fingerprints.tsx
 msgid "Delete fingerprint"
 msgstr "지문 삭제"
+
+#: src/components/routes/settings/backups.tsx
+msgid "Delete this backup?"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Delete this user?"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Delete user"
+msgstr ""
 
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Description"
@@ -588,6 +767,10 @@ msgstr "설명"
 #: src/components/containers-table/containers-table.tsx
 msgid "Detail"
 msgstr "세부사항"
+
+#: src/components/routes/settings/about.tsx
+#~ msgid "Developer"
+#~ msgstr ""
 
 #: src/components/routes/system/smart-table.tsx
 msgid "Device"
@@ -643,8 +826,14 @@ msgstr "Docker 네트워크 I/O"
 msgid "Documentation"
 msgstr "문서"
 
+#: src/components/routes/system/info-bar.tsx
+#: src/components/systems-table/systems-table-columns.tsx
+msgid "down"
+msgstr ""
+
 #. Context: System is down
 #: src/components/alerts-history-columns.tsx
+#: src/components/routes/dashboard.tsx
 #: src/components/routes/system/info-bar.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 #: src/lib/alerts.ts
@@ -658,6 +847,10 @@ msgstr "오프라인 ({downSystemsLength})"
 #: src/components/routes/system/network-sheet.tsx
 msgid "Download"
 msgstr "다운로드"
+
+#: src/components/routes/settings/backups.tsx
+msgid "Download backup"
+msgstr ""
 
 #: src/components/alerts-history-columns.tsx
 msgid "Duration"
@@ -673,9 +866,25 @@ msgstr "수정"
 msgid "Edit {foo}"
 msgstr "{foo} 수정"
 
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Edit user"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Editing is unlocked. Save or lock when done."
+msgstr ""
+
 #: src/components/login/auth-form.tsx
 #: src/components/login/forgot-pass-form.tsx
 #: src/components/login/otp-forms.tsx
+#: src/components/navbar.tsx
+#: src/components/routes/settings/layout.tsx
+#: src/components/routes/settings/mail.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/sidebar.tsx
 msgid "Email"
 msgstr "이메일"
 
@@ -683,10 +892,26 @@ msgstr "이메일"
 msgid "Email notifications"
 msgstr "이메일 알림"
 
+#: src/components/routes/settings/mail.tsx
+msgid "Email sending is currently disabled — enable it above to send tests or alerts."
+msgstr ""
+
+#: src/components/command-palette.tsx
+msgid "Email settings"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Email settings saved"
+msgstr ""
+
 #. Context: Battery state
 #: src/lib/i18n.ts
 msgid "Empty"
 msgstr "빔"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Enable email sending"
+msgstr ""
 
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/routes/settings/quiet-hours.tsx
@@ -709,6 +934,10 @@ msgstr "비밀번호를 재설정하려면 이메일 주소를 입력하세요"
 msgid "Enter email address..."
 msgstr "이메일 주소 입력..."
 
+#: src/components/routes/settings/mail.tsx
+msgid "Enter password"
+msgstr ""
+
 #: src/components/login/otp-forms.tsx
 msgid "Enter your one-time password."
 msgstr "OTP를 입력하세요."
@@ -717,19 +946,30 @@ msgstr "OTP를 입력하세요."
 msgid "Ephemeral"
 msgstr "일시적"
 
-#: src/components/login/auth-form.tsx
 #: src/components/routes/settings/alerts-history-data-table.tsx
+#: src/components/routes/settings/backups.tsx
 #: src/components/routes/settings/config-yaml.tsx
 #: src/components/routes/settings/heartbeat.tsx
 #: src/components/routes/settings/heartbeat.tsx
 #: src/components/routes/settings/heartbeat.tsx
-#: src/components/routes/settings/notifications.tsx
+#: src/components/routes/settings/logs.tsx
+#: src/components/routes/settings/logs.tsx
+#: src/components/routes/settings/mail.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
+#: src/components/routes/settings/users.tsx
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Error"
 msgstr "오류"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Error details"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Errors only"
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Example:"
@@ -754,6 +994,10 @@ msgstr "<0>config.yml</0>에 정의되지 않은 기존 시스템은 삭제됩�
 msgid "Exited active"
 msgstr "활성 종료됨"
 
+#: src/components/sidebar.tsx
+msgid "Expand sidebar"
+msgstr ""
+
 #: src/components/routes/settings/tokens-fingerprints.tsx
 msgid "Expires after one hour or on hub restart."
 msgstr "한 시간 후 또는 허브 재시작 시 만료됩니다."
@@ -775,8 +1019,8 @@ msgid "Fahrenheit (°F)"
 msgstr "화씨 (°F)"
 
 #: src/components/systems-table/systems-table-columns.tsx
-msgid "Failed"
-msgstr "실패"
+#~ msgid "Failed"
+#~ msgstr "실패"
 
 #: src/components/routes/system/smart-table.tsx
 msgid "Failed Attributes:"
@@ -786,28 +1030,88 @@ msgstr "실패한 속성:"
 msgid "Failed to authenticate"
 msgstr "인증 실패"
 
+#: src/components/routes/settings/logs.tsx
+msgid "Failed to clear logs."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Failed to create backup."
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Failed to create user."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Failed to delete backup."
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Failed to delete user."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Failed to load backups."
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Failed to load logs."
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Failed to load SMTP settings."
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Failed to load users."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Failed to restore backup."
+msgstr ""
+
 #: src/components/routes/settings/layout.tsx
 #: src/components/routes/settings/notifications.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 msgid "Failed to save settings"
 msgstr "설정 저장 실패"
 
+#: src/components/routes/settings/mail.tsx
+msgid "Failed to save settings."
+msgstr ""
+
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Failed to send heartbeat"
 msgstr "하트비트 전송 실패"
 
+#: src/components/routes/settings/users.tsx
+msgid "Failed to send password reset."
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Failed to send test email."
+msgstr ""
+
 #: src/components/routes/settings/notifications.tsx
-msgid "Failed to send test notification"
-msgstr "테스트 알림 전송 실패"
+#~ msgid "Failed to send test notification"
+#~ msgstr "테스트 알림 전송 실패"
 
 #: src/components/alerts/alerts-sheet.tsx
 msgid "Failed to update alert"
 msgstr "알림 수정 실패"
 
+#: src/components/routes/settings/users.tsx
+msgid "Failed to update user."
+msgstr ""
+
 #. placeholder {0}: statusTotals[ServiceStatus.Failed]
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Failed: {0}"
 msgstr "실패: {0}"
+
+#: src/components/routes/settings/backups.tsx
+msgid "File"
+msgstr ""
 
 #: src/components/containers-table/containers-table.tsx
 #: src/components/routes/settings/alerts-history-data-table.tsx
@@ -826,9 +1130,17 @@ msgstr "지문"
 msgid "Firmware"
 msgstr "펌웨어"
 
+#: src/components/routes/dashboard.tsx
+msgid "Fleet overview at a glance."
+msgstr ""
+
 #: src/components/alerts/alerts-sheet.tsx
 msgid "For <0>{min}</0> {min, plural, one {minute} other {minutes}}"
 msgstr "<0>{min}</0> {min, plural, one {분} other {분}} 동안"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Force TLS"
+msgstr ""
 
 #: src/components/login/auth-form.tsx
 msgid "Forgot password?"
@@ -839,6 +1151,10 @@ msgstr "비밀번호를 잊으셨나요?"
 msgctxt "Button to copy install command"
 msgid "FreeBSD command"
 msgstr "FreeBSD 명령어"
+
+#: src/components/routes/settings/mail.tsx
+msgid "From address"
+msgstr ""
 
 #. Context: Battery state
 #: src/components/routes/system/info-bar.tsx
@@ -872,6 +1188,7 @@ msgstr "GPU 전원 사용량"
 msgid "GPU Usage"
 msgstr "GPU 사용량"
 
+#: src/components/containers-table/containers-table.tsx
 #: src/components/routes/system/info-bar.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "Grid"
@@ -882,8 +1199,8 @@ msgid "Health"
 msgstr "상태"
 
 #: src/components/routes/settings/layout.tsx
-msgid "Heartbeat"
-msgstr "하트비트"
+#~ msgid "Heartbeat"
+#~ msgstr "하트비트"
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Heartbeat Monitoring"
@@ -935,6 +1252,10 @@ msgstr "대기"
 msgid "If you've lost the password to your admin account, you may reset it using the following command."
 msgstr "관리자 계정의 비밀번호를 잃어버린 경우, 다음 명령어를 사용하여 재설정할 수 있습니다."
 
+#: src/components/containers-table/containers-table.tsx
+msgid "Image"
+msgstr ""
+
 #: src/components/containers-table/containers-table-columns.tsx
 msgctxt "Docker image"
 msgid "Image"
@@ -943,6 +1264,14 @@ msgstr "이미지"
 #: src/components/routes/settings/quiet-hours.tsx
 msgid "Inactive"
 msgstr "비활성"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Info"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Info only"
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Interval"
@@ -954,9 +1283,10 @@ msgstr "잘못된 이메일 주소입니다."
 
 #: src/components/lang-toggle.tsx
 #: src/components/routes/settings/general.tsx
-msgid "Language"
-msgstr "언어"
+#~ msgid "Language"
+#~ msgstr "언어"
 
+#: src/components/containers-table/containers-table.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "Layout"
 msgstr "레이아웃"
@@ -965,9 +1295,26 @@ msgstr "레이아웃"
 msgid "Layout width"
 msgstr "레이아웃 너비"
 
+#: src/components/routes/settings/mail.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Leave blank to keep current"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Level"
+msgstr ""
+
+#: src/components/routes/settings/about.tsx
+msgid "License"
+msgstr ""
+
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Lifecycle"
 msgstr "생명주기"
+
+#: src/components/routes/settings/about.tsx
+msgid "Lightweight monitoring for your fleet."
+msgstr ""
 
 #: src/components/systemd-table/systemd-table.tsx
 #: src/components/systemd-table/systemd-table.tsx
@@ -990,6 +1337,10 @@ msgstr "부하 평균 1분"
 msgid "Load Average 5m"
 msgstr "부하 평균 5분"
 
+#: src/components/systems-table/systems-table-columns.tsx
+msgid "Load average vs {threads} CPU threads"
+msgstr ""
+
 #. Short label for load average
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Load Avg"
@@ -1003,8 +1354,13 @@ msgstr "로드 상태"
 msgid "Loading..."
 msgstr "로딩 중..."
 
+#: src/components/routes/settings/mail.tsx
+msgid "Lock"
+msgstr ""
+
 #: src/components/navbar.tsx
 #: src/components/navbar.tsx
+#: src/components/sidebar.tsx
 msgid "Log Out"
 msgstr "로그아웃"
 
@@ -1017,11 +1373,13 @@ msgstr "로그인"
 msgid "Login attempt failed"
 msgstr "로그인 실패"
 
-#: src/components/command-palette.tsx
 #: src/components/containers-table/containers-table.tsx
-#: src/components/navbar.tsx
 msgid "Logs"
 msgstr "로그"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Logs cleared"
+msgstr ""
 
 #: src/components/routes/settings/notifications.tsx
 msgid "Looking instead for where to create alerts? Click the bell <0/> icons in the systems table."
@@ -1046,6 +1404,7 @@ msgid "Max 1 min"
 msgstr "1분간 최댓값"
 
 #: src/components/containers-table/containers-table-columns.tsx
+#: src/components/containers-table/containers-table.tsx
 #: src/components/routes/system/info-bar.tsx
 #: src/components/systemd-table/systemd-table-columns.tsx
 #: src/components/systemd-table/systemd-table.tsx
@@ -1076,15 +1435,30 @@ msgstr "Docker 컨테이너의 메모리 사용량"
 msgid "Model"
 msgstr "모델"
 
+#: src/components/routes/settings/about.tsx
+msgid "Modified by"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Most recently reporting systems."
+msgstr ""
+
 #: src/components/add-system.tsx
 #: src/components/alerts-history-columns.tsx
 #: src/components/containers-table/containers-table-columns.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
 #: src/components/systemd-table/systemd-table-columns.tsx
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Name"
 msgstr "이름"
 
+#: src/components/routes/settings/users.tsx
+msgid "Name (optional)"
+msgstr ""
+
 #: src/components/containers-table/containers-table-columns.tsx
+#: src/components/containers-table/containers-table.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Net"
 msgstr "네트워크"
@@ -1105,11 +1479,39 @@ msgstr "공용 인터페이스의 네트워크 트래픽"
 msgid "Network unit"
 msgstr "네트워크 단위"
 
+#: src/components/routes/settings/users.tsx
+msgid "New password (optional)"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Next"
+msgstr ""
+
+#: src/components/routes/system/info-bar.tsx
+msgid "NICs"
+msgstr ""
+
 #: src/components/systemd-table/systemd-table.tsx
 #: src/components/systemd-table/systemd-table.tsx
 #: src/components/systemd-table/systemd-table.tsx
 msgid "No"
 msgstr "아니오"
+
+#: src/components/routes/settings/logs.tsx
+msgid "No additional details for this entry."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "No backups yet. Click \"Backup now\" to create your first one."
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "No data yet."
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "No log entries match your filters."
+msgstr ""
 
 #: src/components/command-palette.tsx
 #: src/components/systemd-table/systemd-table.tsx
@@ -1134,6 +1536,18 @@ msgstr "이 장치에 사용할 수 있는 S.M.A.R.T. 속성이 없습니다."
 msgid "No systems found."
 msgstr "시스템을 찾을 수 없습니다."
 
+#: src/components/routes/dashboard.tsx
+msgid "No systems registered yet. Add a system from the sidebar to get started."
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "No systems yet."
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "No users yet."
+msgstr ""
+
 #: src/components/command-palette.tsx
 #: src/components/routes/settings/layout.tsx
 #: src/components/routes/settings/notifications.tsx
@@ -1143,6 +1557,10 @@ msgstr "알림"
 #: src/components/login/auth-form.tsx
 msgid "OAuth 2 / OIDC support"
 msgstr "OAuth 2 / OIDC 지원"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Off uses STARTTLS if available."
+msgstr ""
 
 #: src/components/routes/settings/config-yaml.tsx
 msgid "On each restart, systems in the database will be updated to match the systems defined in the file."
@@ -1161,6 +1579,7 @@ msgstr "OTP"
 #: src/components/routes/settings/tokens-fingerprints.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
 #: src/components/routes/system/smart-table.tsx
+#: src/components/sidebar.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Open menu"
 msgstr "메뉴 열기"
@@ -1168,6 +1587,10 @@ msgstr "메뉴 열기"
 #: src/components/login/auth-form.tsx
 msgid "Or continue with"
 msgstr "또는 아래 항목으로 진행하기"
+
+#: src/components/routes/settings/about.tsx
+msgid "Original author"
+msgstr ""
 
 #: src/components/routes/system/cpu-sheet.tsx
 msgid "Other"
@@ -1180,6 +1603,7 @@ msgstr "기존 알림 덮어쓰기"
 #: src/components/command-palette.tsx
 #: src/components/command-palette.tsx
 #: src/components/command-palette.tsx
+#: src/components/command-palette.tsx
 msgid "Page"
 msgstr "페이지"
 
@@ -1189,12 +1613,18 @@ msgstr "페이지"
 msgid "Page {0} of {1}"
 msgstr "{1}페이지 중 {0}페이지"
 
+#: src/components/routes/settings/logs.tsx
+msgid "Page {page}"
+msgstr ""
+
 #: src/components/command-palette.tsx
 msgid "Pages / Settings"
 msgstr "페이지 / 설정"
 
 #: src/components/login/auth-form.tsx
 #: src/components/login/auth-form.tsx
+#: src/components/routes/settings/mail.tsx
+#: src/components/routes/settings/users.tsx
 msgid "Password"
 msgstr "비밀번호"
 
@@ -1206,9 +1636,17 @@ msgstr "비밀번호는 최소 8자 이상이어야 합니다."
 msgid "Password must be less than 72 bytes."
 msgstr "비밀번호는 72 바이트 이하여야 합니다."
 
+#: src/components/routes/settings/users.tsx
+msgid "Password reset email sent"
+msgstr ""
+
 #: src/components/login/forgot-pass-form.tsx
 msgid "Password reset request received"
 msgstr "비밀번호 재설정 요청이 접수되었습니다"
+
+#: src/components/routes/settings/users.tsx
+msgid "Password updated"
+msgstr ""
 
 #: src/components/routes/settings/quiet-hours.tsx
 msgid "Past"
@@ -1218,6 +1656,7 @@ msgstr "과거"
 msgid "Pause"
 msgstr "일시 중지"
 
+#: src/components/routes/dashboard.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Paused"
 msgstr "일시 정지됨"
@@ -1252,8 +1691,12 @@ msgid "Persistence"
 msgstr "지속성"
 
 #: src/components/routes/settings/notifications.tsx
-msgid "Please <0>configure an SMTP server</0> to ensure alerts are delivered."
-msgstr "알림이 전달되도록 <0>SMTP 서버를 구성</0>하세요."
+#~ msgid "Please <0>configure an SMTP server</0> to ensure alerts are delivered."
+#~ msgstr "알림이 전달되도록 <0>SMTP 서버를 구성</0>하세요."
+
+#: src/components/routes/settings/notifications.tsx
+msgid "Please <0>configure your email server</0> to ensure alerts are delivered."
+msgstr ""
 
 #: src/components/alerts/alerts-sheet.tsx
 msgid "Please check logs for more details."
@@ -1280,13 +1723,22 @@ msgstr "다시 로그인하세요."
 msgid "Please see <0>the documentation</0> for instructions."
 msgstr "사용법은 <0>문서</0>를 참조하세요."
 
+#: src/components/routes/settings/users.tsx
+msgid "Please sign in again with your new password."
+msgstr ""
+
 #: src/components/login/login.tsx
 msgid "Please sign in to your account"
 msgstr "계정에 로그인하세요."
 
 #: src/components/add-system.tsx
+#: src/components/routes/settings/mail.tsx
 msgid "Port"
 msgstr "포트"
+
+#: src/components/containers-table/containers-table.tsx
+msgid "Ports"
+msgstr ""
 
 #: src/components/containers-table/containers-table-columns.tsx
 msgctxt "Container ports"
@@ -1304,8 +1756,12 @@ msgid "Precise utilization at the recorded time"
 msgstr "기록된 시간의 정확한 사용량"
 
 #: src/components/routes/settings/general.tsx
-msgid "Preferred Language"
-msgstr "선호 언어"
+#~ msgid "Preferred Language"
+#~ msgstr "선호 언어"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Previous"
+msgstr ""
 
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Process started"
@@ -1333,19 +1789,50 @@ msgstr "조용한 시간"
 msgid "Read"
 msgstr "읽기"
 
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Read only"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Read only — view only, cannot edit"
+msgstr ""
+
 #: src/components/routes/system/charts/network-charts.tsx
 msgid "Received"
 msgstr "수신됨"
 
+#: src/components/routes/dashboard.tsx
+msgid "Recent activity"
+msgstr ""
+
 #: src/components/containers-table/containers-table.tsx
 #: src/components/containers-table/containers-table.tsx
+#: src/components/routes/settings/logs.tsx
 #: src/components/routes/system/smart-table.tsx
 msgid "Refresh"
 msgstr "새로고침"
 
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Regular"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Regular — manage own systems"
+msgstr ""
+
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Relationships"
 msgstr "관계"
+
+#: src/components/routes/settings/about.tsx
+msgid "Released under the MIT License (inherited from upstream Beszel). See the LICENSE file in the source distribution for the full text and original copyright notices."
+msgstr ""
+
+#: src/components/routes/settings/about.tsx
+#~ msgid "Released under the MIT License. See the LICENSE file in the source distribution for the full text and copyright notices."
+#~ msgstr ""
 
 #: src/components/login/login.tsx
 msgid "Request a one-time password"
@@ -1373,13 +1860,54 @@ msgstr "비밀번호 재설정"
 msgid "Resolved"
 msgstr "해결됨"
 
+#: src/components/routes/system/info-bar.tsx
+#: src/components/routes/system/info-bar.tsx
+#: src/components/routes/system/info-bar.tsx
+msgid "Restart agent"
+msgstr ""
+
+#. placeholder {0}: system.name
+#: src/components/routes/system/info-bar.tsx
+msgid "Restart agent on {0}?"
+msgstr ""
+
+#: src/components/routes/system/info-bar.tsx
+msgid "Restart failed"
+msgstr ""
+
+#: src/components/routes/system/info-bar.tsx
+msgid "Restart requested"
+msgstr ""
+
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Restarts"
 msgstr "재시작 횟수"
 
+#: src/components/routes/settings/backups.tsx
+msgid "Restore"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Restore from this backup"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Restore from this backup?"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Restoring"
+msgstr ""
+
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Resume"
 msgstr "재개"
+
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Role"
+msgstr ""
 
 #: src/components/systems-table/systems-table-columns.tsx
 msgctxt "Root disk label"
@@ -1414,6 +1942,14 @@ msgstr "{foo} 저장"
 msgid "Save address using enter key or comma. Leave blank to disable email notifications."
 msgstr "Enter 키 또는 쉼표를 사용하여 주소를 저장하세요. 이메일 알림을 비활성화하려면 비워 두세요."
 
+#: src/components/routes/settings/users.tsx
+msgid "Save changes"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Save settings"
+msgstr ""
+
 #: src/components/routes/settings/general.tsx
 #: src/components/routes/settings/notifications.tsx
 msgid "Save Settings"
@@ -1436,12 +1972,21 @@ msgid "Schedule quiet hours where notifications will not be sent."
 msgstr "알림이 전송되지 않을 조용한 시간을 예약하세요."
 
 #: src/components/navbar.tsx
+#: src/components/routes/settings/logs.tsx
+#: src/components/sidebar.tsx
+#: src/components/sidebar.tsx
+#: src/components/sidebar.tsx
+#: src/components/sidebar.tsx
 msgid "Search"
 msgstr "검색"
 
 #: src/components/command-palette.tsx
 msgid "Search for systems or settings..."
 msgstr "시스템 또는 설정 검색..."
+
+#: src/components/routes/settings/logs.tsx
+msgid "Search messages..."
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Seconds between pings (default: 60)"
@@ -1459,13 +2004,37 @@ msgstr "{foo} 선택"
 msgid "Send a single heartbeat ping to verify your endpoint is working."
 msgstr "엔드포인트가 작동하는지 확인하기 위해 단일 하트비트 핑을 보냅니다."
 
+#: src/components/routes/settings/users.tsx
+msgid "Send password reset email"
+msgstr ""
+
 #: src/components/routes/settings/heartbeat.tsx
-msgid "Send periodic outbound pings to an external monitoring service so you can monitor Beszel without exposing it to the internet."
-msgstr "외부 모니터링 서비스에 주기적으로 아웃바운드 핑을 보내 인터넷에 노출하지 않고도 Beszel을 모니터링할 수 있습니다."
+msgid "Send periodic outbound pings to an external monitoring service so you can monitor Bantay without exposing it to the internet."
+msgstr ""
+
+#: src/components/routes/settings/heartbeat.tsx
+#~ msgid "Send periodic outbound pings to an external monitoring service so you can monitor Beszel without exposing it to the internet."
+#~ msgstr "외부 모니터링 서비스에 주기적으로 아웃바운드 핑을 보내 인터넷에 노출하지 않고도 Beszel을 모니터링할 수 있습니다."
+
+#: src/components/routes/settings/mail.tsx
+msgid "Send test"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Send test email to"
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Send test heartbeat"
 msgstr "테스트 하트비트 전송"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Sender email"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Sender name"
+msgstr ""
 
 #: src/components/routes/system/charts/network-charts.tsx
 msgid "Sent"
@@ -1480,7 +2049,6 @@ msgid "Service Details"
 msgstr "서비스 세부 정보"
 
 #: src/components/routes/system.tsx
-#: src/components/systems-table/systems-table-columns.tsx
 msgid "Services"
 msgstr "서비스"
 
@@ -1489,8 +2057,12 @@ msgid "Set percentage thresholds for meter colors."
 msgstr "그래프 미터 색상의 백분율 임계값을 설정합니다."
 
 #: src/components/routes/settings/heartbeat.tsx
-msgid "Set the following environment variables on your Beszel hub to enable heartbeat monitoring:"
-msgstr "하트비트 모니터링을 활성화하려면 Beszel 허브에 다음 환경 변수를 설정하세요:"
+msgid "Set the following environment variables on your Bantay hub to enable heartbeat monitoring:"
+msgstr ""
+
+#: src/components/routes/settings/heartbeat.tsx
+#~ msgid "Set the following environment variables on your Beszel hub to enable heartbeat monitoring:"
+#~ msgstr "하트비트 모니터링을 활성화하려면 Beszel 허브에 다음 환경 변수를 설정하세요:"
 
 #: src/components/command-palette.tsx
 #: src/components/command-palette.tsx
@@ -1499,8 +2071,13 @@ msgstr "하트비트 모니터링을 활성화하려면 Beszel 허브에 다음 
 #: src/components/routes/settings/layout.tsx
 #: src/components/routes/settings/layout.tsx
 #: src/components/routes/system/info-bar.tsx
+#: src/components/sidebar.tsx
 msgid "Settings"
 msgstr "설정"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Settings are locked to prevent accidental changes."
+msgstr ""
 
 #: src/components/routes/settings/layout.tsx
 msgid "Settings saved"
@@ -1510,9 +2087,21 @@ msgstr "설정이 저장되었습니다."
 msgid "Sign in"
 msgstr "로그인"
 
+#: src/components/routes/settings/backups.tsx
+msgid "Size"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "SMTP server"
+msgstr ""
+
 #: src/components/command-palette.tsx
-msgid "SMTP settings"
-msgstr "SMTP 설정"
+#~ msgid "SMTP settings"
+#~ msgstr "SMTP 설정"
+
+#: src/components/routes/settings/backups.tsx
+msgid "Snapshots of all your data: users, systems, alerts, history. Take one before any risky change. Restore puts your hub back the way it was when the backup was taken."
+msgstr ""
 
 #: src/components/systems-table/systems-table.tsx
 msgid "Sort By"
@@ -1550,6 +2139,11 @@ msgstr "시스템에서 사용된 스왑 공간"
 msgid "Swap Usage"
 msgstr "스왑 사용량"
 
+#: src/components/mode-toggle.tsx
+#: src/components/mode-toggle.tsx
+msgid "Switch theme"
+msgstr ""
+
 #: src/components/add-system.tsx
 #: src/components/alerts-history-columns.tsx
 #: src/components/containers-table/containers-table-columns.tsx
@@ -1569,11 +2163,16 @@ msgstr "시스템"
 msgid "System load averages over time"
 msgstr "시간에 따른 시스템 부하 평균"
 
+#: src/components/routes/settings/logs.tsx
+msgid "System:"
+msgstr ""
+
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Systemd Services"
 msgstr "Systemd 서비스"
 
-#: src/components/navbar.tsx
+#: src/components/command-palette.tsx
+#: src/components/sidebar.tsx
 msgid "Systems"
 msgstr "시스템"
 
@@ -1581,6 +2180,7 @@ msgstr "시스템"
 msgid "Systems may be managed in a <0>config.yml</0> file inside your data directory."
 msgstr "시스템은 데이터 디렉토리 내의 <0>config.yml</0> 파일에서 관리할 수 있습니다."
 
+#: src/components/containers-table/containers-table.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "Table"
 msgstr "표"
@@ -1614,16 +2214,37 @@ msgid "Temperatures of system sensors"
 msgstr "시스템 센서의 온도"
 
 #: src/components/routes/settings/notifications.tsx
-msgid "Test <0>URL</0>"
-msgstr "테스트 <0>URL</0>"
+#~ msgid "Test <0>URL</0>"
+#~ msgstr "테스트 <0>URL</0>"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Test email sent"
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Test heartbeat"
 msgstr "테스트 하트비트"
 
 #: src/components/routes/settings/notifications.tsx
-msgid "Test notification sent"
-msgstr "테스트 알림이 전송되었습니다."
+#~ msgid "Test notification sent"
+#~ msgstr "테스트 알림이 전송되었습니다."
+
+#: src/components/routes/system/info-bar.tsx
+msgid "The agent process will exit and its supervisor (Docker or systemd) will start it again. Metrics for this system will be unavailable for a few seconds."
+msgstr ""
+
+#. placeholder {0}: backup.key
+#: src/components/routes/settings/backups.tsx
+msgid "The file <0>{0}</0> will be permanently removed. This does not affect your live data."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "The hub will restart in a moment. Refresh the page after about 30 seconds."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "The new backup is now in the list."
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "The overall status is <0>ok</0> when all systems are up, <1>warn</1> when alerts are triggered, and <2>error</2> when any system is down."
@@ -1636,6 +2257,20 @@ msgstr "그런 다음 백엔드에 로그인하여 사용자 테이블에서 사
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "This action cannot be undone. This will permanently delete all current records for {name} from the database."
 msgstr "이 작업은 되돌릴 수 없습니다. 데이터베이스에서 {name}에 대한 모든 현재 기록이 영구적으로 삭제됩니다."
+
+#: src/components/routes/settings/logs.tsx
+msgid "This permanently deletes every entry in the activity log. This cannot be undone."
+msgstr ""
+
+#. placeholder {0}: user.email
+#: src/components/routes/settings/users.tsx
+msgid "This permanently removes <0>{0}</0> and any systems they own. This cannot be undone."
+msgstr ""
+
+#. placeholder {0}: backup.key
+#: src/components/routes/settings/backups.tsx
+msgid "This replaces all current data with the contents of <0>{0}</0>. The hub will restart. Anything added since this backup was taken will be lost."
+msgstr ""
 
 #: src/components/routes/settings/alerts-history-data-table.tsx
 msgid "This will permanently delete all selected records from the database."
@@ -1659,8 +2294,8 @@ msgstr "받는사람(들)"
 
 #: src/components/mode-toggle.tsx
 #: src/components/mode-toggle.tsx
-msgid "Toggle theme"
-msgstr "테마 전환"
+#~ msgid "Toggle theme"
+#~ msgstr "테마 전환"
 
 #: src/components/add-system.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
@@ -1681,6 +2316,23 @@ msgstr "토큰은 에이전트가 연결하고 등록할 수 있도록 합니다
 msgid "Tokens and fingerprints are used to authenticate WebSocket connections to the hub."
 msgstr "토큰과 지문은 허브에 대한 WebSocket 연결을 인증하는 데 사용됩니다."
 
+#: src/components/routes/settings/logs.tsx
+msgid "Took"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Top CPU usage"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Top Disk usage"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Top Memory usage"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
 #: src/components/ui/chart.tsx
 #: src/components/ui/chart.tsx
 msgid "Total"
@@ -1786,7 +2438,16 @@ msgstr "알 수 없음"
 msgid "Unlimited"
 msgstr "무제한"
 
+#: src/components/routes/settings/mail.tsx
+msgid "Unlock to edit"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "up"
+msgstr ""
+
 #. Context: System is up
+#: src/components/routes/dashboard.tsx
 #: src/components/routes/system/info-bar.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Up"
@@ -1836,8 +2497,27 @@ msgstr "루트 파티션의 사용량"
 msgid "Used"
 msgstr "사용됨"
 
+#: src/components/routes/settings/users.tsx
+msgid "User created"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "User deleted"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "User updated"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Username"
+msgstr ""
+
 #: src/components/command-palette.tsx
 #: src/components/navbar.tsx
+#: src/components/routes/settings/layout.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/sidebar.tsx
 msgid "Users"
 msgstr "사용자"
 
@@ -1850,6 +2530,7 @@ msgstr "사용률"
 msgid "Value"
 msgstr "값"
 
+#: src/components/containers-table/containers-table.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "View"
 msgstr "보기"
@@ -1873,12 +2554,16 @@ msgid "Waiting for enough records to display"
 msgstr "표시할 충분한 기록을 기다리는 중"
 
 #: src/components/routes/settings/general.tsx
-msgid "Want to help improve our translations? Check <0>Crowdin</0> for details."
-msgstr "번역을 개선하는데 도움을 주시겠습니까? 자세한 내용은 <0>Crowdin</0>을 확인해 주세요."
+#~ msgid "Want to help improve our translations? Check <0>Crowdin</0> for details."
+#~ msgstr "번역을 개선하는데 도움을 주시겠습니까? 자세한 내용은 <0>Crowdin</0>을 확인해 주세요."
 
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Wants"
 msgstr "요구 항목"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Warning"
+msgstr ""
 
 #: src/components/routes/settings/general.tsx
 msgid "Warning (%)"
@@ -1888,17 +2573,42 @@ msgstr "경고 (%)"
 msgid "Warning thresholds"
 msgstr "경고 임계값"
 
+#: src/components/routes/settings/logs.tsx
+msgid "Warnings only"
+msgstr ""
+
 #: src/components/routes/settings/notifications.tsx
-msgid "Webhook / Push notifications"
-msgstr "Webhook / 푸시 알림"
+#~ msgid "Webhook / Push notifications"
+#~ msgstr "Webhook / 푸시 알림"
+
+#: src/components/routes/settings/logs.tsx
+msgid "What happened"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "What happened recently inside Bantay — useful when something looks wrong or an alert didn't fire. Click a row to see full details."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+#: src/components/routes/settings/logs.tsx
+msgid "When"
+msgstr ""
 
 #: src/components/routes/settings/tokens-fingerprints.tsx
 msgid "When enabled, this token allows agents to self-register without prior system creation."
 msgstr "활성화되면 이 토큰은 사전 시스템 생성 없이 에이전트가 자체 등록할 수 있도록 합니다."
 
+#: src/components/routes/settings/mail.tsx
+msgid "When off, no emails are sent (alerts still appear in the UI)."
+msgstr ""
+
 #: src/components/routes/settings/heartbeat.tsx
 msgid "When using POST, each heartbeat includes a JSON payload with system status summary, list of down systems, and triggered alerts."
 msgstr "POST를 사용할 때 각 하트비트에는 시스템 상태 요약, 다운된 시스템 목록 및 트리거된 알림이 포함된 JSON 페이로드가 포함됩니다."
+
+#: src/components/routes/settings/mail.tsx
+msgid "Who emails from Bantay appear to come from."
+msgstr ""
 
 #: src/components/add-system.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
@@ -1927,6 +2637,10 @@ msgstr "YAML 구성"
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Yes"
 msgstr "예"
+
+#: src/components/routes/settings/users.tsx
+msgid "You cannot change your own role. Ask another admin."
+msgstr ""
 
 #: src/components/routes/settings/layout.tsx
 msgid "Your user settings have been updated."

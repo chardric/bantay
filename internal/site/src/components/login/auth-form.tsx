@@ -99,7 +99,7 @@ export function UserAuthForm({
 						setErrors({ passwordConfirm: msg })
 						return
 					}
-					await pb.send("/api/beszel/create-user", {
+					await pb.send("/api/bantay/create-user", {
 						method: "POST",
 						body: JSON.stringify({ email, password }),
 					})
@@ -138,7 +138,7 @@ export function UserAuthForm({
 	function loginWithOauth(provider: AuthProviderInfo, forcePopup = false) {
 		setIsOauthLoading(true)
 
-		if (globalThis.BESZEL.OAUTH_DISABLE_POPUP) {
+		if (globalThis.BANTAY.OAUTH_DISABLE_POPUP) {
 			redirectToOauthProvider(provider)
 			return
 		}
@@ -382,7 +382,7 @@ export function UserAuthForm({
 						</DialogHeader>
 						<div className="text-primary/70 text-[0.95em] contents">
 							<p>
-								<Trans>Beszel supports OpenID Connect and many OAuth2 authentication providers.</Trans>
+								<Trans>Bantay supports OpenID Connect and many OAuth2 authentication providers.</Trans>
 							</p>
 							<p>
 								<Trans>

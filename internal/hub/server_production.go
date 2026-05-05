@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/henrygd/beszel/internal/hub/utils"
-	"github.com/henrygd/beszel/internal/site"
+	"bantay/internal/hub/utils"
+	"bantay/internal/site"
 
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"

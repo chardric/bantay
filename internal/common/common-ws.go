@@ -2,9 +2,9 @@ package common
 
 import (
 	"github.com/fxamacker/cbor/v2"
-	"github.com/henrygd/beszel/internal/entities/smart"
-	"github.com/henrygd/beszel/internal/entities/system"
-	"github.com/henrygd/beszel/internal/entities/systemd"
+	"bantay/internal/entities/smart"
+	"bantay/internal/entities/system"
+	"bantay/internal/entities/systemd"
 )
 
 type WebSocketAction = uint8
@@ -22,6 +22,8 @@ const (
 	GetSmartData
 	// Request detailed systemd service info from agent
 	GetSystemdInfo
+	// Request the agent process to exit so its supervisor restarts it
+	RestartAgent
 	// Add new actions here...
 )
 

@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/henrygd/beszel/internal/entities/systemd"
+	"bantay/internal/entities/systemd"
 	"github.com/stretchr/testify/assert"
 )
 

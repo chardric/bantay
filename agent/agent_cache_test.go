@@ -7,8 +7,8 @@ import (
 	"testing/synctest"
 	"time"
 
-	"github.com/henrygd/beszel/internal/entities/container"
-	"github.com/henrygd/beszel/internal/entities/system"
+	"bantay/internal/entities/container"
+	"bantay/internal/entities/system"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

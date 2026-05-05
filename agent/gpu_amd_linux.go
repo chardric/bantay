@@ -13,8 +13,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/henrygd/beszel/agent/utils"
-	"github.com/henrygd/beszel/internal/entities/system"
+	"bantay/agent/utils"
+	"bantay/internal/entities/system"
 )
 
 var amdgpuNameCache = struct {
@@ -26,7 +26,10 @@ var amdgpuNameCache = struct {
 	misses: make(map[string]struct{}),
 }
 
-// hasAmdSysfs returns true if any AMD GPU sysfs nodes are found
+// hasAmdSysfs returns true only when an AMD card is present AND exposes
+// gpu_busy_percent (modern amdgpu driver). Old radeon-driver cards have
+// vendor=0x1002 but no busy% file, so we skip them here and let the
+// generic DRM fdinfo collector pick them up if the kernel supports it.
 func (gm *GPUManager) hasAmdSysfs() bool {
 	cards, err := filepath.Glob("/sys/class/drm/card*/device/vendor")
 	if err != nil {
@@ -34,7 +37,11 @@ func (gm *GPUManager) hasAmdSysfs() bool {
 	}
 	for _, vendorPath := range cards {
 		vendor, err := utils.ReadStringFileLimited(vendorPath, 64)
-		if err == nil && vendor == "0x1002" {
+		if err != nil || vendor != "0x1002" {
+			continue
+		}
+		cardDir := filepath.Dir(vendorPath)
+		if _, err := utils.ReadStringFileLimited(filepath.Join(cardDir, "gpu_busy_percent"), 64); err == nil {
 			return true
 		}
 	}
@@ -105,7 +112,7 @@ func (gm *GPUManager) updateAmdGpuData(cardPath string) bool {
 	usage, usageErr := readSysfsFloat(filepath.Join(devicePath, "gpu_busy_percent"))
 	memUsed, memUsedErr := readSysfsFloat(filepath.Join(devicePath, "mem_info_vram_used"))
 	memTotal, _ := readSysfsFloat(filepath.Join(devicePath, "mem_info_vram_total"))
-	// if gtt is present, add it to the memory used and total (https://github.com/henrygd/beszel/issues/1569#issuecomment-3837640484)
+	// if gtt is present, add it to the memory used and total (https://bantay/issues/1569#issuecomment-3837640484)
 	if gttUsed, err := readSysfsFloat(filepath.Join(devicePath, "mem_info_gtt_used")); err == nil && gttUsed > 0 {
 		if gttTotal, err := readSysfsFloat(filepath.Join(devicePath, "mem_info_gtt_total")); err == nil {
 			memUsed += gttUsed

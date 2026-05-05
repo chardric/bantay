@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/correctness/useUniqueElementIds: component is only rendered once */
-import { Trans, useLingui } from "@lingui/react/macro"
-import { LanguagesIcon, LoaderCircleIcon, SaveIcon } from "lucide-react"
+import { Trans } from "@lingui/react/macro"
+import { LoaderCircleIcon, SaveIcon } from "lucide-react"
 import { useState } from "react"
 import { useStore } from "@nanostores/react"
 import { Button } from "@/components/ui/button"
@@ -10,8 +10,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator"
 import Slider from "@/components/ui/slider"
 import { HourFormat, Unit } from "@/lib/enums"
-import { dynamicActivate } from "@/lib/i18n"
-import languages from "@/lib/languages"
 import { $userSettings, defaultLayoutWidth } from "@/lib/stores"
 import { chartTimeData, currentHour12 } from "@/lib/utils"
 import type { UserSettings } from "@/types"
@@ -19,7 +17,6 @@ import { saveSettings } from "./layout"
 
 export default function SettingsProfilePage({ userSettings }: { userSettings: UserSettings }) {
 	const [isLoading, setIsLoading] = useState(false)
-	const { i18n } = useLingui()
 	const currentUserSettings = useStore($userSettings)
 	const layoutWidth = currentUserSettings.layoutWidth ?? defaultLayoutWidth
 
@@ -44,49 +41,6 @@ export default function SettingsProfilePage({ userSettings }: { userSettings: Us
 			</div>
 			<Separator className="my-4" />
 			<form onSubmit={handleSubmit} className="space-y-5">
-				<div className="grid gap-2">
-					<div className="mb-2">
-						<h3 className="mb-1 text-lg font-medium flex items-center gap-2">
-							<LanguagesIcon className="h-4 w-4" />
-							<Trans>Language</Trans>
-						</h3>
-						<p className="text-sm text-muted-foreground leading-relaxed">
-							<Trans>
-								Want to help improve our translations? Check{" "}
-								<a href="https://crowdin.com/project/beszel" className="link" target="_blank" rel="noopener noreferrer">
-									Crowdin
-								</a>{" "}
-								for details.
-							</Trans>
-						</p>
-					</div>
-					<Label className="block" htmlFor="lang">
-						<Trans>Preferred Language</Trans>
-					</Label>
-					<Select value={i18n.locale} onValueChange={(lang: string) => dynamicActivate(lang)}>
-						<SelectTrigger id="lang">
-							<SelectValue />
-						</SelectTrigger>
-						<SelectContent>
-							{languages.map(([lang, label, e]) => (
-								<SelectItem key={lang} value={lang}>
-									<span className="me-2.5">
-										{e || (
-											<code
-												aria-hidden="true"
-												className="font-mono bg-muted text-[.65em] w-5 h-4 inline-grid place-items-center"
-											>
-												{lang}
-											</code>
-										)}
-									</span>
-									{label}
-								</SelectItem>
-							))}
-						</SelectContent>
-					</Select>
-				</div>
-				<Separator />
 				<div className="grid gap-2">
 					<div className="mb-2">
 						<h3 className="mb-1 text-lg font-medium">

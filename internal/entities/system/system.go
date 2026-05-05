@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/henrygd/beszel/internal/entities/container"
-	"github.com/henrygd/beszel/internal/entities/systemd"
+	"bantay/internal/entities/container"
+	"bantay/internal/entities/systemd"
 )
 
 type Stats struct {
@@ -155,6 +155,9 @@ type Info struct {
 	ExtraFsPct     map[string]float64 `json:"efs,omitempty" cbor:"21,keyasint,omitempty"`
 	Services       []uint16           `json:"sv,omitempty" cbor:"22,keyasint,omitempty"` // [totalServices, numFailedServices]
 	Battery        [2]uint8           `json:"bat,omitzero" cbor:"23,keyasint,omitzero"`  // [percent, charge state]
+	LinkSpeeds     map[string]uint32  `json:"ls,omitempty" cbor:"24,keyasint,omitempty"` // negotiated link speed per active NIC, Mbps; 0 = down/unknown
+	MemTotal       float64            `json:"mt,omitempty" cbor:"25,keyasint,omitempty"` // total memory in GB (so the systems table can show used/total)
+	DiskSize       float64            `json:"ds,omitempty" cbor:"26,keyasint,omitempty"` // total root-disk size in GB
 }
 
 // Data that does not change during process lifetime and is not needed in All Systems table

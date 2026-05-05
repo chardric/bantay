@@ -17,9 +17,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/henrygd/beszel/agent/deltatracker"
-	"github.com/henrygd/beszel/agent/utils"
-	"github.com/henrygd/beszel/internal/entities/container"
+	"bantay/agent/deltatracker"
+	"bantay/agent/utils"
+	"bantay/internal/entities/container"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

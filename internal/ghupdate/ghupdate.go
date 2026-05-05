@@ -16,7 +16,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/henrygd/beszel"
+	"bantay"
 
 	"github.com/blang/semver"
 )
@@ -79,7 +79,7 @@ type updater struct {
 
 func Update(config Config) (updated bool, err error) {
 	p := &updater{
-		currentVersion: beszel.Version,
+		currentVersion: bantay.Version,
 		config:         config,
 	}
 
@@ -339,7 +339,7 @@ func archiveSuffix(binaryName, goos, goarch string) string {
 		return fmt.Sprintf("%s_%s_%s.zip", binaryName, goos, goarch)
 	}
 	// Use glibc build for agent on glibc systems (includes NVML support via purego)
-	if binaryName == "beszel-agent" && goos == "linux" && goarch == "amd64" && isGlibc() {
+	if binaryName == "bantay-agent" && goos == "linux" && goarch == "amd64" && isGlibc() {
 		return fmt.Sprintf("%s_%s_%s_glibc.tar.gz", binaryName, goos, goarch)
 	}
 	return fmt.Sprintf("%s_%s_%s.tar.gz", binaryName, goos, goarch)

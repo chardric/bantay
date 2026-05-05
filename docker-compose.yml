@@ -1,0 +1,77 @@
+services:
+  bantay-hub:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.hub
+    image: bantay-local/hub:${BANTAY_VERSION:-local}
+    container_name: bantay-hub
+    restart: unless-stopped
+    ports:
+      - "${HUB_PORT:-8090}:8090"
+    volumes:
+      - ./data/hub:/bantay_data
+    environment:
+      TZ: ${TZ:-Asia/Manila}
+      AUTO_LOGIN: ${AUTO_LOGIN:-}
+      CHECK_UPDATES: ${CHECK_UPDATES:-false}
+      CONTAINER_DETAILS: ${CONTAINER_DETAILS:-true}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8090/api/health >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+
+  bantay-agent:
+    build:
+      context: .
+      dockerfile: internal/dockerfile_agent_alpine
+    image: bantay-local/agent:${BANTAY_VERSION:-local}
+    container_name: bantay-agent
+    restart: unless-stopped
+    network_mode: host
+    depends_on:
+      bantay-hub:
+        condition: service_healthy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./data/agent:/var/lib/bantay-agent
+    environment:
+      TZ: ${TZ:-Asia/Manila}
+      KEY: ${KEY:?KEY is required - paste hub public key from UI > Add System into .env}
+      LISTEN: ${AGENT_LISTEN:-45876}
+      LOG_LEVEL: ${AGENT_LOG_LEVEL:-info}
+      EXTRA_FILESYSTEMS: ${EXTRA_FILESYSTEMS:-}
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -x agent >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+
+  bantay-backup:
+    image: offen/docker-volume-backup:v2.43.4
+    container_name: bantay-backup
+    restart: unless-stopped
+    depends_on:
+      - bantay-hub
+    volumes:
+      - ./data:/backup/bantay-data:ro
+      - ./backups:/archive
+    environment:
+      TZ: ${TZ:-Asia/Manila}
+      BACKUP_CRON_EXPRESSION: ${BACKUP_CRON_EXPRESSION:-0 3 * * *}
+      BACKUP_FILENAME: ${BACKUP_FILENAME:-bantay-%Y-%m-%dT%H-%M-%S.tar.gz}
+      BACKUP_PRUNING_PREFIX: ${BACKUP_PRUNING_PREFIX:-bantay-}
+      BACKUP_RETENTION_DAYS: ${BACKUP_RETENTION_DAYS:-7}
+      GPG_PASSPHRASE: ${GPG_PASSPHRASE:-}
+      AWS_S3_BUCKET_NAME: ${AWS_S3_BUCKET_NAME:-}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-}
+      AWS_ENDPOINT: ${AWS_ENDPOINT:-}
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -x crond >/dev/null 2>&1 || exit 1"]
+      interval: 60s
+      timeout: 5s
+      start_period: 10s
+      retries: 3

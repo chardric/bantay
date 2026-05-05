@@ -6,7 +6,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/henrygd/beszel/internal/ghupdate"
+	"bantay/internal/ghupdate"
 	"github.com/spf13/cobra"
 )
 
@@ -14,9 +14,9 @@ import (
 func Update(cmd *cobra.Command, _ []string) {
 	dataDir := os.TempDir()
 
-	// set dataDir to ./beszel_data if it exists
-	if _, err := os.Stat("./beszel_data"); err == nil {
-		dataDir = "./beszel_data"
+	// set dataDir to ./bantay_data if it exists
+	if _, err := os.Stat("./bantay_data"); err == nil {
+		dataDir = "./bantay_data"
 	}
 
 	// Check if china-mirrors flag is set

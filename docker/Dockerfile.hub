@@ -1,0 +1,32 @@
+# Local-stack hub image. Differs from internal/dockerfile_hub by:
+#   - building the React UI inside Docker (upstream expects it pre-built)
+#   - using alpine final stage so HEALTHCHECK can shell out
+# Build context must be the repo root.
+
+FROM node:22-alpine AS web
+WORKDIR /app/internal/site
+COPY internal/site/package.json internal/site/package-lock.json ./
+RUN npm ci --no-audit --no-fund
+COPY internal/site/ ./
+RUN npm run build
+
+FROM --platform=$BUILDPLATFORM golang:1.26-alpine AS builder
+WORKDIR /app
+RUN apk add --no-cache ca-certificates && update-ca-certificates
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . ./
+COPY --from=web /app/internal/site/dist ./internal/site/dist
+ARG TARGETOS TARGETARCH
+RUN CGO_ENABLED=0 GOGC=75 GOOS=$TARGETOS GOARCH=$TARGETARCH \
+    go build -ldflags "-w -s" -o /bantay ./internal/cmd/hub
+
+FROM alpine:3.20
+RUN apk add --no-cache ca-certificates wget tzdata
+COPY --from=builder /bantay /bantay
+VOLUME ["/bantay_data"]
+EXPOSE 8090
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+    CMD wget -qO- http://127.0.0.1:8090/api/health >/dev/null 2>&1 || exit 1
+ENTRYPOINT ["/bantay"]
+CMD ["serve", "--http=0.0.0.0:8090"]

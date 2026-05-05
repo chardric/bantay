@@ -8,10 +8,10 @@ import (
 	"fmt"
 
 	"github.com/fxamacker/cbor/v2"
-	"github.com/henrygd/beszel/internal/common"
-	"github.com/henrygd/beszel/internal/entities/smart"
-	"github.com/henrygd/beszel/internal/entities/system"
-	"github.com/henrygd/beszel/internal/entities/systemd"
+	"bantay/internal/common"
+	"bantay/internal/entities/smart"
+	"bantay/internal/entities/system"
+	"bantay/internal/entities/systemd"
 )
 
 // Transport defines the interface for hub-agent communication.

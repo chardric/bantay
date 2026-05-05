@@ -15,8 +15,8 @@ import (
 	"time"
 
 	"github.com/coreos/go-systemd/v22/dbus"
-	"github.com/henrygd/beszel/agent/utils"
-	"github.com/henrygd/beszel/internal/entities/systemd"
+	"bantay/agent/utils"
+	"bantay/internal/entities/systemd"
 )
 
 var errNoActiveTime = errors.New("no active time")

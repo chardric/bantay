@@ -5,8 +5,8 @@ package alerts_test
 import (
 	"testing"
 
-	"github.com/henrygd/beszel/internal/alerts"
-	beszelTests "github.com/henrygd/beszel/internal/tests"
+	"bantay/internal/alerts"
+	beszelTests "bantay/internal/tests"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

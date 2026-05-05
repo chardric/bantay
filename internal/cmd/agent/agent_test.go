@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/henrygd/beszel/agent"
+	"bantay/agent"
 
 	"github.com/spf13/pflag"
 	"github.com/stretchr/testify/assert"

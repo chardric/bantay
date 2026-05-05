@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/henrygd/beszel/internal/tests"
+	"bantay/internal/tests"
 
-	"github.com/henrygd/beszel/internal/hub/config"
+	"bantay/internal/hub/config"
 
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/stretchr/testify/assert"

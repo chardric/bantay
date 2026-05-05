@@ -2,10 +2,10 @@ package agent
 
 import (
 	"github.com/fxamacker/cbor/v2"
-	"github.com/henrygd/beszel/internal/common"
-	"github.com/henrygd/beszel/internal/entities/smart"
-	"github.com/henrygd/beszel/internal/entities/system"
-	"github.com/henrygd/beszel/internal/entities/systemd"
+	"bantay/internal/common"
+	"bantay/internal/entities/smart"
+	"bantay/internal/entities/system"
+	"bantay/internal/entities/systemd"
 )
 
 // newAgentResponse creates an AgentResponse using legacy typed fields.

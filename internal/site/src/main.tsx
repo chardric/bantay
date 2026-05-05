@@ -6,27 +6,27 @@ import { DirectionProvider } from "@radix-ui/react-direction"
 // import { Suspense, lazy, useEffect, StrictMode } from "react"
 import { lazy, memo, Suspense, useEffect } from "react"
 import ReactDOM from "react-dom/client"
-import Navbar from "@/components/navbar.tsx"
+import Sidebar from "@/components/sidebar.tsx"
 import { $router } from "@/components/router.tsx"
 import Settings from "@/components/routes/settings/layout.tsx"
 import { ThemeProvider } from "@/components/theme-provider.tsx"
 import { Toaster } from "@/components/ui/toaster.tsx"
 import { alertManager } from "@/lib/alerts"
-import { isAdmin, pb, updateUserSettings } from "@/lib/api.ts"
+import { pb, updateUserSettings } from "@/lib/api.ts"
 import { dynamicActivate, getLocale } from "@/lib/i18n"
 import {
 	$authenticated,
 	$copyContent,
 	$direction,
-	$newVersion,
 	$publicKey,
 	$userSettings,
 	defaultLayoutWidth,
 } from "@/lib/stores.ts"
 import * as systemsManager from "@/lib/systemsManager.ts"
-import type { BeszelInfo, UpdateInfo } from "./types"
+import type { BantayInfo } from "./types"
 
 const LoginPage = lazy(() => import("@/components/login/login.tsx"))
+const Dashboard = lazy(() => import("@/components/routes/dashboard.tsx"))
 const Home = lazy(() => import("@/components/routes/home.tsx"))
 const Containers = lazy(() => import("@/components/routes/containers.tsx"))
 const Smart = lazy(() => import("@/components/routes/smart.tsx"))
@@ -42,12 +42,8 @@ const App = memo(() => {
 			$authenticated.set(pb.authStore.isValid)
 		})
 		// get general info for authenticated users, such as public key and version
-		pb.send<BeszelInfo>("/api/beszel/info", {}).then((data) => {
+		pb.send<BantayInfo>("/api/bantay/info", {}).then((data) => {
 			$publicKey.set(data.key)
-			// check for updates if enabled
-			if (data.cu && isAdmin()) {
-				pb.send<UpdateInfo>("/api/beszel/update", {}).then($newVersion.set)
-			}
 		})
 		// get user settings
 		updateUserSettings()
@@ -72,6 +68,8 @@ const App = memo(() => {
 	if (!page) {
 		return <h1 className="text-3xl text-center my-14">404</h1>
 	} else if (page.route === "home") {
+		return <Dashboard />
+	} else if (page.route === "systems") {
 		return <Home />
 	} else if (page.route === "system") {
 		return <SystemDetail id={page.params.id} />
@@ -102,16 +100,18 @@ const Layout = () => {
 				</Suspense>
 			) : (
 				<div style={{ "--container": `${layoutWidth ?? defaultLayoutWidth}px` } as React.CSSProperties}>
-					<div className="container">
-						<Navbar />
-					</div>
-					<div className="container relative">
-						<App />
-						{copyContent && (
-							<Suspense>
-								<CopyToClipboardDialog content={copyContent} />
-							</Suspense>
-						)}
+					<div className="md:flex">
+						<Sidebar />
+						<div className="flex min-w-0 flex-1 flex-col">
+							<div className="container relative pt-4">
+								<App />
+								{copyContent && (
+									<Suspense>
+										<CopyToClipboardDialog content={copyContent} />
+									</Suspense>
+								)}
+							</div>
+						</div>
 					</div>
 				</div>
 			)}

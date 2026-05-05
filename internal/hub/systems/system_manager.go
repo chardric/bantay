@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/henrygd/beszel/internal/hub/ws"
+	"bantay/internal/hub/ws"
 
-	"github.com/henrygd/beszel/internal/entities/system"
-	"github.com/henrygd/beszel/internal/hub/expirymap"
+	"bantay/internal/entities/system"
+	"bantay/internal/hub/expirymap"
 
-	"github.com/henrygd/beszel/internal/common"
+	"bantay/internal/common"
 
-	"github.com/henrygd/beszel"
+	"bantay"
 
 	"github.com/blang/semver"
 	"github.com/pocketbase/pocketbase/core"
@@ -27,9 +27,8 @@ const (
 	paused  string = "paused"  // System monitoring is paused
 	pending string = "pending" // System is waiting on initial connection result
 
-	// interval is the default update interval in milliseconds (60 seconds)
-	interval int = 60_000
-	// interval int = 10_000 // Debug interval for faster updates
+	// interval is the default update interval in milliseconds (5 seconds for near-realtime updates)
+	interval int = 5_000
 
 	// sessionTimeout is the maximum time to wait for SSH connections
 	sessionTimeout = 4 * time.Second
@@ -347,7 +346,7 @@ func (sm *SystemManager) createSSHClientConfig() error {
 			MACs:         common.DefaultMACs,
 		},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
-		ClientVersion:   fmt.Sprintf("SSH-2.0-%s_%s", beszel.AppName, beszel.Version),
+		ClientVersion:   fmt.Sprintf("SSH-2.0-%s_%s", bantay.AppName, bantay.Version),
 		Timeout:         sessionTimeout,
 	}
 	return nil

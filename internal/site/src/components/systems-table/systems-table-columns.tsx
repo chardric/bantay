@@ -7,25 +7,24 @@ import type { CellContext, ColumnDef, HeaderContext } from "@tanstack/react-tabl
 import type { ClassValue } from "clsx"
 import {
 	ArrowUpDownIcon,
-	ChevronRightSquareIcon,
 	ClockArrowUp,
 	CopyIcon,
 	CpuIcon,
+	GlobeIcon,
 	HardDriveIcon,
 	MemoryStickIcon,
 	MoreHorizontalIcon,
+	NetworkIcon,
 	PauseCircleIcon,
 	PenBoxIcon,
 	PlayCircleIcon,
 	ServerIcon,
-	TerminalSquareIcon,
 	Trash2Icon,
-	WifiIcon,
 } from "lucide-react"
 import { memo, useMemo, useRef, useState } from "react"
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
 import { isReadOnlyUser, pb } from "@/lib/api"
-import { BatteryState, ConnectionType, connectionTypeLabels, MeterState, SystemStatus } from "@/lib/enums"
+import { MeterState, SystemStatus } from "@/lib/enums"
 import { $longestSystemNameLen, $userSettings } from "@/lib/stores"
 import {
 	cn,
@@ -33,10 +32,10 @@ import {
 	decimalString,
 	formatBytes,
 	formatTemperature,
+	getHostDisplayValue,
 	parseSemVer,
 	secondsToUptimeString,
 } from "@/lib/utils"
-import { batteryStateTranslations } from "@/lib/i18n"
 import type { SystemRecord } from "@/types"
 import { SystemDialog } from "../add-system"
 import AlertButton from "../alerts/alert-button"
@@ -60,18 +59,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
-import {
-	BatteryMediumIcon,
-	EthernetIcon,
-	GpuIcon,
-	HourglassIcon,
-	ThermometerIcon,
-	WebSocketIcon,
-	BatteryHighIcon,
-	BatteryLowIcon,
-	PlugChargingIcon,
-	BatteryFullIcon,
-} from "../ui/icons"
+import { EthernetIcon, GpuIcon, HourglassIcon, ThermometerIcon } from "../ui/icons"
 
 const STATUS_COLORS = {
 	[SystemStatus.Up]: "bg-green-500",
@@ -83,6 +71,19 @@ const STATUS_COLORS = {
 function getMeterStateByThresholds(value: number, warn = 65, crit = 90): MeterState {
 	return value >= crit ? MeterState.Crit : value >= warn ? MeterState.Warn : MeterState.Good
 }
+
+/**
+ * Responsive visibility classes for table columns.
+ * Each value pairs `hidden` with a breakpoint at which the cell becomes visible.
+ * Hidden purely via CSS so TanStack's visibility menu still controls user-toggleable state.
+ */
+const RESP = {
+	always: "",
+	mdUp: "hidden md:table-cell",
+	lgUp: "hidden lg:table-cell",
+	xlUp: "hidden xl:table-cell",
+	xl2Up: "hidden 2xl:table-cell",
+} as const
 
 /**
  * @param viewMode - "table" or "grid"
@@ -167,30 +168,50 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 			header: sortableHeader,
 		},
 		{
+			accessorFn: (row) => getHostDisplayValue(row),
+			id: "host",
+			name: () => "IP",
+			size: 50,
+			Icon: GlobeIcon,
+			header: sortableHeader,
+			hideSort: true,
+			responsiveClass: RESP.mdUp,
+			cell(info) {
+				const host = getHostDisplayValue(info.row.original)
+				return <span className="font-mono text-xs whitespace-nowrap text-muted-foreground">{host}</span>
+			},
+		},
+		{
 			accessorFn: ({ info }) => info.cpu || undefined,
 			id: "cpu",
 			name: () => t`CPU`,
 			cell: TableCellWithMeter,
 			Icon: CpuIcon,
 			header: sortableHeader,
+			responsiveClass: RESP.always,
 		},
 		{
 			// accessorKey: "info.mp",
 			accessorFn: ({ info }) => info.mp || undefined,
 			id: "memory",
 			name: () => t`Memory`,
-			cell: TableCellWithMeter,
+			cell: (info: CellContext<SystemRecord, unknown>) =>
+				TableCellWithMeterAndTotal(info, info.row.original.info.mt),
 			Icon: MemoryStickIcon,
 			header: sortableHeader,
+			responsiveClass: RESP.always,
 		},
 		{
 			accessorFn: ({ info }) => info.dp || undefined,
 			id: "disk",
 			name: () => t`Disk`,
 			cell: (info: CellContext<SystemRecord, unknown>) =>
-				info.row.original.info.efs ? DiskCellWithMultiple(info) : TableCellWithMeter(info),
+				info.row.original.info.efs
+					? DiskCellWithMultiple(info)
+					: TableCellWithMeterAndTotal(info, info.row.original.info.ds),
 			Icon: HardDriveIcon,
 			header: sortableHeader,
+			responsiveClass: RESP.mdUp,
 		},
 		{
 			accessorFn: ({ info }) => info.g || undefined,
@@ -199,6 +220,7 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 			cell: TableCellWithMeter,
 			Icon: GpuIcon,
 			header: sortableHeader,
+			responsiveClass: RESP.xlUp,
 		},
 		{
 			id: "loadAverage",
@@ -207,6 +229,7 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 			size: 0,
 			Icon: HourglassIcon,
 			header: sortableHeader,
+			responsiveClass: RESP.xlUp,
 			cell(info: CellContext<SystemRecord, unknown>) {
 				const { info: sysInfo, status } = info.row.original
 				const { major, minor } = parseSemVer(sysInfo.v)
@@ -218,23 +241,50 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 					return null
 				}
 
-				const normalizedLoad = max / (sysInfo.t ?? 1)
-				const threshold = getMeterStateByThresholds(normalizedLoad * 100, colorWarn, colorCrit)
+				const threads = sysInfo.t ?? 1
+				const normalizedMax = max / threads
+				const threshold = getMeterStateByThresholds(normalizedMax * 100, colorWarn, colorCrit)
+				const windowLabels = ["1m", "5m", "15m"]
 
 				return (
-					<div className="flex items-center gap-[.35em] w-full tabular-nums tracking-tight">
-						<span
-							className={cn("inline-block size-2 rounded-full me-0.5", {
-								[STATUS_COLORS[SystemStatus.Up]]: threshold === MeterState.Good,
-								[STATUS_COLORS[SystemStatus.Pending]]: threshold === MeterState.Warn,
-								[STATUS_COLORS[SystemStatus.Down]]: threshold === MeterState.Crit,
-								[STATUS_COLORS[SystemStatus.Paused]]: status !== SystemStatus.Up,
-							})}
-						/>
-						{loadAverages?.map((la, i) => (
-							<span key={i}>{decimalString(la, la >= 10 ? 1 : 2)}</span>
-						))}
-					</div>
+					<Tooltip delayDuration={150}>
+						<TooltipTrigger asChild>
+							<div className="flex items-center gap-[.35em] w-full tabular-nums tracking-tight">
+								<span
+									className={cn("inline-block size-2 rounded-full me-0.5", {
+										[STATUS_COLORS[SystemStatus.Up]]: threshold === MeterState.Good,
+										[STATUS_COLORS[SystemStatus.Pending]]: threshold === MeterState.Warn,
+										[STATUS_COLORS[SystemStatus.Down]]: threshold === MeterState.Crit,
+										[STATUS_COLORS[SystemStatus.Paused]]: status !== SystemStatus.Up,
+									})}
+								/>
+								{loadAverages?.map((la, i) => (
+									<span key={i}>{decimalString(la, la >= 10 ? 1 : 2)}</span>
+								))}
+								<span className="text-muted-foreground text-xs ms-1">({Math.round(normalizedMax * 100)}%)</span>
+							</div>
+						</TooltipTrigger>
+						<TooltipContent className="text-xs max-w-72">
+							<div className="font-semibold mb-1.5">
+								<Trans>Load average vs {threads} CPU threads</Trans>
+							</div>
+							<div className="grid grid-cols-[auto_1fr_auto] gap-x-3 gap-y-0.5 mb-2 tabular-nums">
+								{loadAverages.map((la, i) => (
+									<div key={i} className="contents">
+										<span className="text-muted-foreground">{windowLabels[i]}</span>
+										<span className="text-end">{decimalString(la, 2)}</span>
+										<span className="text-end text-muted-foreground">{Math.round((la / threads) * 100)}%</span>
+									</div>
+								))}
+							</div>
+							<div className="text-muted-foreground leading-snug">
+								<Trans>
+									Average processes using or waiting for CPU. Normalized: under 70% healthy, 70–90% busy, over
+									90% overloaded.
+								</Trans>
+							</div>
+						</TooltipContent>
+					</Tooltip>
 				)
 			},
 		},
@@ -246,6 +296,7 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 			Icon: EthernetIcon,
 			header: sortableHeader,
 			sortUndefined: "last",
+			responsiveClass: RESP.lgUp,
 			cell(info) {
 				const val = info.getValue() as number | undefined
 				if (val === undefined) {
@@ -268,6 +319,7 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 			hideSort: true,
 			Icon: ThermometerIcon,
 			header: sortableHeader,
+			responsiveClass: RESP.xlUp,
 			cell(info) {
 				const val = info.getValue() as number
 				const userSettings = useStore($userSettings, { keys: ["unitTemp"] })
@@ -283,86 +335,40 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 			},
 		},
 		{
-			accessorFn: ({ info }) => info.bat?.[0],
-			id: "battery",
-			name: () => t({ message: "Bat", comment: "Battery label in systems table header" }),
-			size: 70,
-			Icon: BatteryMediumIcon,
-			header: sortableHeader,
-			hideSort: true,
-			cell(info) {
-				const [pct, state] = info.row.original.info.bat ?? []
-				if (pct === undefined) {
-					return null
-				}
-
-				let Icon = PlugChargingIcon
-				let iconColor = "text-muted-foreground"
-
-				if (state !== BatteryState.Charging) {
-					if (pct < 25) {
-						iconColor = pct < 11 ? "text-red-500" : "text-yellow-500"
-						Icon = BatteryLowIcon
-					} else if (pct < 75) {
-						Icon = BatteryMediumIcon
-					} else if (pct < 95) {
-						Icon = BatteryHighIcon
-					} else {
-						Icon = BatteryFullIcon
-					}
-				}
-
-				const stateLabel =
-					state !== undefined ? (batteryStateTranslations[state as BatteryState]?.() ?? undefined) : undefined
-
-				return (
-					<Link
-						tabIndex={-1}
-						href={getPagePath($router, "system", { id: info.row.original.id })}
-						className="flex items-center gap-1 tabular-nums tracking-tight relative z-10"
-						title={stateLabel}
-					>
-						<Icon className={cn("size-3.5", iconColor)} />
-						<span className="min-w-10">{pct}%</span>
-					</Link>
-				)
+			accessorFn: ({ info }) => {
+				const speeds = info.ls ? Object.values(info.ls) : []
+				return speeds.length ? Math.max(...speeds) : undefined
 			},
-		},
-		{
-			accessorFn: ({ info }) => info.sv?.[0],
-			id: "services",
-			name: () => t`Services`,
+			id: "lan",
+			name: () => "LAN",
 			size: 50,
-			Icon: TerminalSquareIcon,
+			Icon: NetworkIcon,
 			header: sortableHeader,
 			hideSort: true,
-			sortingFn: (a, b) => {
-				// sort priorities: 1) failed services, 2) total services
-				const [totalCountA, numFailedA] = a.original.info.sv ?? [0, 0]
-				const [totalCountB, numFailedB] = b.original.info.sv ?? [0, 0]
-				if (numFailedA !== numFailedB) {
-					return numFailedA - numFailedB
-				}
-				return totalCountA - totalCountB
-			},
+			responsiveClass: RESP.xl2Up,
 			cell(info) {
 				const sys = info.row.original
-				const [totalCount, numFailed] = sys.info.sv ?? [0, 0]
-				if (sys.status !== SystemStatus.Up || totalCount === 0) {
+				const speeds = sys.info.ls ? Object.values(sys.info.ls) : []
+				if (speeds.length === 0 || sys.status !== SystemStatus.Up) {
 					return null
 				}
+				const max = Math.max(...speeds)
+				const label =
+					max === 0
+						? t`down`
+						: max >= 1000
+							? `${max % 1000 === 0 ? max / 1000 : (max / 1000).toFixed(1)} Gbps`
+							: `${max} Mbps`
 				return (
 					<span className="tabular-nums whitespace-nowrap flex gap-1.5 items-center">
 						<span
 							className={cn("block size-2 rounded-full", {
-								[STATUS_COLORS[SystemStatus.Down]]: numFailed > 0,
-								[STATUS_COLORS[SystemStatus.Up]]: numFailed === 0,
+								[STATUS_COLORS[SystemStatus.Down]]: max === 0,
+								[STATUS_COLORS[SystemStatus.Pending]]: max > 0 && max < 1000,
+								[STATUS_COLORS[SystemStatus.Up]]: max >= 1000,
 							})}
 						/>
-						{totalCount}{" "}
-						<span className="text-muted-foreground text-sm -ms-0.5">
-							({t`Failed`.toLowerCase()}: {numFailed})
-						</span>
+						{label}
 					</span>
 				)
 			},
@@ -375,54 +381,13 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 			Icon: ClockArrowUp,
 			header: sortableHeader,
 			hideSort: true,
+			responsiveClass: RESP.lgUp,
 			cell(info) {
 				const uptime = info.getValue() as number
 				if (!uptime) {
 					return null
 				}
 				return <span className="tabular-nums whitespace-nowrap">{secondsToUptimeString(uptime)}</span>
-			},
-		},
-		{
-			accessorFn: ({ info }) => info.v,
-			id: "agent",
-			name: () => t`Agent`,
-			size: 50,
-			Icon: WifiIcon,
-			hideSort: true,
-			header: sortableHeader,
-			cell(info) {
-				const version = info.getValue() as string
-				if (!version) {
-					return null
-				}
-				const system = info.row.original
-				const color = {
-					"text-green-500": version === globalThis.BESZEL.HUB_VERSION,
-					"text-yellow-500": version !== globalThis.BESZEL.HUB_VERSION,
-					"text-red-500": system.status !== SystemStatus.Up,
-				}
-				return (
-					<Link
-						href={getPagePath($router, "system", { id: system.id })}
-						className={cn(
-							"flex gap-1.5 items-center md:pe-5 tabular-nums relative z-10",
-							viewMode === "table" && "ps-0.5"
-						)}
-						tabIndex={-1}
-						title={connectionTypeLabels[system.info.ct as ConnectionType]}
-						role="none"
-					>
-						{system.info.ct === ConnectionType.WebSocket && (
-							<WebSocketIcon className={cn("size-3 pointer-events-none", color)} />
-						)}
-						{system.info.ct === ConnectionType.SSH && (
-							<ChevronRightSquareIcon className={cn("size-3 pointer-events-none", color)} />
-						)}
-						{!system.info.ct && <IndicatorDot system={system} className={cn(color, "bg-current mx-0.5")} />}
-						<span className="truncate max-w-14">{info.getValue() as string}</span>
-					</Link>
-				)
 			},
 		},
 		{
@@ -459,6 +424,10 @@ function sortableHeader(context: HeaderContext<SystemRecord, unknown>) {
 }
 
 function TableCellWithMeter(info: CellContext<SystemRecord, unknown>) {
+	return TableCellWithMeterAndTotal(info, undefined)
+}
+
+function TableCellWithMeterAndTotal(info: CellContext<SystemRecord, unknown>, total: number | undefined) {
 	const { colorWarn = 65, colorCrit = 90 } = useStore($userSettings, { keys: ["colorWarn", "colorCrit"] })
 	const val = Number(info.getValue()) || 0
 	const threshold = getMeterStateByThresholds(val, colorWarn, colorCrit)
@@ -469,12 +438,18 @@ function TableCellWithMeter(info: CellContext<SystemRecord, unknown>) {
 			(threshold === MeterState.Warn && STATUS_COLORS.pending) ||
 			STATUS_COLORS.down
 	)
+	const used = total ? (total * val) / 100 : 0
 	return (
 		<div className="flex gap-2 items-center tabular-nums tracking-tight w-full">
 			<span className="min-w-8 shrink-0">{decimalString(val, val >= 10 ? 1 : 2)}%</span>
 			<span className="flex-1 min-w-8 grid bg-muted h-[1em] rounded-sm overflow-hidden">
 				<span className={meterClass} style={{ width: `${val}%` }}></span>
 			</span>
+			{total ? (
+				<span className="text-xs text-muted-foreground whitespace-nowrap shrink-0">
+					{decimalString(used, used >= 10 ? 0 : 1)}/{decimalString(total, total >= 10 ? 0 : 1)} GB
+				</span>
+			) : null}
 		</div>
 	)
 }

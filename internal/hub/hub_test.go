@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	beszelTests "github.com/henrygd/beszel/internal/tests"
+	beszelTests "bantay/internal/tests"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

@@ -24,14 +24,14 @@ const getScriptUrl = (path: string = "") => {
 
 export function copyDockerCompose(port = "45876", publicKey: string, token: string) {
 	copyToClipboard(`services:
-  beszel-agent:
-    image: henrygd/beszel-agent
-    container_name: beszel-agent
+  bantay-agent:
+    image: henrygd/bantay-agent
+    container_name: bantay-agent
     restart: unless-stopped
     network_mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./beszel_agent_data:/var/lib/beszel-agent
+      - ./beszel_agent_data:/var/lib/bantay-agent
       # monitor other disks / partitions by mounting a folder in /extra-filesystems
       # - /mnt/disk/.beszel:/extra-filesystems/sda1:ro
     environment:
@@ -43,7 +43,7 @@ export function copyDockerCompose(port = "45876", publicKey: string, token: stri
 
 export function copyDockerRun(port = "45876", publicKey: string, token: string) {
 	copyToClipboard(
-		`docker run -d --name beszel-agent --network host --restart unless-stopped -v /var/run/docker.sock:/var/run/docker.sock:ro -v beszel_agent_data:/var/lib/beszel-agent -e KEY="${publicKey}" -e LISTEN=${port} -e TOKEN="${token}" -e HUB_URL="${getHubURL()}" henrygd/beszel-agent`
+		`docker run -d --name bantay-agent --network host --restart unless-stopped -v /var/run/docker.sock:/var/run/docker.sock:ro -v beszel_agent_data:/var/lib/bantay-agent -e KEY="${publicKey}" -e LISTEN=${port} -e TOKEN="${token}" -e HUB_URL="${getHubURL()}" henrygd/bantay-agent`
 	)
 }
 

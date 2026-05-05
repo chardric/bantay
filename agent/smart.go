@@ -18,8 +18,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/henrygd/beszel/agent/utils"
-	"github.com/henrygd/beszel/internal/entities/smart"
+	"bantay/agent/utils"
+	"bantay/internal/entities/smart"
 )
 
 // SmartManager manages data collection for SMART devices
@@ -509,7 +509,7 @@ func (sm *SmartManager) CollectSmart(deviceInfo *DeviceInfo) error {
 	hasValidData := sm.parseSmartOutput(deviceInfo, output)
 
 	// If NVMe controller path failed, try namespace path as fallback.
-	// NVMe controllers (/dev/nvme0) don't always support SMART queries. See github.com/henrygd/beszel/issues/1504
+	// NVMe controllers (/dev/nvme0) don't always support SMART queries. See bantay/issues/1504
 	if !hasValidData && err != nil && isNvmeControllerPath(deviceInfo.Name) {
 		controllerPath := deviceInfo.Name
 		namespacePath := controllerPath + "n1"
@@ -557,7 +557,7 @@ func (sm *SmartManager) smartctlArgs(deviceInfo *DeviceInfo, includeStandby bool
 	if deviceInfo != nil {
 		deviceType = strings.ToLower(deviceInfo.Type)
 		parserType = strings.ToLower(deviceInfo.parserType)
-		// types sometimes misidentified in scan; see github.com/henrygd/beszel/issues/1345
+		// types sometimes misidentified in scan; see bantay/issues/1345
 		if deviceType != "" && deviceType != "scsi" && deviceType != "ata" {
 			args = append(args, "-d", deviceInfo.Type)
 		}

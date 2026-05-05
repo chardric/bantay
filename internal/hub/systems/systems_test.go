@@ -9,10 +9,10 @@ import (
 	"testing/synctest"
 	"time"
 
-	"github.com/henrygd/beszel/internal/entities/container"
-	"github.com/henrygd/beszel/internal/entities/system"
-	"github.com/henrygd/beszel/internal/hub/systems"
-	"github.com/henrygd/beszel/internal/tests"
+	"bantay/internal/entities/container"
+	"bantay/internal/entities/system"
+	"bantay/internal/hub/systems"
+	"bantay/internal/tests"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

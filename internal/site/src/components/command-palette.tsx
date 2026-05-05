@@ -30,7 +30,7 @@ import {
 import { isAdmin } from "@/lib/api"
 import { $systems } from "@/lib/stores"
 import { getHostDisplayValue, listen } from "@/lib/utils"
-import { $router, basePath, navigate, prependBasePath } from "./router"
+import { $router, basePath, navigate } from "./router"
 
 export default memo(function CommandPalette({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
 	useEffect(() => {
@@ -82,15 +82,30 @@ export default memo(function CommandPalette({ open, setOpen }: { open: boolean; 
 					)}
 					<CommandGroup heading={t`Pages / Settings`}>
 						<CommandItem
-							keywords={["home"]}
+							keywords={["home", "overview"]}
 							onSelect={() => {
-								navigate(basePath)
+								navigate(basePath || "/")
 								setOpen(false)
 							}}
 						>
 							<ServerIcon className="me-2 size-4" />
 							<span>
-								<Trans>All Systems</Trans>
+								<Trans>Dashboard</Trans>
+							</span>
+							<CommandShortcut>
+								<Trans>Page</Trans>
+							</CommandShortcut>
+						</CommandItem>
+						<CommandItem
+							keywords={["devices", "hosts", "machines"]}
+							onSelect={() => {
+								navigate(getPagePath($router, "systems"))
+								setOpen(false)
+							}}
+						>
+							<ServerIcon className="me-2 size-4" />
+							<span>
+								<Trans>Systems</Trans>
 							</span>
 							<CommandShortcut>
 								<Trans>Page</Trans>
@@ -190,10 +205,9 @@ export default memo(function CommandPalette({ open, setOpen }: { open: boolean; 
 							<CommandSeparator className="mb-1.5" />
 							<CommandGroup heading={t`Admin`}>
 								<CommandItem
-									keywords={["pocketbase"]}
 									onSelect={() => {
 										setOpen(false)
-										window.open(prependBasePath("/_/"), "_blank")
+										navigate(getPagePath($router, "settings", { name: "users" }))
 									}}
 								>
 									<UsersIcon className="me-2 size-4" />
@@ -203,21 +217,22 @@ export default memo(function CommandPalette({ open, setOpen }: { open: boolean; 
 									{AdminShortcut}
 								</CommandItem>
 								<CommandItem
+									keywords={["email", "smtp"]}
 									onSelect={() => {
 										setOpen(false)
-										window.open(prependBasePath("/_/#/logs"), "_blank")
+										navigate(getPagePath($router, "settings", { name: "mail" }))
 									}}
 								>
-									<LogsIcon className="me-2 size-4" />
+									<MailIcon className="me-2 size-4" />
 									<span>
-										<Trans>Logs</Trans>
+										<Trans>Email settings</Trans>
 									</span>
 									{AdminShortcut}
 								</CommandItem>
 								<CommandItem
 									onSelect={() => {
 										setOpen(false)
-										window.open(prependBasePath("/_/#/settings/backups"), "_blank")
+										navigate(getPagePath($router, "settings", { name: "backups" }))
 									}}
 								>
 									<DatabaseBackupIcon className="me-2 size-4" />
@@ -227,15 +242,14 @@ export default memo(function CommandPalette({ open, setOpen }: { open: boolean; 
 									{AdminShortcut}
 								</CommandItem>
 								<CommandItem
-									keywords={["email"]}
 									onSelect={() => {
 										setOpen(false)
-										window.open(prependBasePath("/_/#/settings/mail"), "_blank")
+										navigate(getPagePath($router, "settings", { name: "logs" }))
 									}}
 								>
-									<MailIcon className="me-2 size-4" />
+									<LogsIcon className="me-2 size-4" />
 									<span>
-										<Trans>SMTP settings</Trans>
+										<Trans>Activity log</Trans>
 									</span>
 									{AdminShortcut}
 								</CommandItem>

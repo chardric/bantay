@@ -12,17 +12,17 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/henrygd/beszel/internal/common"
-	"github.com/henrygd/beszel/internal/hub/transport"
-	"github.com/henrygd/beszel/internal/hub/utils"
-	"github.com/henrygd/beszel/internal/hub/ws"
+	"bantay/internal/common"
+	"bantay/internal/hub/transport"
+	"bantay/internal/hub/utils"
+	"bantay/internal/hub/ws"
 
-	"github.com/henrygd/beszel/internal/entities/container"
-	"github.com/henrygd/beszel/internal/entities/smart"
-	"github.com/henrygd/beszel/internal/entities/system"
-	"github.com/henrygd/beszel/internal/entities/systemd"
+	"bantay/internal/entities/container"
+	"bantay/internal/entities/smart"
+	"bantay/internal/entities/system"
+	"bantay/internal/entities/systemd"
 
-	"github.com/henrygd/beszel"
+	"bantay"
 
 	"github.com/blang/semver"
 	"github.com/fxamacker/cbor/v2"
@@ -531,6 +531,14 @@ func (sys *System) FetchSystemdInfoFromAgent(serviceName string) (systemd.Servic
 	return result, err
 }
 
+// RequestAgentRestart asks the agent to exit so its supervisor (docker/systemd) restarts it.
+func (sys *System) RequestAgentRestart() error {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	var ack bool
+	return sys.request(ctx, common.RestartAgent, nil, &ack)
+}
+
 // FetchSmartDataFromAgent fetches SMART data from the agent
 func (sys *System) FetchSmartDataFromAgent() (map[string]smart.SmartData, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
@@ -564,7 +572,7 @@ func (sys *System) fetchDataViaSSH(options common.DataRequestOptions) (*system.C
 
 		*sys.data = system.CombinedData{}
 
-		if sys.agentVersion.GTE(beszel.MinVersionAgentResponse) && stdinErr == nil {
+		if sys.agentVersion.GTE(bantay.MinVersionAgentResponse) && stdinErr == nil {
 			req := common.HubRequest[any]{Action: common.GetData, Data: options}
 			_ = cbor.NewEncoder(stdin).Encode(req)
 			_ = stdin.Close()
@@ -580,7 +588,7 @@ func (sys *System) fetchDataViaSSH(options common.DataRequestOptions) (*system.C
 		}
 
 		var decodeErr error
-		if sys.agentVersion.GTE(beszel.MinVersionCbor) {
+		if sys.agentVersion.GTE(bantay.MinVersionCbor) {
 			decodeErr = cbor.NewDecoder(stdout).Decode(sys.data)
 		} else {
 			decodeErr = json.NewDecoder(stdout).Decode(sys.data)

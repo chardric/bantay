@@ -10,8 +10,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/henrygd/beszel/internal/alerts"
-	beszelTests "github.com/henrygd/beszel/internal/tests"
+	"bantay/internal/alerts"
+	beszelTests "bantay/internal/tests"
 	pbTests "github.com/pocketbase/pocketbase/tests"
 
 	"github.com/pocketbase/dbx"
@@ -92,15 +92,15 @@ func TestUserAlertsApi(t *testing.T) {
 		// {
 		// 	Name:            "GET not implemented - returns index",
 		// 	Method:          http.MethodGet,
-		// 	URL:             "/api/beszel/user-alerts",
+		// 	URL:             "/api/bantay/user-alerts",
 		// 	ExpectedStatus:  200,
-		// 	ExpectedContent: []string{"<html ", "globalThis.BESZEL"},
+		// 	ExpectedContent: []string{"<html ", "globalThis.BANTAY"},
 		// 	TestAppFactory:  testAppFactory,
 		// },
 		{
 			Name:            "POST no auth",
 			Method:          http.MethodPost,
-			URL:             "/api/beszel/user-alerts",
+			URL:             "/api/bantay/user-alerts",
 			ExpectedStatus:  401,
 			ExpectedContent: []string{"requires valid"},
 			TestAppFactory:  testAppFactory,
@@ -108,7 +108,7 @@ func TestUserAlertsApi(t *testing.T) {
 		{
 			Name:   "POST no body",
 			Method: http.MethodPost,
-			URL:    "/api/beszel/user-alerts",
+			URL:    "/api/bantay/user-alerts",
 			Headers: map[string]string{
 				"Authorization": user1Token,
 			},
@@ -119,7 +119,7 @@ func TestUserAlertsApi(t *testing.T) {
 		{
 			Name:   "POST bad data",
 			Method: http.MethodPost,
-			URL:    "/api/beszel/user-alerts",
+			URL:    "/api/bantay/user-alerts",
 			Headers: map[string]string{
 				"Authorization": user1Token,
 			},
@@ -134,7 +134,7 @@ func TestUserAlertsApi(t *testing.T) {
 		{
 			Name:   "POST malformed JSON",
 			Method: http.MethodPost,
-			URL:    "/api/beszel/user-alerts",
+			URL:    "/api/bantay/user-alerts",
 			Headers: map[string]string{
 				"Authorization": user1Token,
 			},
@@ -146,7 +146,7 @@ func TestUserAlertsApi(t *testing.T) {
 		{
 			Name:   "POST valid alert data multiple systems",
 			Method: http.MethodPost,
-			URL:    "/api/beszel/user-alerts",
+			URL:    "/api/bantay/user-alerts",
 			Headers: map[string]string{
 				"Authorization": user1Token,
 			},
@@ -172,7 +172,7 @@ func TestUserAlertsApi(t *testing.T) {
 		{
 			Name:   "POST valid alert data single system",
 			Method: http.MethodPost,
-			URL:    "/api/beszel/user-alerts",
+			URL:    "/api/bantay/user-alerts",
 			Headers: map[string]string{
 				"Authorization": user1Token,
 			},
@@ -193,7 +193,7 @@ func TestUserAlertsApi(t *testing.T) {
 		{
 			Name:   "Overwrite: false, should not overwrite existing alert",
 			Method: http.MethodPost,
-			URL:    "/api/beszel/user-alerts",
+			URL:    "/api/bantay/user-alerts",
 			Headers: map[string]string{
 				"Authorization": user1Token,
 			},
@@ -227,7 +227,7 @@ func TestUserAlertsApi(t *testing.T) {
 		{
 			Name:   "Overwrite: true, should overwrite existing alert",
 			Method: http.MethodPost,
-			URL:    "/api/beszel/user-alerts",
+			URL:    "/api/bantay/user-alerts",
 			Headers: map[string]string{
 				"Authorization": user2Token,
 			},
@@ -261,7 +261,7 @@ func TestUserAlertsApi(t *testing.T) {
 		{
 			Name:            "DELETE no auth",
 			Method:          http.MethodDelete,
-			URL:             "/api/beszel/user-alerts",
+			URL:             "/api/bantay/user-alerts",
 			ExpectedStatus:  401,
 			ExpectedContent: []string{"requires valid"},
 			TestAppFactory:  testAppFactory,
@@ -287,7 +287,7 @@ func TestUserAlertsApi(t *testing.T) {
 		{
 			Name:   "DELETE alert",
 			Method: http.MethodDelete,
-			URL:    "/api/beszel/user-alerts",
+			URL:    "/api/bantay/user-alerts",
 			Headers: map[string]string{
 				"Authorization": user1Token,
 			},
@@ -316,7 +316,7 @@ func TestUserAlertsApi(t *testing.T) {
 		{
 			Name:   "DELETE alert multiple systems",
 			Method: http.MethodDelete,
-			URL:    "/api/beszel/user-alerts",
+			URL:    "/api/bantay/user-alerts",
 			Headers: map[string]string{
 				"Authorization": user1Token,
 			},
@@ -350,7 +350,7 @@ func TestUserAlertsApi(t *testing.T) {
 		{
 			Name:   "User 2 should not be able to delete alert of user 1",
 			Method: http.MethodDelete,
-			URL:    "/api/beszel/user-alerts",
+			URL:    "/api/bantay/user-alerts",
 			Headers: map[string]string{
 				"Authorization": user2Token,
 			},
@@ -415,7 +415,7 @@ func TestSendTestNotification(t *testing.T) {
 		{
 			Name:            "POST /test-notification - no auth should fail",
 			Method:          http.MethodPost,
-			URL:             "/api/beszel/test-notification",
+			URL:             "/api/bantay/test-notification",
 			ExpectedStatus:  401,
 			ExpectedContent: []string{"requires valid"},
 			TestAppFactory:  testAppFactory,
@@ -426,7 +426,7 @@ func TestSendTestNotification(t *testing.T) {
 		{
 			Name:           "POST /test-notification - with external auth should succeed",
 			Method:         http.MethodPost,
-			URL:            "/api/beszel/test-notification",
+			URL:            "/api/bantay/test-notification",
 			TestAppFactory: testAppFactory,
 			Headers: map[string]string{
 				"Authorization": userToken,
@@ -440,7 +440,7 @@ func TestSendTestNotification(t *testing.T) {
 		{
 			Name:           "POST /test-notification - local url with user auth should fail",
 			Method:         http.MethodPost,
-			URL:            "/api/beszel/test-notification",
+			URL:            "/api/bantay/test-notification",
 			TestAppFactory: testAppFactory,
 			Headers: map[string]string{
 				"Authorization": userToken,
@@ -454,7 +454,7 @@ func TestSendTestNotification(t *testing.T) {
 		{
 			Name:           "POST /test-notification - internal url with user auth should fail",
 			Method:         http.MethodPost,
-			URL:            "/api/beszel/test-notification",
+			URL:            "/api/bantay/test-notification",
 			TestAppFactory: testAppFactory,
 			Headers: map[string]string{
 				"Authorization": userToken,
@@ -468,7 +468,7 @@ func TestSendTestNotification(t *testing.T) {
 		{
 			Name:           "POST /test-notification - internal url with admin auth should succeed",
 			Method:         http.MethodPost,
-			URL:            "/api/beszel/test-notification",
+			URL:            "/api/bantay/test-notification",
 			TestAppFactory: testAppFactory,
 			Headers: map[string]string{
 				"Authorization": adminUserToken,
@@ -482,7 +482,7 @@ func TestSendTestNotification(t *testing.T) {
 		{
 			Name:           "POST /test-notification - internal url with superuser auth should succeed",
 			Method:         http.MethodPost,
-			URL:            "/api/beszel/test-notification",
+			URL:            "/api/bantay/test-notification",
 			TestAppFactory: testAppFactory,
 			Headers: map[string]string{
 				"Authorization": superuserToken,

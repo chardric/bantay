@@ -19,6 +19,15 @@ import { $allSystemsById, $longestSystemNameLen } from "@/lib/stores"
 import { useStore } from "@nanostores/react"
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
 
+/** Responsive visibility classes for container columns. CSS-hidden so TanStack visibility state is unaffected. */
+const RESP = {
+	always: "",
+	mdUp: "hidden md:table-cell",
+	lgUp: "hidden lg:table-cell",
+	xlUp: "hidden xl:table-cell",
+	xl2Up: "hidden 2xl:table-cell",
+} as const
+
 // Unit names and their corresponding number of seconds for converting docker status strings
 const unitSeconds = [
 	["s", 1],
@@ -41,7 +50,9 @@ function getStatusValue(status: string): number {
 	return 0
 }
 
-export const containerChartCols: ColumnDef<ContainerRecord>[] = [
+type ContainerCol = ColumnDef<ContainerRecord> & { responsiveClass?: string }
+
+export const containerChartCols: ContainerCol[] = [
 	{
 		id: "name",
 		sortingFn: (a, b) => a.original.name.localeCompare(b.original.name),
@@ -53,6 +64,7 @@ export const containerChartCols: ColumnDef<ContainerRecord>[] = [
 	},
 	{
 		id: "system",
+		responsiveClass: RESP.mdUp,
 		accessorFn: (record) => record.system,
 		sortingFn: (a, b) => {
 			const allSystems = $allSystemsById.get()
@@ -105,6 +117,7 @@ export const containerChartCols: ColumnDef<ContainerRecord>[] = [
 	},
 	{
 		id: "net",
+		responsiveClass: RESP.lgUp,
 		accessorFn: (record) => record.net,
 		invertSorting: true,
 		header: ({ column }) => <HeaderButton column={column} name={t`Net`} Icon={EthernetIcon} />,
@@ -119,6 +132,7 @@ export const containerChartCols: ColumnDef<ContainerRecord>[] = [
 	},
 	{
 		id: "health",
+		responsiveClass: RESP.mdUp,
 		invertSorting: true,
 		accessorFn: (record) => record.health,
 		header: ({ column }) => <HeaderButton column={column} name={t`Health`} Icon={ShieldCheckIcon} />,
@@ -143,6 +157,7 @@ export const containerChartCols: ColumnDef<ContainerRecord>[] = [
 	},
 	{
 		id: "ports",
+		responsiveClass: RESP.xlUp,
 		accessorFn: (record) => record.ports || undefined,
 		header: ({ column }) => (
 			<HeaderButton
@@ -172,6 +187,7 @@ export const containerChartCols: ColumnDef<ContainerRecord>[] = [
 	},
 	{
 		id: "image",
+		responsiveClass: RESP.xlUp,
 		sortingFn: (a, b) => a.original.image.localeCompare(b.original.image),
 		accessorFn: (record) => record.image,
 		header: ({ column }) => (
@@ -188,6 +204,7 @@ export const containerChartCols: ColumnDef<ContainerRecord>[] = [
 	},
 	{
 		id: "status",
+		responsiveClass: RESP.xl2Up,
 		accessorFn: (record) => record.status,
 		invertSorting: true,
 		sortingFn: (a, b) => getStatusValue(a.original.status) - getStatusValue(b.original.status),
@@ -198,6 +215,7 @@ export const containerChartCols: ColumnDef<ContainerRecord>[] = [
 	},
 	{
 		id: "updated",
+		responsiveClass: RESP.xl2Up,
 		invertSorting: true,
 		accessorFn: (record) => record.updated,
 		header: ({ column }) => <HeaderButton column={column} name={t`Updated`} Icon={ClockIcon} />,

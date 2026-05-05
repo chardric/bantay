@@ -21,3 +21,16 @@ __debug_*
 agent/lhm/obj
 agent/lhm/bin
 dockerfile_agent_dev
+# Local Docker stack
+.env
+/backups/
+/config/.env
+
+# Claude Code project state (machine-local agent context)
+.claude/
+
+# Bantay-rename leftovers and cross-compile output
+bantay_data
+bantay_data*
+internal/cmd/hub/bantay
+internal/cmd/agent/bantay

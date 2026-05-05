@@ -4,7 +4,7 @@ import (
 	"math"
 	"runtime"
 
-	"github.com/henrygd/beszel/internal/entities/system"
+	"bantay/internal/entities/system"
 	"github.com/shirou/gopsutil/v4/cpu"
 )
 

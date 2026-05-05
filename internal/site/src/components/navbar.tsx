@@ -7,10 +7,10 @@ import {
 	HardDriveIcon,
 	LogOutIcon,
 	LogsIcon,
+	MailIcon,
 	MenuIcon,
 	PlusIcon,
 	SearchIcon,
-	ServerIcon,
 	SettingsIcon,
 	UserIcon,
 	UsersIcon,
@@ -32,10 +32,9 @@ import {
 import { isAdmin, isReadOnlyUser, logOut, pb } from "@/lib/api"
 import { cn, runOnce } from "@/lib/utils"
 import { AddSystemDialog } from "./add-system"
-import { LangToggle } from "./lang-toggle"
 import { Logo } from "./logo"
 import { ModeToggle } from "./mode-toggle"
-import { $router, basePath, Link, navigate, prependBasePath } from "./router"
+import { $router, basePath, Link, navigate } from "./router"
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 
 const CommandPalette = lazy(() => import("./command-palette"))
@@ -180,7 +179,6 @@ export default function Navbar() {
 					</TooltipTrigger>
 					<TooltipContent>S.M.A.R.T.</TooltipContent>
 				</Tooltip>
-				<LangToggle />
 				<ModeToggle />
 				<Tooltip>
 					<TooltipTrigger asChild>
@@ -240,36 +238,36 @@ function AdminDropdownGroup() {
 	return (
 		<DropdownMenuGroup>
 			<DropdownMenuItem asChild>
-				<a href={prependBasePath("/_/")} target="_blank">
+				<Link href={getPagePath($router, "settings", { name: "users" })}>
 					<UsersIcon className="me-2.5 h-4 w-4" />
 					<span>
 						<Trans>Users</Trans>
 					</span>
-				</a>
+				</Link>
 			</DropdownMenuItem>
 			<DropdownMenuItem asChild>
-				<a href={prependBasePath("/_/#/collections?collection=systems")} target="_blank">
-					<ServerIcon className="me-2.5 h-4 w-4" />
+				<Link href={getPagePath($router, "settings", { name: "mail" })}>
+					<MailIcon className="me-2.5 h-4 w-4" />
 					<span>
-						<Trans>Systems</Trans>
+						<Trans>Email</Trans>
 					</span>
-				</a>
+				</Link>
 			</DropdownMenuItem>
 			<DropdownMenuItem asChild>
-				<a href={prependBasePath("/_/#/logs")} target="_blank">
-					<LogsIcon className="me-2.5 h-4 w-4" />
-					<span>
-						<Trans>Logs</Trans>
-					</span>
-				</a>
-			</DropdownMenuItem>
-			<DropdownMenuItem asChild>
-				<a href={prependBasePath("/_/#/settings/backups")} target="_blank">
+				<Link href={getPagePath($router, "settings", { name: "backups" })}>
 					<DatabaseBackupIcon className="me-2.5 h-4 w-4" />
 					<span>
 						<Trans>Backups</Trans>
 					</span>
-				</a>
+				</Link>
+			</DropdownMenuItem>
+			<DropdownMenuItem asChild>
+				<Link href={getPagePath($router, "settings", { name: "logs" })}>
+					<LogsIcon className="me-2.5 h-4 w-4" />
+					<span>
+						<Trans>Activity log</Trans>
+					</span>
+				</Link>
 			</DropdownMenuItem>
 		</DropdownMenuGroup>
 	)

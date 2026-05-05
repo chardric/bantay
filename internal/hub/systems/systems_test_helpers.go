@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	entities "github.com/henrygd/beszel/internal/entities/system"
+	entities "bantay/internal/entities/system"
 	"github.com/pocketbase/pocketbase/core"
 )
 

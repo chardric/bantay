@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/henrygd/beszel/agent/utils"
+	"bantay/agent/utils"
 )
 
 // getBatteryPaths returns the paths of all batteries in /sys/class/power_supply

@@ -5,10 +5,14 @@ import { getPagePath, redirectPage } from "@nanostores/router"
 import {
 	AlertOctagonIcon,
 	BellIcon,
+	DatabaseBackupIcon,
 	FileSlidersIcon,
 	FingerprintIcon,
-	HeartPulseIcon,
+	InfoIcon,
+	LogsIcon,
+	MailIcon,
 	SettingsIcon,
+	UsersIcon,
 } from "lucide-react"
 import { lazy, useEffect } from "react"
 import { $router } from "@/components/router.tsx"
@@ -25,14 +29,22 @@ const notificationsSettingsImport = () => import("./notifications.tsx")
 const configYamlSettingsImport = () => import("./config-yaml.tsx")
 const fingerprintsSettingsImport = () => import("./tokens-fingerprints.tsx")
 const alertsHistoryDataTableSettingsImport = () => import("./alerts-history-data-table.tsx")
-const heartbeatSettingsImport = () => import("./heartbeat.tsx")
+const usersSettingsImport = () => import("./users.tsx")
+const backupsSettingsImport = () => import("./backups.tsx")
+const mailSettingsImport = () => import("./mail.tsx")
+const logsSettingsImport = () => import("./logs.tsx")
+const aboutSettingsImport = () => import("./about.tsx")
 
 const GeneralSettings = lazy(generalSettingsImport)
 const NotificationsSettings = lazy(notificationsSettingsImport)
 const ConfigYamlSettings = lazy(configYamlSettingsImport)
 const FingerprintsSettings = lazy(fingerprintsSettingsImport)
 const AlertsHistoryDataTableSettings = lazy(alertsHistoryDataTableSettingsImport)
-const HeartbeatSettings = lazy(heartbeatSettingsImport)
+const UsersSettings = lazy(usersSettingsImport)
+const BackupsSettings = lazy(backupsSettingsImport)
+const MailSettings = lazy(mailSettingsImport)
+const LogsSettings = lazy(logsSettingsImport)
+const AboutSettings = lazy(aboutSettingsImport)
 
 export async function saveSettings(newSettings: Partial<UserSettings>) {
 	try {
@@ -91,11 +103,32 @@ export default function SettingsLayout() {
 			preload: alertsHistoryDataTableSettingsImport,
 		},
 		{
-			title: t`Heartbeat`,
-			href: getPagePath($router, "settings", { name: "heartbeat" }),
-			icon: HeartPulseIcon,
+			title: t`Users`,
+			href: getPagePath($router, "settings", { name: "users" }),
+			icon: UsersIcon,
 			admin: true,
-			preload: heartbeatSettingsImport,
+			preload: usersSettingsImport,
+		},
+		{
+			title: t`Email`,
+			href: getPagePath($router, "settings", { name: "mail" }),
+			icon: MailIcon,
+			admin: true,
+			preload: mailSettingsImport,
+		},
+		{
+			title: t`Backups`,
+			href: getPagePath($router, "settings", { name: "backups" }),
+			icon: DatabaseBackupIcon,
+			admin: true,
+			preload: backupsSettingsImport,
+		},
+		{
+			title: t`Activity log`,
+			href: getPagePath($router, "settings", { name: "logs" }),
+			icon: LogsIcon,
+			admin: true,
+			preload: logsSettingsImport,
 		},
 		{
 			title: t`YAML Config`,
@@ -104,13 +137,19 @@ export default function SettingsLayout() {
 			admin: true,
 			preload: configYamlSettingsImport,
 		},
+		{
+			title: t`About`,
+			href: getPagePath($router, "settings", { name: "about" }),
+			icon: InfoIcon,
+			preload: aboutSettingsImport,
+		},
 	]
 
 	const page = useStore($router)
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: no dependencies
 	useEffect(() => {
-		document.title = `${t`Settings`} / Beszel`
+		document.title = `${t`Settings`} / Bantay`
 		// @ts-expect-error redirect to account page if no page is specified
 		if (!page?.params?.name) {
 			redirectPage($router, "settings", { name: "general" })
@@ -157,7 +196,15 @@ function SettingsContent({ name }: { name: string }) {
 			return <FingerprintsSettings />
 		case "alert-history":
 			return <AlertsHistoryDataTableSettings />
-		case "heartbeat":
-			return <HeartbeatSettings />
+		case "users":
+			return <UsersSettings />
+		case "backups":
+			return <BackupsSettings />
+		case "mail":
+			return <MailSettings />
+		case "logs":
+			return <LogsSettings />
+		case "about":
+			return <AboutSettings />
 	}
 }

@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"testing"
 
-	beszelTests "github.com/henrygd/beszel/internal/tests"
+	beszelTests "bantay/internal/tests"
 	"github.com/pocketbase/pocketbase/core"
 	pbTests "github.com/pocketbase/pocketbase/tests"
 	"github.com/stretchr/testify/assert"

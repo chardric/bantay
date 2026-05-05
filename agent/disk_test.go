@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/henrygd/beszel/internal/entities/system"
+	"bantay/internal/entities/system"
 	"github.com/shirou/gopsutil/v4/disk"
 	"github.com/stretchr/testify/assert"
 )

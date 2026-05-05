@@ -38,7 +38,7 @@ You may specify a port number with the `-p` flag. The default port is `8090`.
 #### Update
 
 ```bash
-sudo /opt/beszel/beszel update && sudo systemctl restart beszel-hub
+sudo /opt/beszel/beszel update && sudo systemctl restart bantay-hub
 ```
 
 ### Agent
@@ -68,7 +68,7 @@ If specifying your key with `-k`, please make sure to enclose it in quotes.
 #### Update
 
 ```bash
-sudo /opt/beszel-agent/beszel-agent update && sudo systemctl restart beszel-agent
+sudo /opt/bantay-agent/bantay-agent update && sudo systemctl restart bantay-agent
 ```
 
 ## Manual install
@@ -103,7 +103,7 @@ sudo systemctl start beszel.service
 
 ### Agent
 
-1. Create the system service at `/etc/systemd/system/beszel-agent.service`
+1. Create the system service at `/etc/systemd/system/bantay-agent.service`
 
 ```bash
 [Unit]
@@ -115,7 +115,7 @@ After=network.target
 Environment="PORT={PASTE_YOUR_PORT_HERE}"
 Environment="KEY={PASTE_YOUR_KEY_HERE}"
 # Environment="EXTRA_FILESYSTEMS={sdb}"
-ExecStart={/path/to/directory}/beszel-agent
+ExecStart={/path/to/directory}/bantay-agent
 User={YOUR_USERNAME}
 Restart=always
 
@@ -127,6 +127,6 @@ WantedBy=multi-user.target
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable beszel-agent.service
-sudo systemctl start beszel-agent.service
+sudo systemctl enable bantay-agent.service
+sudo systemctl start bantay-agent.service
 ```

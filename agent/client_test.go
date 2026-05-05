@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/henrygd/beszel"
+	"bantay"
 
-	"github.com/henrygd/beszel/internal/common"
+	"bantay/internal/common"
 
 	"github.com/fxamacker/cbor/v2"
 	"github.com/stretchr/testify/assert"
@@ -111,19 +111,19 @@ func TestWebSocketClient_GetOptions(t *testing.T) {
 			name:           "http to ws conversion",
 			inputURL:       "http://localhost:8080",
 			expectedScheme: "ws",
-			expectedPath:   "/api/beszel/agent-connect",
+			expectedPath:   "/api/bantay/agent-connect",
 		},
 		{
 			name:           "https to wss conversion",
 			inputURL:       "https://hub.example.com",
 			expectedScheme: "wss",
-			expectedPath:   "/api/beszel/agent-connect",
+			expectedPath:   "/api/bantay/agent-connect",
 		},
 		{
 			name:           "existing path preservation",
 			inputURL:       "http://localhost:8080/custom/path",
 			expectedScheme: "ws",
-			expectedPath:   "/custom/path/api/beszel/agent-connect",
+			expectedPath:   "/custom/path/api/bantay/agent-connect",
 		},
 	}
 
@@ -147,7 +147,7 @@ func TestWebSocketClient_GetOptions(t *testing.T) {
 
 			// Check headers
 			assert.Equal(t, "test-token", options.RequestHeader.Get("X-Token"))
-			assert.Equal(t, beszel.Version, options.RequestHeader.Get("X-Beszel"))
+			assert.Equal(t, bantay.Version, options.RequestHeader.Get("X-Beszel"))
 			assert.Contains(t, options.RequestHeader.Get("User-Agent"), "Mozilla/5.0")
 
 			// Test options caching

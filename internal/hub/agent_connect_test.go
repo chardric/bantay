@@ -14,9 +14,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/henrygd/beszel/agent"
-	"github.com/henrygd/beszel/internal/common"
-	"github.com/henrygd/beszel/internal/hub/ws"
+	"bantay/agent"
+	"bantay/internal/common"
+	"bantay/internal/hub/ws"
 
 	"github.com/pocketbase/pocketbase/core"
 	pbtests "github.com/pocketbase/pocketbase/tests"
@@ -610,7 +610,7 @@ func TestAgentConnect(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			req := httptest.NewRequest("GET", "/api/beszel/agent-connect", nil)
+			req := httptest.NewRequest("GET", "/api/bantay/agent-connect", nil)
 			for key, value := range tc.headers {
 				req.Header.Set(key, value)
 			}
@@ -734,7 +734,7 @@ func TestHandleAgentConnect(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			req := httptest.NewRequest(tc.method, "/api/beszel/agent-connect", nil)
+			req := httptest.NewRequest(tc.method, "/api/bantay/agent-connect", nil)
 			for key, value := range tc.headers {
 				req.Header.Set(key, value)
 			}
@@ -776,7 +776,7 @@ func TestAgentWebSocketIntegration(t *testing.T) {
 
 	// Create HTTP server with the actual API route
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path == "/api/beszel/agent-connect" {
+		if r.URL.Path == "/api/bantay/agent-connect" {
 			acr := &agentConnectRequest{
 				hub: hub,
 				req: r,
@@ -1011,7 +1011,7 @@ func TestMultipleSystemsWithSameUniversalToken(t *testing.T) {
 
 	// Create HTTP server with the actual API route
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path == "/api/beszel/agent-connect" {
+		if r.URL.Path == "/api/bantay/agent-connect" {
 			acr := &agentConnectRequest{
 				hub: hub,
 				req: r,
@@ -1213,7 +1213,7 @@ func TestPermanentUniversalTokenFromDB(t *testing.T) {
 
 	// Create HTTP server with the actual API route
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path == "/api/beszel/agent-connect" {
+		if r.URL.Path == "/api/bantay/agent-connect" {
 			acr := &agentConnectRequest{
 				hub: hub,
 				req: r,

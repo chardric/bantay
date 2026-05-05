@@ -10,8 +10,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/henrygd/beszel/agent/utils"
-	"github.com/henrygd/beszel/internal/entities/system"
+	"bantay/agent/utils"
+	"bantay/internal/entities/system"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

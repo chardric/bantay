@@ -1,6 +1,6 @@
 // Package heartbeat sends periodic outbound pings to an external monitoring
 // endpoint (e.g. BetterStack, Uptime Kuma, Healthchecks.io) so operators can
-// monitor Beszel without exposing it to the internet.
+// monitor Bantay without exposing it to the internet.
 package heartbeat
 
 import (
@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/henrygd/beszel"
+	"bantay"
 	"github.com/pocketbase/pocketbase/core"
 )
 
@@ -282,7 +282,7 @@ func (hb *Heartbeat) buildPayload() (*Payload, error) {
 		Systems:   summary,
 		Down:      downSystems,
 		Alerts:    alerts,
-		Version:   beszel.Version,
+		Version:   bantay.Version,
 	}, nil
 }
 

@@ -6,12 +6,25 @@ import {
 	ClockArrowUp,
 	CpuIcon,
 	GlobeIcon,
+	Loader2Icon,
 	MemoryStickIcon,
 	MonitorIcon,
+	NetworkIcon,
+	RotateCwIcon,
 	Settings2Icon,
 } from "lucide-react"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import ChartTimeSelect from "@/components/charts/chart-time-select"
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import {
@@ -26,9 +39,19 @@ import {
 import { FreeBsdIcon, TuxIcon, WebSocketIcon, WindowsIcon } from "@/components/ui/icons"
 import { Separator } from "@/components/ui/separator"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { toast } from "@/components/ui/use-toast"
+import { isAdmin, pb } from "@/lib/api"
 import { ConnectionType, connectionTypeLabels, Os, SystemStatus } from "@/lib/enums"
 import { cn, formatBytes, getHostDisplayValue, secondsToUptimeString, toFixedFloat } from "@/lib/utils"
 import type { ChartData, SystemDetailsRecord, SystemRecord } from "@/types"
+
+function formatLinkSpeed(mbps: number): string {
+	if (mbps >= 1000) {
+		const gbps = mbps / 1000
+		return `${gbps % 1 === 0 ? gbps : gbps.toFixed(1)} Gbps`
+	}
+	return `${mbps} Mbps`
+}
 
 export default function InfoBar({
 	system,
@@ -48,6 +71,27 @@ export default function InfoBar({
 	details: SystemDetailsRecord | null
 }) {
 	const { t } = useLingui()
+	const [restartOpen, setRestartOpen] = useState(false)
+	const [restarting, setRestarting] = useState(false)
+	const showRestart = isAdmin()
+
+	async function handleRestartConfirm() {
+		setRestarting(true)
+		try {
+			await pb.send(`/api/bantay/admin/agents/restart?system=${system.id}`, { method: "POST" })
+			toast({ title: t`Restart requested`, description: system.name })
+			setRestartOpen(false)
+		} catch (err) {
+			const e = err as { message?: string; data?: { message?: string } }
+			toast({
+				title: t`Restart failed`,
+				description: e?.data?.message || e?.message || t`Agent did not respond.`,
+				variant: "destructive",
+			})
+		} finally {
+			setRestarting(false)
+		}
+	}
 
 	// values for system info bar - use details with fallback to system.info
 	const systemInfo = useMemo(() => {
@@ -199,9 +243,55 @@ export default function InfoBar({
 							)
 						})}
 					</div>
+					{system.info.ls && Object.keys(system.info.ls).length > 0 && (
+						<div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm mt-2 pt-2 border-t border-border/50">
+							<span className="flex items-center gap-1.5 text-muted-foreground text-xs uppercase tracking-wider">
+								<NetworkIcon className="size-3.5" />
+								<Trans>NICs</Trans>
+							</span>
+							{Object.entries(system.info.ls)
+								.sort(([a], [b]) => a.localeCompare(b))
+								.map(([name, mbps]) => (
+									<div key={name} className="flex items-center gap-1.5">
+										<span className="font-mono text-xs text-muted-foreground">{name}</span>
+										<span
+											className={cn(
+												"tabular-nums text-xs font-medium",
+												mbps === 0
+													? "text-red-500"
+													: mbps < 1000
+														? "text-amber-500"
+														: "text-emerald-600 dark:text-emerald-500"
+											)}
+										>
+											{mbps === 0 ? t`down` : formatLinkSpeed(mbps)}
+										</span>
+									</div>
+								))}
+						</div>
+					)}
 				</div>
 				<div className="xl:ms-auto flex items-center gap-2 max-sm:-mb-1">
 					<ChartTimeSelect className="w-full xl:w-40" agentVersion={chartData.agentVersion} />
+					{showRestart && (
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<Button
+									aria-label={t`Restart agent`}
+									variant="outline"
+									size="icon"
+									className="hidden xl:flex p-0 text-primary"
+									disabled={system.status !== SystemStatus.Up}
+									onClick={() => setRestartOpen(true)}
+								>
+									<RotateCwIcon className="size-4 opacity-90" />
+								</Button>
+							</TooltipTrigger>
+							<TooltipContent>
+								<Trans>Restart agent</Trans>
+							</TooltipContent>
+						</Tooltip>
+					)}
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button
@@ -251,6 +341,32 @@ export default function InfoBar({
 					</DropdownMenu>
 				</div>
 			</div>
+			{showRestart && (
+				<AlertDialog open={restartOpen} onOpenChange={(o) => !restarting && setRestartOpen(o)}>
+					<AlertDialogContent>
+						<AlertDialogHeader>
+							<AlertDialogTitle>
+								<Trans>Restart agent on {system.name}?</Trans>
+							</AlertDialogTitle>
+							<AlertDialogDescription>
+								<Trans>
+									The agent process will exit and its supervisor (Docker or systemd) will start it again.
+									Metrics for this system will be unavailable for a few seconds.
+								</Trans>
+							</AlertDialogDescription>
+						</AlertDialogHeader>
+						<AlertDialogFooter>
+							<AlertDialogCancel disabled={restarting}>
+								<Trans>Cancel</Trans>
+							</AlertDialogCancel>
+							<AlertDialogAction onClick={handleRestartConfirm} disabled={restarting}>
+								{restarting && <Loader2Icon className="size-4 animate-spin me-1.5" />}
+								<Trans>Restart agent</Trans>
+							</AlertDialogAction>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
+			)}
 		</Card>
 	)
 }

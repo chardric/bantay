@@ -7,8 +7,8 @@ import (
 	"testing/synctest"
 	"time"
 
-	"github.com/henrygd/beszel/internal/alerts"
-	beszelTests "github.com/henrygd/beszel/internal/tests"
+	"bantay/internal/alerts"
+	beszelTests "bantay/internal/tests"
 
 	"github.com/pocketbase/dbx"
 	"github.com/stretchr/testify/assert"

@@ -292,7 +292,7 @@
 
 - Fix `intel_gpu_top` parsing when engine instance id is in column. (#1230)
 
-- Update `henrygd/beszel-agent-nvidia` Dockerfile to build latest smartmontools. (#1335)
+- Update `henrygd/bantay-agent-nvidia` Dockerfile to build latest smartmontools. (#1335)
 
 ## 0.15.3
 
@@ -338,7 +338,7 @@
 
 - Add initial S.M.A.R.T. support for disk health monitoring. (#962)
 
-- Add `henrygd/beszel-agent:alpine` Docker image and include `smartmontools` in all non-base agent images.
+- Add `henrygd/bantay-agent:alpine` Docker image and include `smartmontools` in all non-base agent images.
 
 - Remove environment variables from container details (#1305)
 
@@ -426,7 +426,7 @@ Note that the default memory calculation changed in this release, which may caus
 
 - Fix temperature unit and bytes / bits settings. (#1180)
 
-- Add `henrygd/beszel-agent-intel` image for Intel GPUs (experimental).
+- Add `henrygd/bantay-agent-intel` image for Intel GPUs (experimental).
 
 - Update Go dependencies. Shoutrrr now supports notifications for Signal and WeChat Work (WeCom).
 

@@ -3,7 +3,7 @@
 package hub
 
 import (
-	"github.com/henrygd/beszel/internal/hub/systems"
+	"bantay/internal/hub/systems"
 )
 
 // TESTING ONLY: GetSystemManager returns the system manager

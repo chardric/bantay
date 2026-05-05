@@ -1,14 +1,14 @@
-// Package beszel provides core application constants and version information
+// Package bantay provides core application constants and version information
 // which are used throughout the application.
-package beszel
+package bantay
 
 import "github.com/blang/semver"
 
 const (
 	// Version is the current version of the application.
-	Version = "0.18.7"
+	Version = "1.0.0"
 	// AppName is the name of the application.
-	AppName = "beszel"
+	AppName = "bantay"
 )
 
 // MinVersionCbor is the minimum supported version for CBOR compatibility.

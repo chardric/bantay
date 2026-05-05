@@ -1,7 +1,7 @@
-// Package agent implements the Beszel monitoring agent that collects and serves system metrics.
+// Package agent implements the Bantay monitoring agent that collects and serves system metrics.
 //
 // The agent runs on monitored systems and communicates collected data
-// to the Beszel hub for centralized monitoring and alerting.
+// to the Bantay hub for centralized monitoring and alerting.
 package agent
 
 import (
@@ -11,11 +11,11 @@ import (
 	"time"
 
 	"github.com/gliderlabs/ssh"
-	"github.com/henrygd/beszel"
-	"github.com/henrygd/beszel/agent/deltatracker"
-	"github.com/henrygd/beszel/agent/utils"
-	"github.com/henrygd/beszel/internal/common"
-	"github.com/henrygd/beszel/internal/entities/system"
+	"bantay"
+	"bantay/agent/deltatracker"
+	"bantay/agent/utils"
+	"bantay/internal/common"
+	"bantay/internal/entities/system"
 	gossh "golang.org/x/crypto/ssh"
 )
 
@@ -97,7 +97,7 @@ func NewAgent(dataDir ...string) (agent *Agent, err error) {
 		}
 	}
 
-	slog.Debug(beszel.Version)
+	slog.Debug(bantay.Version)
 
 	// initialize docker manager
 	agent.dockerManager = newDockerManager(agent)

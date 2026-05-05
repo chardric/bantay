@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/henrygd/beszel/internal/entities/system"
+	"bantay/internal/entities/system"
 
 	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase/core"

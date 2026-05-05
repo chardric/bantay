@@ -9,12 +9,12 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/henrygd/beszel"
-	"github.com/henrygd/beszel/agent/battery"
-	"github.com/henrygd/beszel/agent/utils"
-	"github.com/henrygd/beszel/agent/zfs"
-	"github.com/henrygd/beszel/internal/entities/container"
-	"github.com/henrygd/beszel/internal/entities/system"
+	"bantay"
+	"bantay/agent/battery"
+	"bantay/agent/utils"
+	"bantay/agent/zfs"
+	"bantay/internal/entities/container"
+	"bantay/internal/entities/system"
 
 	"github.com/shirou/gopsutil/v4/cpu"
 	"github.com/shirou/gopsutil/v4/host"
@@ -24,7 +24,7 @@ import (
 
 // Sets initial / non-changing values about the host system
 func (a *Agent) refreshSystemDetails() {
-	a.systemInfo.AgentVersion = beszel.Version
+	a.systemInfo.AgentVersion = bantay.Version
 
 	// get host info from Docker if available
 	var hostInfo container.HostInfo
@@ -254,10 +254,13 @@ func (a *Agent) getSystemStats(cacheTimeMs uint16) system.Stats {
 	a.systemInfo.Cpu = systemStats.Cpu
 	a.systemInfo.LoadAvg = systemStats.LoadAvg
 	a.systemInfo.MemPct = systemStats.MemPct
+	a.systemInfo.MemTotal = systemStats.Mem
 	a.systemInfo.DiskPct = systemStats.DiskPct
+	a.systemInfo.DiskSize = systemStats.DiskTotal
 	a.systemInfo.Battery = systemStats.Battery
 	a.systemInfo.Uptime, _ = host.Uptime()
 	a.systemInfo.BandwidthBytes = systemStats.Bandwidth[0] + systemStats.Bandwidth[1]
+	a.systemInfo.LinkSpeeds = a.gatherLinkSpeeds()
 	a.systemInfo.Threads = a.systemDetails.Threads
 
 	return systemStats

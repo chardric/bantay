@@ -1,0 +1,15 @@
+FROM debian:13-slim
+# smartmontools : SMART data
+# nvtop         : last-resort GPU TUI; agent only invokes it if no kernel path exists
+#
+# Intel iGPU monitoring is handled by the agent's DRM fdinfo collector
+# (i915 PMU >= 5.19). intel-gpu-tools is intentionally NOT installed —
+# its intel_gpu_top binary requires capabilities the container doesn't have
+# and would mask the working fdinfo path.
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        smartmontools nvtop ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+COPY agent /agent
+VOLUME ["/var/lib/bantay-agent"]
+ENTRYPOINT ["/agent"]

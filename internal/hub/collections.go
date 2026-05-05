@@ -1,7 +1,7 @@
 package hub
 
 import (
-	"github.com/henrygd/beszel/internal/hub/utils"
+	"bantay/internal/hub/utils"
 	"github.com/pocketbase/pocketbase/core"
 )
 

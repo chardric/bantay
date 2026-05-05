@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/henrygd/beszel/agent/utils"
+	"bantay/agent/utils"
 )
 
 // GetDataDir returns the path to the data directory for the agent and an error
@@ -25,11 +25,11 @@ func GetDataDir(dataDirs ...string) (string, error) {
 
 	if runtime.GOOS == "windows" {
 		dataDirs = append(dataDirs,
-			filepath.Join(os.Getenv("APPDATA"), "beszel-agent"),
-			filepath.Join(os.Getenv("LOCALAPPDATA"), "beszel-agent"),
+			filepath.Join(os.Getenv("APPDATA"), "bantay-agent"),
+			filepath.Join(os.Getenv("LOCALAPPDATA"), "bantay-agent"),
 		)
 	} else {
-		dataDirs = append(dataDirs, "/var/lib/beszel-agent")
+		dataDirs = append(dataDirs, "/var/lib/bantay-agent")
 		if homeDir, err := os.UserHomeDir(); err == nil {
 			dataDirs = append(dataDirs, filepath.Join(homeDir, ".config", "beszel"))
 		}

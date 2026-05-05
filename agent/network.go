@@ -3,13 +3,15 @@ package agent
 import (
 	"fmt"
 	"log/slog"
+	"os"
 	"path"
+	"strconv"
 	"strings"
 	"time"
 
-	"github.com/henrygd/beszel/agent/deltatracker"
-	"github.com/henrygd/beszel/agent/utils"
-	"github.com/henrygd/beszel/internal/entities/system"
+	"bantay/agent/deltatracker"
+	"bantay/agent/utils"
+	"bantay/internal/entities/system"
 	psutilNet "github.com/shirou/gopsutil/v4/net"
 )
 
@@ -232,6 +234,42 @@ func (a *Agent) applyNetworkTotals(
 	nis.BytesSent = totalBytesSent
 	nis.BytesRecv = totalBytesRecv
 	a.netIoStats[cacheTimeMs] = nis
+}
+
+// readLinkSpeed returns the negotiated link speed for an interface in Mbps.
+// Returns 0 when the interface is not up or sysfs is unavailable (non-Linux,
+// virtual NIC, or unprivileged read failure). Reads are cheap (<1ms each).
+func readLinkSpeed(iface string) uint32 {
+	state, err := os.ReadFile("/sys/class/net/" + iface + "/operstate")
+	if err != nil {
+		return 0
+	}
+	if strings.TrimSpace(string(state)) != "up" {
+		return 0
+	}
+	data, err := os.ReadFile("/sys/class/net/" + iface + "/speed")
+	if err != nil {
+		return 0
+	}
+	v, err := strconv.Atoi(strings.TrimSpace(string(data)))
+	if err != nil || v < 0 {
+		return 0
+	}
+	return uint32(v)
+}
+
+// gatherLinkSpeeds returns a map of {ifname: Mbps} for every interface currently
+// tracked by the agent. Down or unreadable interfaces report 0 so the UI can
+// flag a disconnected NIC explicitly.
+func (a *Agent) gatherLinkSpeeds() map[string]uint32 {
+	if len(a.netInterfaces) == 0 {
+		return nil
+	}
+	out := make(map[string]uint32, len(a.netInterfaces))
+	for name := range a.netInterfaces {
+		out[name] = readLinkSpeed(name)
+	}
+	return out
 }
 
 // skipNetworkInterface returns true if the network interface should be ignored.

@@ -15,8 +15,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/henrygd/beszel/agent/utils"
-	"github.com/henrygd/beszel/internal/entities/system"
+	"bantay/agent/utils"
+	"bantay/internal/entities/system"
 )
 
 const (
@@ -91,6 +91,7 @@ const (
 	collectorSourceNvidiaSMI    collectorSource = collectorSource(nvidiaSmiCmd)
 	collectorSourceIntelGpuTop  collectorSource = collectorSource(intelGpuStatsCmd)
 	collectorSourceAmdSysfs     collectorSource = "amd_sysfs"
+	collectorSourceDrmFdinfo    collectorSource = "drm_fdinfo"
 	collectorSourceRocmSMI      collectorSource = collectorSource(rocmSmiCmd)
 	collectorSourceMacmon       collectorSource = collectorSource(macmonCmd)
 	collectorSourcePowermetrics collectorSource = collectorSource(powermetricsCmd)
@@ -107,6 +108,7 @@ func isValidCollectorSource(source collectorSource) bool {
 		collectorSourceNvidiaSMI,
 		collectorSourceIntelGpuTop,
 		collectorSourceAmdSysfs,
+		collectorSourceDrmFdinfo,
 		collectorSourceRocmSMI,
 		collectorSourceMacmon,
 		collectorSourcePowermetrics:
@@ -120,6 +122,7 @@ type gpuCapabilities struct {
 	hasNvidiaSmi    bool
 	hasRocmSmi      bool
 	hasAmdSysfs     bool
+	hasDrmFdinfo    bool
 	hasTegrastats   bool
 	hasIntelGpuTop  bool
 	hasNvtop        bool
@@ -443,7 +446,8 @@ func (gm *GPUManager) storeSnapshot(id string, gpu *system.GPUData, cacheKey uin
 // It only reports capability presence and does not apply policy decisions.
 func (gm *GPUManager) discoverGpuCapabilities() gpuCapabilities {
 	caps := gpuCapabilities{
-		hasAmdSysfs: gm.hasAmdSysfs(),
+		hasAmdSysfs:  gm.hasAmdSysfs(),
+		hasDrmFdinfo: gm.hasDrmFdinfo(),
 	}
 	if _, err := exec.LookPath(nvidiaSmiCmd); err == nil {
 		caps.hasNvidiaSmi = true
@@ -472,7 +476,7 @@ func (gm *GPUManager) discoverGpuCapabilities() gpuCapabilities {
 }
 
 func hasAnyGpuCollector(caps gpuCapabilities) bool {
-	return caps.hasNvidiaSmi || caps.hasRocmSmi || caps.hasAmdSysfs || caps.hasTegrastats || caps.hasIntelGpuTop || caps.hasNvtop || caps.hasMacmon || caps.hasPowermetrics
+	return caps.hasNvidiaSmi || caps.hasRocmSmi || caps.hasAmdSysfs || caps.hasDrmFdinfo || caps.hasTegrastats || caps.hasIntelGpuTop || caps.hasNvtop || caps.hasMacmon || caps.hasPowermetrics
 }
 
 func (gm *GPUManager) startIntelCollector() {
@@ -570,6 +574,13 @@ func (gm *GPUManager) collectorDefinitions(caps gpuCapabilities) map[collectorSo
 				return gm.startAmdSysfsCollector()
 			},
 		},
+		collectorSourceDrmFdinfo: {
+			// no group: cross-vendor fallback that should never block vendor-specific collectors.
+			available: caps.hasDrmFdinfo,
+			start: func(_ func()) bool {
+				return gm.startDrmFdinfoCollector()
+			},
+		},
 		collectorSourceRocmSMI: {
 			group:              collectorGroupAmd,
 			available:          caps.hasRocmSmi,
@@ -643,6 +654,18 @@ func (gm *GPUManager) startAmdSysfsCollector() bool {
 	return true
 }
 
+// startDrmFdinfoCollector starts cross-vendor GPU collection via /proc fdinfo.
+// Works for any modern DRM driver that emits drm-engine-* counters
+// (amdgpu 5.14+, i915 5.19+, xe 6.8+, v3d 6.6+, panfrost 6.6+, msm 6.0+).
+func (gm *GPUManager) startDrmFdinfoCollector() bool {
+	go func() {
+		if err := gm.collectDrmFdinfoStats(); err != nil {
+			slog.Warn("Error collecting GPU data via DRM fdinfo", "err", err)
+		}
+	}()
+	return true
+}
+
 // startCollectorsByPriority starts collectors in order with one source per vendor group.
 func (gm *GPUManager) startCollectorsByPriority(priorities []collectorSource, caps gpuCapabilities) int {
 	definitions := gm.collectorDefinitions(caps)
@@ -667,6 +690,19 @@ func (gm *GPUManager) startCollectorsByPriority(priorities []collectorSource, ca
 				started++
 				return started
 			}
+		}
+		// drm_fdinfo is a cross-vendor fallback. Skip if a vendor collector is already running
+		// (otherwise the same GPU would be reported twice with different ids).
+		if source == collectorSourceDrmFdinfo {
+			if len(selectedGroups) > 0 {
+				slog.Debug("Skipping drm_fdinfo because vendor-specific collector is active")
+				continue
+			}
+			if definition.start(nil) {
+				selectedGroups["drm_fdinfo"] = true
+				started++
+			}
+			continue
 		}
 		group := definition.group
 		if group == "" || selectedGroups[group] {
@@ -707,6 +743,14 @@ func (gm *GPUManager) resolveLegacyCollectorPriority(caps gpuCapabilities) []col
 
 	if caps.hasIntelGpuTop {
 		priorities = append(priorities, collectorSourceIntelGpuTop)
+	}
+
+	// DRM fdinfo: kernel-blessed cross-vendor utilization scheme.
+	// No vendor group, so it runs alongside any vendor-specific collector picked above
+	// and adds coverage for Intel iGPUs (i915 PMU 5.19+, xe 6.8+), Pi V3D 6.6+,
+	// Mali Panfrost 6.6+, msm 6.0+ — anything where vendor binaries aren't installed.
+	if caps.hasDrmFdinfo {
+		priorities = append(priorities, collectorSourceDrmFdinfo)
 	}
 
 	// Apple collectors are currently opt-in only for testing.

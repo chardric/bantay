@@ -18,11 +18,10 @@ msgstr ""
 "X-Crowdin-File: /main/internal/site/src/locales/en/en.po\n"
 "X-Crowdin-File-ID: 32\n"
 
-#. placeholder {0}: newVersion.v
 #: src/components/footer-repo-link.tsx
-msgctxt "New version available"
-msgid "{0} available"
-msgstr "{0} disponible"
+#~ msgctxt "New version available"
+#~ msgid "{0} available"
+#~ msgstr "{0} disponible"
 
 #. placeholder {0}: table.getFilteredSelectedRowModel().rows.length
 #. placeholder {1}: table.getFilteredRowModel().rows.length
@@ -89,9 +88,20 @@ msgstr "30 jours"
 msgid "5 min"
 msgstr ""
 
+#: src/components/routes/settings/about.tsx
+#: src/components/routes/settings/layout.tsx
+msgid "About"
+msgstr ""
+
+#: src/components/routes/settings/about.tsx
+msgid "About Bantay."
+msgstr ""
+
 #. Table column
+#: src/components/routes/settings/backups.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
+#: src/components/routes/settings/users.tsx
 #: src/components/routes/system/smart-table.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Actions"
@@ -112,6 +122,14 @@ msgstr "Alertes actives"
 msgid "Active state"
 msgstr "État actif"
 
+#: src/components/command-palette.tsx
+#: src/components/navbar.tsx
+#: src/components/routes/settings/layout.tsx
+#: src/components/routes/settings/logs.tsx
+#: src/components/sidebar.tsx
+msgid "Activity log"
+msgstr ""
+
 #: src/components/add-system.tsx
 #: src/components/add-system.tsx
 #: src/components/navbar.tsx
@@ -121,9 +139,27 @@ msgstr "État actif"
 msgid "Add {foo}"
 msgstr "Ajouter {foo}"
 
+#: src/components/routes/settings/users.tsx
+msgid "Add a new user"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Add people who can sign in. Admins can change settings; read-only users can view but not edit."
+msgstr ""
+
+#: src/components/sidebar.tsx
+#: src/components/sidebar.tsx
+#: src/components/sidebar.tsx
+msgid "Add System"
+msgstr ""
+
 #: src/components/routes/settings/notifications.tsx
-msgid "Add URL"
-msgstr "Ajouter l’URL"
+#~ msgid "Add URL"
+#~ msgstr "Ajouter l’URL"
+
+#: src/components/routes/settings/users.tsx
+msgid "Add user"
+msgstr ""
 
 #: src/components/routes/settings/general.tsx
 msgid "Adjust display options for charts."
@@ -136,7 +172,14 @@ msgstr "Ajuster la largeur de la mise en page principale"
 #: src/components/command-palette.tsx
 #: src/components/command-palette.tsx
 #: src/components/navbar.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/sidebar.tsx
 msgid "Admin"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Admin — full access"
 msgstr ""
 
 #: src/components/systemd-table/systemd-table.tsx
@@ -144,11 +187,19 @@ msgid "After"
 msgstr "Après"
 
 #: src/components/routes/settings/heartbeat.tsx
-msgid "After setting the environment variables, restart your Beszel hub for changes to take effect."
-msgstr "Après avoir défini les variables d'environnement, redémarrez votre hub Beszel pour que les changements prennent effet."
+msgid "After setting the environment variables, restart your Bantay hub for changes to take effect."
+msgstr ""
+
+#: src/components/routes/settings/heartbeat.tsx
+#~ msgid "After setting the environment variables, restart your Beszel hub for changes to take effect."
+#~ msgstr "Après avoir défini les variables d'environnement, redémarrez votre hub Beszel pour que les changements prennent effet."
 
 #: src/components/systems-table/systems-table-columns.tsx
-msgid "Agent"
+#~ msgid "Agent"
+#~ msgstr ""
+
+#: src/components/routes/system/info-bar.tsx
+msgid "Agent did not respond."
 msgstr ""
 
 #: src/components/command-palette.tsx
@@ -170,14 +221,21 @@ msgstr "Alertes"
 msgid "All Containers"
 msgstr "Tous les conteneurs"
 
+#: src/components/routes/settings/logs.tsx
+msgid "All levels"
+msgstr ""
+
 #: src/components/alerts/alerts-sheet.tsx
-#: src/components/command-palette.tsx
 #: src/components/routes/home.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/systems-table/systems-table.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "All Systems"
 msgstr "Tous les systèmes"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Anonymous (no login)"
+msgstr ""
 
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Are you sure you want to delete {name}?"
@@ -186,6 +244,18 @@ msgstr "Êtes-vous sûr de vouloir supprimer {name} ?"
 #: src/components/routes/settings/alerts-history-data-table.tsx
 msgid "Are you sure?"
 msgstr "Êtes-vous sûr ?"
+
+#: src/components/routes/settings/users.tsx
+msgid "At least 8 characters."
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Auth method"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Authenticated as"
+msgstr ""
 
 #: src/components/copy-to-clipboard.tsx
 msgid "Automatic copy requires a secure context."
@@ -217,6 +287,10 @@ msgstr "Nombre moyen d'opérations d'E/S en attente d'être traitées"
 msgid "Average power consumption of GPUs"
 msgstr "Consommation d'énergie moyenne des GPUs"
 
+#: src/components/systems-table/systems-table-columns.tsx
+msgid "Average processes using or waiting for CPU. Normalized: under 70% healthy, 70–90% busy, over 90% overloaded."
+msgstr ""
+
 #: src/components/routes/system/disk-io-sheet.tsx
 msgctxt "Disk I/O average operation time (iostat await)"
 msgid "Average queue to completion time per operation"
@@ -235,8 +309,35 @@ msgstr "Utilisation moyenne de {0}"
 msgid "Average utilization of GPU engines"
 msgstr "Utilisation moyenne des moteurs GPU"
 
+#: src/components/routes/dashboard.tsx
+msgid "Avg CPU"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Avg Disk"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Avg Memory"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Backup created"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Backup deleted"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Backup now"
+msgstr ""
+
 #: src/components/command-palette.tsx
 #: src/components/navbar.tsx
+#: src/components/routes/settings/backups.tsx
+#: src/components/routes/settings/layout.tsx
+#: src/components/sidebar.tsx
 msgid "Backups"
 msgstr "Sauvegardes"
 
@@ -245,10 +346,18 @@ msgstr "Sauvegardes"
 msgid "Bandwidth"
 msgstr "Bande passante"
 
+#: src/components/routes/settings/about.tsx
+msgid "Bantay is a fork of <0>Beszel</0>, originally created by henrygd. All credit for the underlying monitoring platform belongs to the upstream project."
+msgstr ""
+
+#: src/components/login/auth-form.tsx
+msgid "Bantay supports OpenID Connect and many OAuth2 authentication providers."
+msgstr ""
+
 #. Battery label in systems table header
 #: src/components/systems-table/systems-table-columns.tsx
-msgid "Bat"
-msgstr ""
+#~ msgid "Bat"
+#~ msgstr ""
 
 #: src/components/routes/system/charts/sensor-charts.tsx
 #: src/lib/alerts.ts
@@ -275,12 +384,12 @@ msgid "Below {0}{1} in last {2, plural, one {# minute} other {# minutes}}"
 msgstr "Inférieur à {0}{1} dans {2, plural, one {la dernière # minute} other {les dernières # minutes}}"
 
 #: src/components/login/auth-form.tsx
-msgid "Beszel supports OpenID Connect and many OAuth2 authentication providers."
-msgstr "Beszel prend en charge OpenID Connect et de nombreux fournisseurs d'authentification OAuth2."
+#~ msgid "Beszel supports OpenID Connect and many OAuth2 authentication providers."
+#~ msgstr "Beszel prend en charge OpenID Connect et de nombreux fournisseurs d'authentification OAuth2."
 
 #: src/components/routes/settings/notifications.tsx
-msgid "Beszel uses <0>Shoutrrr</0> to integrate with popular notification services."
-msgstr "Beszel utilise <0>Shoutrrr</0> pour s'intégrer aux services de notification populaires."
+#~ msgid "Beszel uses <0>Shoutrrr</0> to integrate with popular notification services."
+#~ msgstr "Beszel utilise <0>Shoutrrr</0> pour s'intégrer aux services de notification populaires."
 
 #: src/components/add-system.tsx
 msgid "Binary"
@@ -295,6 +404,10 @@ msgstr ""
 msgid "Boot state"
 msgstr "État de démarrage"
 
+#: src/components/routes/settings/logs.tsx
+msgid "Browser / agent"
+msgstr ""
+
 #: src/components/routes/settings/general.tsx
 #: src/components/routes/settings/general.tsx
 msgid "Bytes (KB/s, MB/s, GB/s)"
@@ -303,6 +416,10 @@ msgstr ""
 #: src/components/routes/system/charts/memory-charts.tsx
 msgid "Cache / Buffers"
 msgstr "Cache / Tampons"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Came from"
+msgstr ""
 
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Can reload"
@@ -317,7 +434,14 @@ msgid "Can stop"
 msgstr "Peut arrêter"
 
 #: src/components/routes/settings/alerts-history-data-table.tsx
+#: src/components/routes/settings/backups.tsx
+#: src/components/routes/settings/backups.tsx
+#: src/components/routes/settings/logs.tsx
 #: src/components/routes/settings/quiet-hours.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/system/info-bar.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Cancel"
 msgstr "Annuler"
@@ -376,14 +500,26 @@ msgid "Check your monitoring service"
 msgstr "Vérifiez votre service de surveillance"
 
 #: src/components/routes/settings/notifications.tsx
-msgid "Check your notification service"
-msgstr "Vérifiez votre service de notification"
+#~ msgid "Check your notification service"
+#~ msgstr "Vérifiez votre service de notification"
 
 #: src/components/containers-table/containers-table.tsx
 #: src/components/routes/system/smart-table.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "Clear"
 msgstr "Effacer"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Clear all"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Clear all log entries?"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Clear logs"
+msgstr ""
 
 #: src/components/containers-table/containers-table.tsx
 msgid "Click on a container to view more information."
@@ -401,10 +537,22 @@ msgstr "Cliquez sur un système pour voir plus d'informations."
 msgid "Click to copy"
 msgstr "Cliquez pour copier"
 
+#: src/components/routes/settings/logs.tsx
+msgid "Client IP"
+msgstr ""
+
+#: src/components/sidebar.tsx
+msgid "Collapse sidebar"
+msgstr ""
+
 #: src/components/login/forgot-pass-form.tsx
 #: src/components/login/forgot-pass-form.tsx
 msgid "Command line instructions"
 msgstr "Instructions en ligne de commande"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Configure how Bantay sends email — for password resets, alerts, and notifications. Ask your email provider or admin if you don't know these values."
+msgstr ""
 
 #: src/components/routes/settings/notifications.tsx
 msgid "Configure how you receive alert notifications."
@@ -424,6 +572,7 @@ msgid "Connection is down"
 msgstr "Connexion interrompue"
 
 #: src/components/routes/system.tsx
+#: src/components/sidebar.tsx
 msgid "Containers"
 msgstr "Conteneurs"
 
@@ -493,6 +642,7 @@ msgid "Core"
 msgstr "Cœur"
 
 #: src/components/containers-table/containers-table-columns.tsx
+#: src/components/containers-table/containers-table.tsx
 #: src/components/systemd-table/systemd-table-columns.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "CPU"
@@ -529,6 +679,10 @@ msgstr "Créer"
 msgid "Create account"
 msgstr "Créer un compte"
 
+#: src/components/routes/settings/users.tsx
+msgid "Create user"
+msgstr ""
+
 #. Context: date created
 #: src/components/alerts-history-columns.tsx
 msgid "Created"
@@ -561,6 +715,13 @@ msgstr ""
 msgid "Daily"
 msgstr "Quotidien"
 
+#: src/components/command-palette.tsx
+#: src/components/routes/dashboard.tsx
+#: src/components/routes/dashboard.tsx
+#: src/components/sidebar.tsx
+msgid "Dashboard"
+msgstr ""
+
 #: src/components/routes/system/info-bar.tsx
 msgctxt "Default system layout option"
 msgid "Default"
@@ -571,15 +732,33 @@ msgid "Default time period"
 msgstr "Période par défaut"
 
 #: src/components/routes/settings/alerts-history-data-table.tsx
+#: src/components/routes/settings/backups.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/routes/system/smart-table.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Delete"
 msgstr "Supprimer"
 
+#: src/components/routes/settings/backups.tsx
+msgid "Delete backup"
+msgstr ""
+
 #: src/components/routes/settings/tokens-fingerprints.tsx
 msgid "Delete fingerprint"
 msgstr "Supprimer l'empreinte"
+
+#: src/components/routes/settings/backups.tsx
+msgid "Delete this backup?"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Delete this user?"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Delete user"
+msgstr ""
 
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Description"
@@ -588,6 +767,10 @@ msgstr ""
 #: src/components/containers-table/containers-table.tsx
 msgid "Detail"
 msgstr "Détail"
+
+#: src/components/routes/settings/about.tsx
+#~ msgid "Developer"
+#~ msgstr ""
 
 #: src/components/routes/system/smart-table.tsx
 msgid "Device"
@@ -643,8 +826,14 @@ msgstr "Entrée/Sortie réseau Docker"
 msgid "Documentation"
 msgstr ""
 
+#: src/components/routes/system/info-bar.tsx
+#: src/components/systems-table/systems-table-columns.tsx
+msgid "down"
+msgstr ""
+
 #. Context: System is down
 #: src/components/alerts-history-columns.tsx
+#: src/components/routes/dashboard.tsx
 #: src/components/routes/system/info-bar.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 #: src/lib/alerts.ts
@@ -658,6 +847,10 @@ msgstr "Injoignable ({downSystemsLength})"
 #: src/components/routes/system/network-sheet.tsx
 msgid "Download"
 msgstr "Télécharger"
+
+#: src/components/routes/settings/backups.tsx
+msgid "Download backup"
+msgstr ""
 
 #: src/components/alerts-history-columns.tsx
 msgid "Duration"
@@ -673,9 +866,25 @@ msgstr "Éditer"
 msgid "Edit {foo}"
 msgstr "Modifier {foo}"
 
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Edit user"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Editing is unlocked. Save or lock when done."
+msgstr ""
+
 #: src/components/login/auth-form.tsx
 #: src/components/login/forgot-pass-form.tsx
 #: src/components/login/otp-forms.tsx
+#: src/components/navbar.tsx
+#: src/components/routes/settings/layout.tsx
+#: src/components/routes/settings/mail.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/sidebar.tsx
 msgid "Email"
 msgstr ""
 
@@ -683,10 +892,26 @@ msgstr ""
 msgid "Email notifications"
 msgstr "Notifications par email"
 
+#: src/components/routes/settings/mail.tsx
+msgid "Email sending is currently disabled — enable it above to send tests or alerts."
+msgstr ""
+
+#: src/components/command-palette.tsx
+msgid "Email settings"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Email settings saved"
+msgstr ""
+
 #. Context: Battery state
 #: src/lib/i18n.ts
 msgid "Empty"
 msgstr "Vide"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Enable email sending"
+msgstr ""
 
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/routes/settings/quiet-hours.tsx
@@ -709,6 +934,10 @@ msgstr "Entrez l'adresse email pour réinitialiser le mot de passe"
 msgid "Enter email address..."
 msgstr "Entrez l'adresse email..."
 
+#: src/components/routes/settings/mail.tsx
+msgid "Enter password"
+msgstr ""
+
 #: src/components/login/otp-forms.tsx
 msgid "Enter your one-time password."
 msgstr "Entrez votre mot de passe à usage unique."
@@ -717,19 +946,30 @@ msgstr "Entrez votre mot de passe à usage unique."
 msgid "Ephemeral"
 msgstr "Éphémère"
 
-#: src/components/login/auth-form.tsx
 #: src/components/routes/settings/alerts-history-data-table.tsx
+#: src/components/routes/settings/backups.tsx
 #: src/components/routes/settings/config-yaml.tsx
 #: src/components/routes/settings/heartbeat.tsx
 #: src/components/routes/settings/heartbeat.tsx
 #: src/components/routes/settings/heartbeat.tsx
-#: src/components/routes/settings/notifications.tsx
+#: src/components/routes/settings/logs.tsx
+#: src/components/routes/settings/logs.tsx
+#: src/components/routes/settings/mail.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
+#: src/components/routes/settings/users.tsx
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Error"
 msgstr "Erreur"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Error details"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Errors only"
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Example:"
@@ -754,6 +994,10 @@ msgstr "Les systèmes existants non définis dans <0>config.yml</0> seront suppr
 msgid "Exited active"
 msgstr "Sorti actif"
 
+#: src/components/sidebar.tsx
+msgid "Expand sidebar"
+msgstr ""
+
 #: src/components/routes/settings/tokens-fingerprints.tsx
 msgid "Expires after one hour or on hub restart."
 msgstr "Expire après une heure ou au redémarrage du hub."
@@ -775,8 +1019,8 @@ msgid "Fahrenheit (°F)"
 msgstr ""
 
 #: src/components/systems-table/systems-table-columns.tsx
-msgid "Failed"
-msgstr "Échoué"
+#~ msgid "Failed"
+#~ msgstr "Échoué"
 
 #: src/components/routes/system/smart-table.tsx
 msgid "Failed Attributes:"
@@ -786,28 +1030,88 @@ msgstr "Attributs défaillants :"
 msgid "Failed to authenticate"
 msgstr "Échec de l'authentification"
 
+#: src/components/routes/settings/logs.tsx
+msgid "Failed to clear logs."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Failed to create backup."
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Failed to create user."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Failed to delete backup."
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Failed to delete user."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Failed to load backups."
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Failed to load logs."
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Failed to load SMTP settings."
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Failed to load users."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Failed to restore backup."
+msgstr ""
+
 #: src/components/routes/settings/layout.tsx
 #: src/components/routes/settings/notifications.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 msgid "Failed to save settings"
 msgstr "Échec de l'enregistrement des paramètres"
 
+#: src/components/routes/settings/mail.tsx
+msgid "Failed to save settings."
+msgstr ""
+
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Failed to send heartbeat"
 msgstr "Échec de l'envoi du battement de cœur (heartbeat)"
 
+#: src/components/routes/settings/users.tsx
+msgid "Failed to send password reset."
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Failed to send test email."
+msgstr ""
+
 #: src/components/routes/settings/notifications.tsx
-msgid "Failed to send test notification"
-msgstr "Échec de l'envoi de la notification de test"
+#~ msgid "Failed to send test notification"
+#~ msgstr "Échec de l'envoi de la notification de test"
 
 #: src/components/alerts/alerts-sheet.tsx
 msgid "Failed to update alert"
 msgstr "Échec de la mise à jour de l'alerte"
 
+#: src/components/routes/settings/users.tsx
+msgid "Failed to update user."
+msgstr ""
+
 #. placeholder {0}: statusTotals[ServiceStatus.Failed]
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Failed: {0}"
 msgstr "Échec : {0}"
+
+#: src/components/routes/settings/backups.tsx
+msgid "File"
+msgstr ""
 
 #: src/components/containers-table/containers-table.tsx
 #: src/components/routes/settings/alerts-history-data-table.tsx
@@ -826,9 +1130,17 @@ msgstr "Empreinte"
 msgid "Firmware"
 msgstr "Micrologiciel"
 
+#: src/components/routes/dashboard.tsx
+msgid "Fleet overview at a glance."
+msgstr ""
+
 #: src/components/alerts/alerts-sheet.tsx
 msgid "For <0>{min}</0> {min, plural, one {minute} other {minutes}}"
 msgstr "Pendant <0>{min}</0> {min, plural, one {minute} other {minutes}}"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Force TLS"
+msgstr ""
 
 #: src/components/login/auth-form.tsx
 msgid "Forgot password?"
@@ -839,6 +1151,10 @@ msgstr "Mot de passe oublié ?"
 msgctxt "Button to copy install command"
 msgid "FreeBSD command"
 msgstr "Commande FreeBSD"
+
+#: src/components/routes/settings/mail.tsx
+msgid "From address"
+msgstr ""
 
 #. Context: Battery state
 #: src/components/routes/system/info-bar.tsx
@@ -872,6 +1188,7 @@ msgstr "Consommation du GPU"
 msgid "GPU Usage"
 msgstr "Utilisation GPU"
 
+#: src/components/containers-table/containers-table.tsx
 #: src/components/routes/system/info-bar.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "Grid"
@@ -882,8 +1199,8 @@ msgid "Health"
 msgstr "Santé"
 
 #: src/components/routes/settings/layout.tsx
-msgid "Heartbeat"
-msgstr "Pulsation"
+#~ msgid "Heartbeat"
+#~ msgstr "Pulsation"
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Heartbeat Monitoring"
@@ -935,6 +1252,10 @@ msgstr "Inactive"
 msgid "If you've lost the password to your admin account, you may reset it using the following command."
 msgstr "Si vous avez perdu le mot de passe de votre compte administrateur, vous pouvez le réinitialiser en utilisant la commande suivante."
 
+#: src/components/containers-table/containers-table.tsx
+msgid "Image"
+msgstr ""
+
 #: src/components/containers-table/containers-table-columns.tsx
 msgctxt "Docker image"
 msgid "Image"
@@ -943,6 +1264,14 @@ msgstr ""
 #: src/components/routes/settings/quiet-hours.tsx
 msgid "Inactive"
 msgstr "Inactif"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Info"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Info only"
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Interval"
@@ -954,9 +1283,10 @@ msgstr "Adresse email invalide."
 
 #: src/components/lang-toggle.tsx
 #: src/components/routes/settings/general.tsx
-msgid "Language"
-msgstr "Langue"
+#~ msgid "Language"
+#~ msgstr "Langue"
 
+#: src/components/containers-table/containers-table.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "Layout"
 msgstr "Disposition"
@@ -965,9 +1295,26 @@ msgstr "Disposition"
 msgid "Layout width"
 msgstr "Largeur de la mise en page"
 
+#: src/components/routes/settings/mail.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Leave blank to keep current"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Level"
+msgstr ""
+
+#: src/components/routes/settings/about.tsx
+msgid "License"
+msgstr ""
+
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Lifecycle"
 msgstr "Cycle de vie"
+
+#: src/components/routes/settings/about.tsx
+msgid "Lightweight monitoring for your fleet."
+msgstr ""
 
 #: src/components/systemd-table/systemd-table.tsx
 #: src/components/systemd-table/systemd-table.tsx
@@ -990,6 +1337,10 @@ msgstr "Charge moyenne 1m"
 msgid "Load Average 5m"
 msgstr "Charge moyenne 5m"
 
+#: src/components/systems-table/systems-table-columns.tsx
+msgid "Load average vs {threads} CPU threads"
+msgstr ""
+
 #. Short label for load average
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Load Avg"
@@ -1003,8 +1354,13 @@ msgstr "État de charge"
 msgid "Loading..."
 msgstr "Chargement..."
 
+#: src/components/routes/settings/mail.tsx
+msgid "Lock"
+msgstr ""
+
 #: src/components/navbar.tsx
 #: src/components/navbar.tsx
+#: src/components/sidebar.tsx
 msgid "Log Out"
 msgstr "Déconnexion"
 
@@ -1017,11 +1373,13 @@ msgstr "Connexion"
 msgid "Login attempt failed"
 msgstr "Échec de la tentative de connexion"
 
-#: src/components/command-palette.tsx
 #: src/components/containers-table/containers-table.tsx
-#: src/components/navbar.tsx
 msgid "Logs"
 msgstr "Journaux"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Logs cleared"
+msgstr ""
 
 #: src/components/routes/settings/notifications.tsx
 msgid "Looking instead for where to create alerts? Click the bell <0/> icons in the systems table."
@@ -1046,6 +1404,7 @@ msgid "Max 1 min"
 msgstr ""
 
 #: src/components/containers-table/containers-table-columns.tsx
+#: src/components/containers-table/containers-table.tsx
 #: src/components/routes/system/info-bar.tsx
 #: src/components/systemd-table/systemd-table-columns.tsx
 #: src/components/systemd-table/systemd-table.tsx
@@ -1076,15 +1435,30 @@ msgstr "Utilisation de la mémoire des conteneurs Docker"
 msgid "Model"
 msgstr "Modèle"
 
+#: src/components/routes/settings/about.tsx
+msgid "Modified by"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Most recently reporting systems."
+msgstr ""
+
 #: src/components/add-system.tsx
 #: src/components/alerts-history-columns.tsx
 #: src/components/containers-table/containers-table-columns.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
 #: src/components/systemd-table/systemd-table-columns.tsx
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Name"
 msgstr "Nom"
 
+#: src/components/routes/settings/users.tsx
+msgid "Name (optional)"
+msgstr ""
+
 #: src/components/containers-table/containers-table-columns.tsx
+#: src/components/containers-table/containers-table.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Net"
 msgstr "Rés"
@@ -1105,11 +1479,39 @@ msgstr "Trafic réseau des interfaces publiques"
 msgid "Network unit"
 msgstr "Unité réseau"
 
+#: src/components/routes/settings/users.tsx
+msgid "New password (optional)"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Next"
+msgstr ""
+
+#: src/components/routes/system/info-bar.tsx
+msgid "NICs"
+msgstr ""
+
 #: src/components/systemd-table/systemd-table.tsx
 #: src/components/systemd-table/systemd-table.tsx
 #: src/components/systemd-table/systemd-table.tsx
 msgid "No"
 msgstr "Non"
+
+#: src/components/routes/settings/logs.tsx
+msgid "No additional details for this entry."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "No backups yet. Click \"Backup now\" to create your first one."
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "No data yet."
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "No log entries match your filters."
+msgstr ""
 
 #: src/components/command-palette.tsx
 #: src/components/systemd-table/systemd-table.tsx
@@ -1134,6 +1536,18 @@ msgstr "Aucun attribut S.M.A.R.T. disponible pour cet appareil."
 msgid "No systems found."
 msgstr "Aucun système trouvé."
 
+#: src/components/routes/dashboard.tsx
+msgid "No systems registered yet. Add a system from the sidebar to get started."
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "No systems yet."
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "No users yet."
+msgstr ""
+
 #: src/components/command-palette.tsx
 #: src/components/routes/settings/layout.tsx
 #: src/components/routes/settings/notifications.tsx
@@ -1143,6 +1557,10 @@ msgstr ""
 #: src/components/login/auth-form.tsx
 msgid "OAuth 2 / OIDC support"
 msgstr "Support OAuth 2 / OIDC"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Off uses STARTTLS if available."
+msgstr ""
 
 #: src/components/routes/settings/config-yaml.tsx
 msgid "On each restart, systems in the database will be updated to match the systems defined in the file."
@@ -1161,6 +1579,7 @@ msgstr "Mot de passe à usage unique"
 #: src/components/routes/settings/tokens-fingerprints.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
 #: src/components/routes/system/smart-table.tsx
+#: src/components/sidebar.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Open menu"
 msgstr "Ouvrir le menu"
@@ -1168,6 +1587,10 @@ msgstr "Ouvrir le menu"
 #: src/components/login/auth-form.tsx
 msgid "Or continue with"
 msgstr "Ou continuer avec"
+
+#: src/components/routes/settings/about.tsx
+msgid "Original author"
+msgstr ""
 
 #: src/components/routes/system/cpu-sheet.tsx
 msgid "Other"
@@ -1180,6 +1603,7 @@ msgstr "Écraser les alertes existantes"
 #: src/components/command-palette.tsx
 #: src/components/command-palette.tsx
 #: src/components/command-palette.tsx
+#: src/components/command-palette.tsx
 msgid "Page"
 msgstr ""
 
@@ -1189,12 +1613,18 @@ msgstr ""
 msgid "Page {0} of {1}"
 msgstr "Page {0} sur {1}"
 
+#: src/components/routes/settings/logs.tsx
+msgid "Page {page}"
+msgstr ""
+
 #: src/components/command-palette.tsx
 msgid "Pages / Settings"
 msgstr "Pages / Paramètres"
 
 #: src/components/login/auth-form.tsx
 #: src/components/login/auth-form.tsx
+#: src/components/routes/settings/mail.tsx
+#: src/components/routes/settings/users.tsx
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -1206,9 +1636,17 @@ msgstr "Le mot de passe doit contenir au moins 8 caractères."
 msgid "Password must be less than 72 bytes."
 msgstr "Le mot de passe doit être inférieur à 72 Octets."
 
+#: src/components/routes/settings/users.tsx
+msgid "Password reset email sent"
+msgstr ""
+
 #: src/components/login/forgot-pass-form.tsx
 msgid "Password reset request received"
 msgstr "Demande de réinitialisation du mot de passe reçue"
+
+#: src/components/routes/settings/users.tsx
+msgid "Password updated"
+msgstr ""
 
 #: src/components/routes/settings/quiet-hours.tsx
 msgid "Past"
@@ -1218,6 +1656,7 @@ msgstr "Passé"
 msgid "Pause"
 msgstr ""
 
+#: src/components/routes/dashboard.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Paused"
 msgstr "En pause"
@@ -1252,8 +1691,12 @@ msgid "Persistence"
 msgstr "Persistance"
 
 #: src/components/routes/settings/notifications.tsx
-msgid "Please <0>configure an SMTP server</0> to ensure alerts are delivered."
-msgstr "Veuillez <0>configurer un serveur SMTP</0> pour garantir la livraison des alertes."
+#~ msgid "Please <0>configure an SMTP server</0> to ensure alerts are delivered."
+#~ msgstr "Veuillez <0>configurer un serveur SMTP</0> pour garantir la livraison des alertes."
+
+#: src/components/routes/settings/notifications.tsx
+msgid "Please <0>configure your email server</0> to ensure alerts are delivered."
+msgstr ""
 
 #: src/components/alerts/alerts-sheet.tsx
 msgid "Please check logs for more details."
@@ -1280,12 +1723,21 @@ msgstr "Veuillez vous reconnecter"
 msgid "Please see <0>the documentation</0> for instructions."
 msgstr "Veuillez consulter <0>la documentation</0> pour les instructions."
 
+#: src/components/routes/settings/users.tsx
+msgid "Please sign in again with your new password."
+msgstr ""
+
 #: src/components/login/login.tsx
 msgid "Please sign in to your account"
 msgstr "Veuillez vous connecter à votre compte"
 
 #: src/components/add-system.tsx
+#: src/components/routes/settings/mail.tsx
 msgid "Port"
+msgstr ""
+
+#: src/components/containers-table/containers-table.tsx
+msgid "Ports"
 msgstr ""
 
 #: src/components/containers-table/containers-table-columns.tsx
@@ -1304,8 +1756,12 @@ msgid "Precise utilization at the recorded time"
 msgstr "Utilisation précise au moment enregistré"
 
 #: src/components/routes/settings/general.tsx
-msgid "Preferred Language"
-msgstr "Langue préférée"
+#~ msgid "Preferred Language"
+#~ msgstr "Langue préférée"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Previous"
+msgstr ""
 
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Process started"
@@ -1333,19 +1789,50 @@ msgstr "Heures calmes"
 msgid "Read"
 msgstr "Lecture"
 
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Read only"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Read only — view only, cannot edit"
+msgstr ""
+
 #: src/components/routes/system/charts/network-charts.tsx
 msgid "Received"
 msgstr "Reçu"
 
+#: src/components/routes/dashboard.tsx
+msgid "Recent activity"
+msgstr ""
+
 #: src/components/containers-table/containers-table.tsx
 #: src/components/containers-table/containers-table.tsx
+#: src/components/routes/settings/logs.tsx
 #: src/components/routes/system/smart-table.tsx
 msgid "Refresh"
 msgstr "Actualiser"
 
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Regular"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Regular — manage own systems"
+msgstr ""
+
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Relationships"
 msgstr "Relations"
+
+#: src/components/routes/settings/about.tsx
+msgid "Released under the MIT License (inherited from upstream Beszel). See the LICENSE file in the source distribution for the full text and original copyright notices."
+msgstr ""
+
+#: src/components/routes/settings/about.tsx
+#~ msgid "Released under the MIT License. See the LICENSE file in the source distribution for the full text and copyright notices."
+#~ msgstr ""
 
 #: src/components/login/login.tsx
 msgid "Request a one-time password"
@@ -1373,13 +1860,54 @@ msgstr "Réinitialiser le mot de passe"
 msgid "Resolved"
 msgstr "Résolu"
 
+#: src/components/routes/system/info-bar.tsx
+#: src/components/routes/system/info-bar.tsx
+#: src/components/routes/system/info-bar.tsx
+msgid "Restart agent"
+msgstr ""
+
+#. placeholder {0}: system.name
+#: src/components/routes/system/info-bar.tsx
+msgid "Restart agent on {0}?"
+msgstr ""
+
+#: src/components/routes/system/info-bar.tsx
+msgid "Restart failed"
+msgstr ""
+
+#: src/components/routes/system/info-bar.tsx
+msgid "Restart requested"
+msgstr ""
+
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Restarts"
 msgstr "Redémarrages"
 
+#: src/components/routes/settings/backups.tsx
+msgid "Restore"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Restore from this backup"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Restore from this backup?"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Restoring"
+msgstr ""
+
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Resume"
 msgstr "Reprendre"
+
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Role"
+msgstr ""
 
 #: src/components/systems-table/systems-table-columns.tsx
 msgctxt "Root disk label"
@@ -1414,6 +1942,14 @@ msgstr "Enregistrer {foo}"
 msgid "Save address using enter key or comma. Leave blank to disable email notifications."
 msgstr "Enregistrez l'adresse en utilisant la touche Entrée ou la virgule. Laissez vide pour désactiver les notifications par email."
 
+#: src/components/routes/settings/users.tsx
+msgid "Save changes"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Save settings"
+msgstr ""
+
 #: src/components/routes/settings/general.tsx
 #: src/components/routes/settings/notifications.tsx
 msgid "Save Settings"
@@ -1436,12 +1972,21 @@ msgid "Schedule quiet hours where notifications will not be sent."
 msgstr "Programmez des heures calmes où les notifications ne seront pas envoyées."
 
 #: src/components/navbar.tsx
+#: src/components/routes/settings/logs.tsx
+#: src/components/sidebar.tsx
+#: src/components/sidebar.tsx
+#: src/components/sidebar.tsx
+#: src/components/sidebar.tsx
 msgid "Search"
 msgstr "Recherche"
 
 #: src/components/command-palette.tsx
 msgid "Search for systems or settings..."
 msgstr "Rechercher des systèmes ou des paramètres..."
+
+#: src/components/routes/settings/logs.tsx
+msgid "Search messages..."
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Seconds between pings (default: 60)"
@@ -1459,13 +2004,37 @@ msgstr "Sélectionner {foo}"
 msgid "Send a single heartbeat ping to verify your endpoint is working."
 msgstr "Envoyez un seul ping heartbeat pour vérifier que votre point de terminaison fonctionne."
 
+#: src/components/routes/settings/users.tsx
+msgid "Send password reset email"
+msgstr ""
+
 #: src/components/routes/settings/heartbeat.tsx
-msgid "Send periodic outbound pings to an external monitoring service so you can monitor Beszel without exposing it to the internet."
-msgstr "Envoyez des pings sortants périodiques vers un service de surveillance externe afin de pouvoir surveiller Beszel sans l'exposer à Internet."
+msgid "Send periodic outbound pings to an external monitoring service so you can monitor Bantay without exposing it to the internet."
+msgstr ""
+
+#: src/components/routes/settings/heartbeat.tsx
+#~ msgid "Send periodic outbound pings to an external monitoring service so you can monitor Beszel without exposing it to the internet."
+#~ msgstr "Envoyez des pings sortants périodiques vers un service de surveillance externe afin de pouvoir surveiller Beszel sans l'exposer à Internet."
+
+#: src/components/routes/settings/mail.tsx
+msgid "Send test"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Send test email to"
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Send test heartbeat"
 msgstr "Envoyer un heartbeat de test"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Sender email"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Sender name"
+msgstr ""
 
 #: src/components/routes/system/charts/network-charts.tsx
 msgid "Sent"
@@ -1480,7 +2049,6 @@ msgid "Service Details"
 msgstr "Détails du service"
 
 #: src/components/routes/system.tsx
-#: src/components/systems-table/systems-table-columns.tsx
 msgid "Services"
 msgstr ""
 
@@ -1489,8 +2057,12 @@ msgid "Set percentage thresholds for meter colors."
 msgstr "Définir des seuils de pourcentage pour les couleurs des compteurs."
 
 #: src/components/routes/settings/heartbeat.tsx
-msgid "Set the following environment variables on your Beszel hub to enable heartbeat monitoring:"
-msgstr "Définissez les variables d'environnement suivantes sur votre hub Beszel pour activer la surveillance du heartbeat :"
+msgid "Set the following environment variables on your Bantay hub to enable heartbeat monitoring:"
+msgstr ""
+
+#: src/components/routes/settings/heartbeat.tsx
+#~ msgid "Set the following environment variables on your Beszel hub to enable heartbeat monitoring:"
+#~ msgstr "Définissez les variables d'environnement suivantes sur votre hub Beszel pour activer la surveillance du heartbeat :"
 
 #: src/components/command-palette.tsx
 #: src/components/command-palette.tsx
@@ -1499,8 +2071,13 @@ msgstr "Définissez les variables d'environnement suivantes sur votre hub Beszel
 #: src/components/routes/settings/layout.tsx
 #: src/components/routes/settings/layout.tsx
 #: src/components/routes/system/info-bar.tsx
+#: src/components/sidebar.tsx
 msgid "Settings"
 msgstr "Paramètres"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Settings are locked to prevent accidental changes."
+msgstr ""
 
 #: src/components/routes/settings/layout.tsx
 msgid "Settings saved"
@@ -1510,9 +2087,21 @@ msgstr "Paramètres enregistrés"
 msgid "Sign in"
 msgstr "Se connecter"
 
+#: src/components/routes/settings/backups.tsx
+msgid "Size"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "SMTP server"
+msgstr ""
+
 #: src/components/command-palette.tsx
-msgid "SMTP settings"
-msgstr "Paramètres SMTP"
+#~ msgid "SMTP settings"
+#~ msgstr "Paramètres SMTP"
+
+#: src/components/routes/settings/backups.tsx
+msgid "Snapshots of all your data: users, systems, alerts, history. Take one before any risky change. Restore puts your hub back the way it was when the backup was taken."
+msgstr ""
 
 #: src/components/systems-table/systems-table.tsx
 msgid "Sort By"
@@ -1550,6 +2139,11 @@ msgstr "Espace Swap utilisé par le système"
 msgid "Swap Usage"
 msgstr "Utilisation du swap"
 
+#: src/components/mode-toggle.tsx
+#: src/components/mode-toggle.tsx
+msgid "Switch theme"
+msgstr ""
+
 #: src/components/add-system.tsx
 #: src/components/alerts-history-columns.tsx
 #: src/components/containers-table/containers-table-columns.tsx
@@ -1569,11 +2163,16 @@ msgstr "Système"
 msgid "System load averages over time"
 msgstr "Charges moyennes du système dans le temps"
 
+#: src/components/routes/settings/logs.tsx
+msgid "System:"
+msgstr ""
+
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Systemd Services"
 msgstr "Services systemd"
 
-#: src/components/navbar.tsx
+#: src/components/command-palette.tsx
+#: src/components/sidebar.tsx
 msgid "Systems"
 msgstr "Systèmes"
 
@@ -1581,6 +2180,7 @@ msgstr "Systèmes"
 msgid "Systems may be managed in a <0>config.yml</0> file inside your data directory."
 msgstr "Les systèmes peuvent être gérés dans un fichier <0>config.yml</0> à l'intérieur de votre répertoire de données."
 
+#: src/components/containers-table/containers-table.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "Table"
 msgstr "Tableau"
@@ -1614,16 +2214,37 @@ msgid "Temperatures of system sensors"
 msgstr "Températures des capteurs du système"
 
 #: src/components/routes/settings/notifications.tsx
-msgid "Test <0>URL</0>"
-msgstr "Tester <0>URL</0>"
+#~ msgid "Test <0>URL</0>"
+#~ msgstr "Tester <0>URL</0>"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Test email sent"
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Test heartbeat"
 msgstr "Tester le heartbeat"
 
 #: src/components/routes/settings/notifications.tsx
-msgid "Test notification sent"
-msgstr "Notification de test envoyée"
+#~ msgid "Test notification sent"
+#~ msgstr "Notification de test envoyée"
+
+#: src/components/routes/system/info-bar.tsx
+msgid "The agent process will exit and its supervisor (Docker or systemd) will start it again. Metrics for this system will be unavailable for a few seconds."
+msgstr ""
+
+#. placeholder {0}: backup.key
+#: src/components/routes/settings/backups.tsx
+msgid "The file <0>{0}</0> will be permanently removed. This does not affect your live data."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "The hub will restart in a moment. Refresh the page after about 30 seconds."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "The new backup is now in the list."
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "The overall status is <0>ok</0> when all systems are up, <1>warn</1> when alerts are triggered, and <2>error</2> when any system is down."
@@ -1636,6 +2257,20 @@ msgstr "Ensuite, connectez-vous au backend et réinitialisez le mot de passe de 
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "This action cannot be undone. This will permanently delete all current records for {name} from the database."
 msgstr "Cette action ne peut pas être annulée. Cela supprimera définitivement tous les enregistrements actuels pour {name} de la base de données."
+
+#: src/components/routes/settings/logs.tsx
+msgid "This permanently deletes every entry in the activity log. This cannot be undone."
+msgstr ""
+
+#. placeholder {0}: user.email
+#: src/components/routes/settings/users.tsx
+msgid "This permanently removes <0>{0}</0> and any systems they own. This cannot be undone."
+msgstr ""
+
+#. placeholder {0}: backup.key
+#: src/components/routes/settings/backups.tsx
+msgid "This replaces all current data with the contents of <0>{0}</0>. The hub will restart. Anything added since this backup was taken will be lost."
+msgstr ""
 
 #: src/components/routes/settings/alerts-history-data-table.tsx
 msgid "This will permanently delete all selected records from the database."
@@ -1659,8 +2294,8 @@ msgstr "Aux email(s)"
 
 #: src/components/mode-toggle.tsx
 #: src/components/mode-toggle.tsx
-msgid "Toggle theme"
-msgstr "Changer le thème"
+#~ msgid "Toggle theme"
+#~ msgstr "Changer le thème"
 
 #: src/components/add-system.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
@@ -1681,6 +2316,23 @@ msgstr "Les tokens permettent aux agents de se connecter et de s'enregistrer. Le
 msgid "Tokens and fingerprints are used to authenticate WebSocket connections to the hub."
 msgstr "Les tokens et les empreintes sont utilisés pour authentifier les connexions WebSocket vers le hub."
 
+#: src/components/routes/settings/logs.tsx
+msgid "Took"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Top CPU usage"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Top Disk usage"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Top Memory usage"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
 #: src/components/ui/chart.tsx
 #: src/components/ui/chart.tsx
 msgid "Total"
@@ -1786,7 +2438,16 @@ msgstr "Inconnue"
 msgid "Unlimited"
 msgstr "Illimité"
 
+#: src/components/routes/settings/mail.tsx
+msgid "Unlock to edit"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "up"
+msgstr ""
+
 #. Context: System is up
+#: src/components/routes/dashboard.tsx
 #: src/components/routes/system/info-bar.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Up"
@@ -1836,8 +2497,27 @@ msgstr "Utilisation de la partition racine"
 msgid "Used"
 msgstr "Utilisé"
 
+#: src/components/routes/settings/users.tsx
+msgid "User created"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "User deleted"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "User updated"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Username"
+msgstr ""
+
 #: src/components/command-palette.tsx
 #: src/components/navbar.tsx
+#: src/components/routes/settings/layout.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/sidebar.tsx
 msgid "Users"
 msgstr "Utilisateurs"
 
@@ -1850,6 +2530,7 @@ msgstr "Utilisation"
 msgid "Value"
 msgstr "Valeur"
 
+#: src/components/containers-table/containers-table.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "View"
 msgstr "Vue"
@@ -1873,12 +2554,16 @@ msgid "Waiting for enough records to display"
 msgstr "En attente de suffisamment d'enregistrements à afficher"
 
 #: src/components/routes/settings/general.tsx
-msgid "Want to help improve our translations? Check <0>Crowdin</0> for details."
-msgstr "Vous voulez nous aider à améliorer nos traductions ? Consultez <0>Crowdin</0> pour plus de détails."
+#~ msgid "Want to help improve our translations? Check <0>Crowdin</0> for details."
+#~ msgstr "Vous voulez nous aider à améliorer nos traductions ? Consultez <0>Crowdin</0> pour plus de détails."
 
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Wants"
 msgstr "Souhaite"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Warning"
+msgstr ""
 
 #: src/components/routes/settings/general.tsx
 msgid "Warning (%)"
@@ -1888,17 +2573,42 @@ msgstr "Avertissement (%)"
 msgid "Warning thresholds"
 msgstr "Seuils d'avertissement"
 
+#: src/components/routes/settings/logs.tsx
+msgid "Warnings only"
+msgstr ""
+
 #: src/components/routes/settings/notifications.tsx
-msgid "Webhook / Push notifications"
-msgstr "Notifications Webhook / Push"
+#~ msgid "Webhook / Push notifications"
+#~ msgstr "Notifications Webhook / Push"
+
+#: src/components/routes/settings/logs.tsx
+msgid "What happened"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "What happened recently inside Bantay — useful when something looks wrong or an alert didn't fire. Click a row to see full details."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+#: src/components/routes/settings/logs.tsx
+msgid "When"
+msgstr ""
 
 #: src/components/routes/settings/tokens-fingerprints.tsx
 msgid "When enabled, this token allows agents to self-register without prior system creation."
 msgstr "Lorsqu'il est activé, ce jeton permet aux agents de s'enregistrer automatiquement sans création préalable du système."
 
+#: src/components/routes/settings/mail.tsx
+msgid "When off, no emails are sent (alerts still appear in the UI)."
+msgstr ""
+
 #: src/components/routes/settings/heartbeat.tsx
 msgid "When using POST, each heartbeat includes a JSON payload with system status summary, list of down systems, and triggered alerts."
 msgstr "En utilisant POST, chaque heartbeat inclut une charge utile JSON avec un résumé de l'état du sistema, la liste des systèmes en panne et les alertes déclenchées."
+
+#: src/components/routes/settings/mail.tsx
+msgid "Who emails from Bantay appear to come from."
+msgstr ""
 
 #: src/components/add-system.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
@@ -1927,6 +2637,10 @@ msgstr "Configuration YAML"
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Yes"
 msgstr "Oui"
+
+#: src/components/routes/settings/users.tsx
+msgid "You cannot change your own role. Ask another admin."
+msgstr ""
 
 #: src/components/routes/settings/layout.tsx
 msgid "Your user settings have been updated."

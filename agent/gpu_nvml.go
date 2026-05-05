@@ -10,7 +10,7 @@ import (
 	"unsafe"
 
 	"github.com/ebitengine/purego"
-	"github.com/henrygd/beszel/internal/entities/system"
+	"bantay/internal/entities/system"
 )
 
 // NVML constants and types

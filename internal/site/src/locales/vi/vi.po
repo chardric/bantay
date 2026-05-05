@@ -18,11 +18,10 @@ msgstr ""
 "X-Crowdin-File: /main/internal/site/src/locales/en/en.po\n"
 "X-Crowdin-File-ID: 32\n"
 
-#. placeholder {0}: newVersion.v
 #: src/components/footer-repo-link.tsx
-msgctxt "New version available"
-msgid "{0} available"
-msgstr "{0} có sẵn"
+#~ msgctxt "New version available"
+#~ msgid "{0} available"
+#~ msgstr "{0} có sẵn"
 
 #. placeholder {0}: table.getFilteredSelectedRowModel().rows.length
 #. placeholder {1}: table.getFilteredRowModel().rows.length
@@ -89,9 +88,20 @@ msgstr "30 ngày"
 msgid "5 min"
 msgstr "5 phút"
 
+#: src/components/routes/settings/about.tsx
+#: src/components/routes/settings/layout.tsx
+msgid "About"
+msgstr ""
+
+#: src/components/routes/settings/about.tsx
+msgid "About Bantay."
+msgstr ""
+
 #. Table column
+#: src/components/routes/settings/backups.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
+#: src/components/routes/settings/users.tsx
 #: src/components/routes/system/smart-table.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Actions"
@@ -112,6 +122,14 @@ msgstr "Cảnh báo hoạt động"
 msgid "Active state"
 msgstr "Trạng thái hoạt động"
 
+#: src/components/command-palette.tsx
+#: src/components/navbar.tsx
+#: src/components/routes/settings/layout.tsx
+#: src/components/routes/settings/logs.tsx
+#: src/components/sidebar.tsx
+msgid "Activity log"
+msgstr ""
+
 #: src/components/add-system.tsx
 #: src/components/add-system.tsx
 #: src/components/navbar.tsx
@@ -121,9 +139,27 @@ msgstr "Trạng thái hoạt động"
 msgid "Add {foo}"
 msgstr "Thêm {foo}"
 
+#: src/components/routes/settings/users.tsx
+msgid "Add a new user"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Add people who can sign in. Admins can change settings; read-only users can view but not edit."
+msgstr ""
+
+#: src/components/sidebar.tsx
+#: src/components/sidebar.tsx
+#: src/components/sidebar.tsx
+msgid "Add System"
+msgstr ""
+
 #: src/components/routes/settings/notifications.tsx
-msgid "Add URL"
-msgstr "Thêm URL"
+#~ msgid "Add URL"
+#~ msgstr "Thêm URL"
+
+#: src/components/routes/settings/users.tsx
+msgid "Add user"
+msgstr ""
 
 #: src/components/routes/settings/general.tsx
 msgid "Adjust display options for charts."
@@ -136,20 +172,35 @@ msgstr "Điều chỉnh chiều rộng bố cục chính"
 #: src/components/command-palette.tsx
 #: src/components/command-palette.tsx
 #: src/components/navbar.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/sidebar.tsx
 msgid "Admin"
 msgstr "Quản trị viên"
+
+#: src/components/routes/settings/users.tsx
+msgid "Admin — full access"
+msgstr ""
 
 #: src/components/systemd-table/systemd-table.tsx
 msgid "After"
 msgstr "Sau"
 
 #: src/components/routes/settings/heartbeat.tsx
-msgid "After setting the environment variables, restart your Beszel hub for changes to take effect."
-msgstr "Sau khi thiết lập các biến môi trường, hãy khởi động lại hub Beszel để các thay đổi có hiệu lực."
+msgid "After setting the environment variables, restart your Bantay hub for changes to take effect."
+msgstr ""
+
+#: src/components/routes/settings/heartbeat.tsx
+#~ msgid "After setting the environment variables, restart your Beszel hub for changes to take effect."
+#~ msgstr "Sau khi thiết lập các biến môi trường, hãy khởi động lại hub Beszel để các thay đổi có hiệu lực."
 
 #: src/components/systems-table/systems-table-columns.tsx
-msgid "Agent"
-msgstr "Tác nhân"
+#~ msgid "Agent"
+#~ msgstr "Tác nhân"
+
+#: src/components/routes/system/info-bar.tsx
+msgid "Agent did not respond."
+msgstr ""
 
 #: src/components/command-palette.tsx
 #: src/components/routes/settings/alerts-history-data-table.tsx
@@ -170,14 +221,21 @@ msgstr "Cảnh báo"
 msgid "All Containers"
 msgstr "Tất cả container"
 
+#: src/components/routes/settings/logs.tsx
+msgid "All levels"
+msgstr ""
+
 #: src/components/alerts/alerts-sheet.tsx
-#: src/components/command-palette.tsx
 #: src/components/routes/home.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/systems-table/systems-table.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "All Systems"
 msgstr "Tất cả Hệ thống"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Anonymous (no login)"
+msgstr ""
 
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Are you sure you want to delete {name}?"
@@ -186,6 +244,18 @@ msgstr "Bạn có chắc chắn muốn xóa {name} không?"
 #: src/components/routes/settings/alerts-history-data-table.tsx
 msgid "Are you sure?"
 msgstr "Bạn có chắc không?"
+
+#: src/components/routes/settings/users.tsx
+msgid "At least 8 characters."
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Auth method"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Authenticated as"
+msgstr ""
 
 #: src/components/copy-to-clipboard.tsx
 msgid "Automatic copy requires a secure context."
@@ -217,6 +287,10 @@ msgstr "Số lượng trung bình các hoạt động I/O đang chờ được x
 msgid "Average power consumption of GPUs"
 msgstr "Tiêu thụ điện năng trung bình của GPU"
 
+#: src/components/systems-table/systems-table-columns.tsx
+msgid "Average processes using or waiting for CPU. Normalized: under 70% healthy, 70–90% busy, over 90% overloaded."
+msgstr ""
+
 #: src/components/routes/system/disk-io-sheet.tsx
 msgctxt "Disk I/O average operation time (iostat await)"
 msgid "Average queue to completion time per operation"
@@ -235,8 +309,35 @@ msgstr "Mức sử dụng trung bình của {0}"
 msgid "Average utilization of GPU engines"
 msgstr "Mức sử dụng trung bình của động cơ GPU"
 
+#: src/components/routes/dashboard.tsx
+msgid "Avg CPU"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Avg Disk"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Avg Memory"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Backup created"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Backup deleted"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Backup now"
+msgstr ""
+
 #: src/components/command-palette.tsx
 #: src/components/navbar.tsx
+#: src/components/routes/settings/backups.tsx
+#: src/components/routes/settings/layout.tsx
+#: src/components/sidebar.tsx
 msgid "Backups"
 msgstr "Sao lưu"
 
@@ -245,10 +346,18 @@ msgstr "Sao lưu"
 msgid "Bandwidth"
 msgstr "Băng thông"
 
+#: src/components/routes/settings/about.tsx
+msgid "Bantay is a fork of <0>Beszel</0>, originally created by henrygd. All credit for the underlying monitoring platform belongs to the upstream project."
+msgstr ""
+
+#: src/components/login/auth-form.tsx
+msgid "Bantay supports OpenID Connect and many OAuth2 authentication providers."
+msgstr ""
+
 #. Battery label in systems table header
 #: src/components/systems-table/systems-table-columns.tsx
-msgid "Bat"
-msgstr "Pin"
+#~ msgid "Bat"
+#~ msgstr "Pin"
 
 #: src/components/routes/system/charts/sensor-charts.tsx
 #: src/lib/alerts.ts
@@ -275,12 +384,12 @@ msgid "Below {0}{1} in last {2, plural, one {# minute} other {# minutes}}"
 msgstr "Dưới {0}{1} trong {2, plural, one {# phút} other {# phút}} qua"
 
 #: src/components/login/auth-form.tsx
-msgid "Beszel supports OpenID Connect and many OAuth2 authentication providers."
-msgstr "Beszel hỗ trợ OpenID Connect và nhiều nhà cung cấp xác thực OAuth2."
+#~ msgid "Beszel supports OpenID Connect and many OAuth2 authentication providers."
+#~ msgstr "Beszel hỗ trợ OpenID Connect và nhiều nhà cung cấp xác thực OAuth2."
 
 #: src/components/routes/settings/notifications.tsx
-msgid "Beszel uses <0>Shoutrrr</0> to integrate with popular notification services."
-msgstr "Beszel sử dụng <0>Shoutrrr</0> để tích hợp với các dịch vụ thông báo phổ biến."
+#~ msgid "Beszel uses <0>Shoutrrr</0> to integrate with popular notification services."
+#~ msgstr "Beszel sử dụng <0>Shoutrrr</0> để tích hợp với các dịch vụ thông báo phổ biến."
 
 #: src/components/add-system.tsx
 msgid "Binary"
@@ -295,6 +404,10 @@ msgstr "Bit (Kbps, Mbps, Gbps)"
 msgid "Boot state"
 msgstr "Trạng thái khởi động"
 
+#: src/components/routes/settings/logs.tsx
+msgid "Browser / agent"
+msgstr ""
+
 #: src/components/routes/settings/general.tsx
 #: src/components/routes/settings/general.tsx
 msgid "Bytes (KB/s, MB/s, GB/s)"
@@ -303,6 +416,10 @@ msgstr "Byte (KB/giây, MB/giây, GB/giây)"
 #: src/components/routes/system/charts/memory-charts.tsx
 msgid "Cache / Buffers"
 msgstr "Bộ nhớ đệm / Bộ đệm"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Came from"
+msgstr ""
 
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Can reload"
@@ -317,7 +434,14 @@ msgid "Can stop"
 msgstr "Có thể dừng"
 
 #: src/components/routes/settings/alerts-history-data-table.tsx
+#: src/components/routes/settings/backups.tsx
+#: src/components/routes/settings/backups.tsx
+#: src/components/routes/settings/logs.tsx
 #: src/components/routes/settings/quiet-hours.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/system/info-bar.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Cancel"
 msgstr "Hủy bỏ"
@@ -376,14 +500,26 @@ msgid "Check your monitoring service"
 msgstr "Kiểm tra dịch vụ giám sát của bạn"
 
 #: src/components/routes/settings/notifications.tsx
-msgid "Check your notification service"
-msgstr "Kiểm tra dịch vụ thông báo của bạn"
+#~ msgid "Check your notification service"
+#~ msgstr "Kiểm tra dịch vụ thông báo của bạn"
 
 #: src/components/containers-table/containers-table.tsx
 #: src/components/routes/system/smart-table.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "Clear"
 msgstr "Xóa"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Clear all"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Clear all log entries?"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Clear logs"
+msgstr ""
 
 #: src/components/containers-table/containers-table.tsx
 msgid "Click on a container to view more information."
@@ -401,10 +537,22 @@ msgstr "Nhấp vào hệ thống để xem thêm thông tin."
 msgid "Click to copy"
 msgstr "Nhấp để sao chép"
 
+#: src/components/routes/settings/logs.tsx
+msgid "Client IP"
+msgstr ""
+
+#: src/components/sidebar.tsx
+msgid "Collapse sidebar"
+msgstr ""
+
 #: src/components/login/forgot-pass-form.tsx
 #: src/components/login/forgot-pass-form.tsx
 msgid "Command line instructions"
 msgstr "Hướng dẫn dòng lệnh"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Configure how Bantay sends email — for password resets, alerts, and notifications. Ask your email provider or admin if you don't know these values."
+msgstr ""
 
 #: src/components/routes/settings/notifications.tsx
 msgid "Configure how you receive alert notifications."
@@ -424,6 +572,7 @@ msgid "Connection is down"
 msgstr "Mất kết nối"
 
 #: src/components/routes/system.tsx
+#: src/components/sidebar.tsx
 msgid "Containers"
 msgstr "Container"
 
@@ -493,6 +642,7 @@ msgid "Core"
 msgstr "Lõi"
 
 #: src/components/containers-table/containers-table-columns.tsx
+#: src/components/containers-table/containers-table.tsx
 #: src/components/systemd-table/systemd-table-columns.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "CPU"
@@ -529,6 +679,10 @@ msgstr "Tạo"
 msgid "Create account"
 msgstr "Tạo tài khoản"
 
+#: src/components/routes/settings/users.tsx
+msgid "Create user"
+msgstr ""
+
 #. Context: date created
 #: src/components/alerts-history-columns.tsx
 msgid "Created"
@@ -561,6 +715,13 @@ msgstr "Chu kỳ"
 msgid "Daily"
 msgstr "Hàng ngày"
 
+#: src/components/command-palette.tsx
+#: src/components/routes/dashboard.tsx
+#: src/components/routes/dashboard.tsx
+#: src/components/sidebar.tsx
+msgid "Dashboard"
+msgstr ""
+
 #: src/components/routes/system/info-bar.tsx
 msgctxt "Default system layout option"
 msgid "Default"
@@ -571,15 +732,33 @@ msgid "Default time period"
 msgstr "Thời gian mặc định"
 
 #: src/components/routes/settings/alerts-history-data-table.tsx
+#: src/components/routes/settings/backups.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/routes/system/smart-table.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Delete"
 msgstr "Xóa"
 
+#: src/components/routes/settings/backups.tsx
+msgid "Delete backup"
+msgstr ""
+
 #: src/components/routes/settings/tokens-fingerprints.tsx
 msgid "Delete fingerprint"
 msgstr "Xóa vân tay"
+
+#: src/components/routes/settings/backups.tsx
+msgid "Delete this backup?"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Delete this user?"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Delete user"
+msgstr ""
 
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Description"
@@ -588,6 +767,10 @@ msgstr "Mô tả"
 #: src/components/containers-table/containers-table.tsx
 msgid "Detail"
 msgstr "Chi tiết"
+
+#: src/components/routes/settings/about.tsx
+#~ msgid "Developer"
+#~ msgstr ""
 
 #: src/components/routes/system/smart-table.tsx
 msgid "Device"
@@ -643,8 +826,14 @@ msgstr "Mạng I/O Docker"
 msgid "Documentation"
 msgstr "Tài liệu"
 
+#: src/components/routes/system/info-bar.tsx
+#: src/components/systems-table/systems-table-columns.tsx
+msgid "down"
+msgstr ""
+
 #. Context: System is down
 #: src/components/alerts-history-columns.tsx
+#: src/components/routes/dashboard.tsx
 #: src/components/routes/system/info-bar.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 #: src/lib/alerts.ts
@@ -658,6 +847,10 @@ msgstr "Mất kết nối ({downSystemsLength})"
 #: src/components/routes/system/network-sheet.tsx
 msgid "Download"
 msgstr "Tải xuống"
+
+#: src/components/routes/settings/backups.tsx
+msgid "Download backup"
+msgstr ""
 
 #: src/components/alerts-history-columns.tsx
 msgid "Duration"
@@ -673,9 +866,25 @@ msgstr "Chỉnh sửa"
 msgid "Edit {foo}"
 msgstr "Chỉnh sửa {foo}"
 
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Edit user"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Editing is unlocked. Save or lock when done."
+msgstr ""
+
 #: src/components/login/auth-form.tsx
 #: src/components/login/forgot-pass-form.tsx
 #: src/components/login/otp-forms.tsx
+#: src/components/navbar.tsx
+#: src/components/routes/settings/layout.tsx
+#: src/components/routes/settings/mail.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/sidebar.tsx
 msgid "Email"
 msgstr ""
 
@@ -683,10 +892,26 @@ msgstr ""
 msgid "Email notifications"
 msgstr "Thông báo email"
 
+#: src/components/routes/settings/mail.tsx
+msgid "Email sending is currently disabled — enable it above to send tests or alerts."
+msgstr ""
+
+#: src/components/command-palette.tsx
+msgid "Email settings"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Email settings saved"
+msgstr ""
+
 #. Context: Battery state
 #: src/lib/i18n.ts
 msgid "Empty"
 msgstr "Hết pin"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Enable email sending"
+msgstr ""
 
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/routes/settings/quiet-hours.tsx
@@ -709,6 +934,10 @@ msgstr "Nhập địa chỉ email để đặt lại mật khẩu"
 msgid "Enter email address..."
 msgstr "Nhập địa chỉ email..."
 
+#: src/components/routes/settings/mail.tsx
+msgid "Enter password"
+msgstr ""
+
 #: src/components/login/otp-forms.tsx
 msgid "Enter your one-time password."
 msgstr "Nhập mật khẩu một lần của bạn."
@@ -717,19 +946,30 @@ msgstr "Nhập mật khẩu một lần của bạn."
 msgid "Ephemeral"
 msgstr "Tạm thời"
 
-#: src/components/login/auth-form.tsx
 #: src/components/routes/settings/alerts-history-data-table.tsx
+#: src/components/routes/settings/backups.tsx
 #: src/components/routes/settings/config-yaml.tsx
 #: src/components/routes/settings/heartbeat.tsx
 #: src/components/routes/settings/heartbeat.tsx
 #: src/components/routes/settings/heartbeat.tsx
-#: src/components/routes/settings/notifications.tsx
+#: src/components/routes/settings/logs.tsx
+#: src/components/routes/settings/logs.tsx
+#: src/components/routes/settings/mail.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
+#: src/components/routes/settings/users.tsx
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Error"
 msgstr "Lỗi"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Error details"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Errors only"
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Example:"
@@ -754,6 +994,10 @@ msgstr "Các hệ thống hiện có không được định nghĩa trong <0>con
 msgid "Exited active"
 msgstr "Đã thoát khi hoạt động"
 
+#: src/components/sidebar.tsx
+msgid "Expand sidebar"
+msgstr ""
+
 #: src/components/routes/settings/tokens-fingerprints.tsx
 msgid "Expires after one hour or on hub restart."
 msgstr "Hết hạn sau một giờ hoặc khi khởi động lại hub."
@@ -775,8 +1019,8 @@ msgid "Fahrenheit (°F)"
 msgstr "Độ F (°F)"
 
 #: src/components/systems-table/systems-table-columns.tsx
-msgid "Failed"
-msgstr "Thất bại"
+#~ msgid "Failed"
+#~ msgstr "Thất bại"
 
 #: src/components/routes/system/smart-table.tsx
 msgid "Failed Attributes:"
@@ -786,28 +1030,88 @@ msgstr "Thuộc tính thất bại:"
 msgid "Failed to authenticate"
 msgstr "Xác thực thất bại"
 
+#: src/components/routes/settings/logs.tsx
+msgid "Failed to clear logs."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Failed to create backup."
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Failed to create user."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Failed to delete backup."
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Failed to delete user."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Failed to load backups."
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Failed to load logs."
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Failed to load SMTP settings."
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Failed to load users."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Failed to restore backup."
+msgstr ""
+
 #: src/components/routes/settings/layout.tsx
 #: src/components/routes/settings/notifications.tsx
 #: src/components/routes/settings/quiet-hours.tsx
 msgid "Failed to save settings"
 msgstr "Lưu cài đặt thất bại"
 
+#: src/components/routes/settings/mail.tsx
+msgid "Failed to save settings."
+msgstr ""
+
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Failed to send heartbeat"
 msgstr "Gửi heartbeat thất bại"
 
+#: src/components/routes/settings/users.tsx
+msgid "Failed to send password reset."
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Failed to send test email."
+msgstr ""
+
 #: src/components/routes/settings/notifications.tsx
-msgid "Failed to send test notification"
-msgstr "Gửi thông báo thử nghiệm thất bại"
+#~ msgid "Failed to send test notification"
+#~ msgstr "Gửi thông báo thử nghiệm thất bại"
 
 #: src/components/alerts/alerts-sheet.tsx
 msgid "Failed to update alert"
 msgstr "Cập nhật cảnh báo thất bại"
 
+#: src/components/routes/settings/users.tsx
+msgid "Failed to update user."
+msgstr ""
+
 #. placeholder {0}: statusTotals[ServiceStatus.Failed]
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Failed: {0}"
 msgstr "Thất bại: {0}"
+
+#: src/components/routes/settings/backups.tsx
+msgid "File"
+msgstr ""
 
 #: src/components/containers-table/containers-table.tsx
 #: src/components/routes/settings/alerts-history-data-table.tsx
@@ -826,9 +1130,17 @@ msgstr "Vân tay"
 msgid "Firmware"
 msgstr "Phần sụn"
 
+#: src/components/routes/dashboard.tsx
+msgid "Fleet overview at a glance."
+msgstr ""
+
 #: src/components/alerts/alerts-sheet.tsx
 msgid "For <0>{min}</0> {min, plural, one {minute} other {minutes}}"
 msgstr "Trong <0>{min}</0> {min, plural, one {phút} other {phút}}"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Force TLS"
+msgstr ""
 
 #: src/components/login/auth-form.tsx
 msgid "Forgot password?"
@@ -839,6 +1151,10 @@ msgstr "Quên mật khẩu?"
 msgctxt "Button to copy install command"
 msgid "FreeBSD command"
 msgstr "Lệnh FreeBSD"
+
+#: src/components/routes/settings/mail.tsx
+msgid "From address"
+msgstr ""
 
 #. Context: Battery state
 #: src/components/routes/system/info-bar.tsx
@@ -872,6 +1188,7 @@ msgstr "Mức tiêu thụ điện của GPU"
 msgid "GPU Usage"
 msgstr "Sử dụng GPU"
 
+#: src/components/containers-table/containers-table.tsx
 #: src/components/routes/system/info-bar.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "Grid"
@@ -882,8 +1199,8 @@ msgid "Health"
 msgstr "Sức khỏe"
 
 #: src/components/routes/settings/layout.tsx
-msgid "Heartbeat"
-msgstr ""
+#~ msgid "Heartbeat"
+#~ msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Heartbeat Monitoring"
@@ -935,6 +1252,10 @@ msgstr "Không hoạt động"
 msgid "If you've lost the password to your admin account, you may reset it using the following command."
 msgstr "Nếu bạn đã mất mật khẩu cho tài khoản quản trị viên của mình, bạn có thể đặt lại bằng cách sử dụng lệnh sau."
 
+#: src/components/containers-table/containers-table.tsx
+msgid "Image"
+msgstr ""
+
 #: src/components/containers-table/containers-table-columns.tsx
 msgctxt "Docker image"
 msgid "Image"
@@ -943,6 +1264,14 @@ msgstr "Hình ảnh"
 #: src/components/routes/settings/quiet-hours.tsx
 msgid "Inactive"
 msgstr "Không hoạt động"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Info"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Info only"
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Interval"
@@ -954,9 +1283,10 @@ msgstr "Địa chỉ email không hợp lệ."
 
 #: src/components/lang-toggle.tsx
 #: src/components/routes/settings/general.tsx
-msgid "Language"
-msgstr "Ngôn ngữ"
+#~ msgid "Language"
+#~ msgstr "Ngôn ngữ"
 
+#: src/components/containers-table/containers-table.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "Layout"
 msgstr "Bố cục"
@@ -965,9 +1295,26 @@ msgstr "Bố cục"
 msgid "Layout width"
 msgstr "Chiều rộng bố cục"
 
+#: src/components/routes/settings/mail.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Leave blank to keep current"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Level"
+msgstr ""
+
+#: src/components/routes/settings/about.tsx
+msgid "License"
+msgstr ""
+
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Lifecycle"
 msgstr "Vòng đời"
+
+#: src/components/routes/settings/about.tsx
+msgid "Lightweight monitoring for your fleet."
+msgstr ""
 
 #: src/components/systemd-table/systemd-table.tsx
 #: src/components/systemd-table/systemd-table.tsx
@@ -990,6 +1337,10 @@ msgstr "Tải trung bình 1 phút"
 msgid "Load Average 5m"
 msgstr "Tải trung bình 5 phút"
 
+#: src/components/systems-table/systems-table-columns.tsx
+msgid "Load average vs {threads} CPU threads"
+msgstr ""
+
 #. Short label for load average
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Load Avg"
@@ -1003,8 +1354,13 @@ msgstr "Trạng thái tải"
 msgid "Loading..."
 msgstr "Đang tải..."
 
+#: src/components/routes/settings/mail.tsx
+msgid "Lock"
+msgstr ""
+
 #: src/components/navbar.tsx
 #: src/components/navbar.tsx
+#: src/components/sidebar.tsx
 msgid "Log Out"
 msgstr "Đăng xuất"
 
@@ -1017,11 +1373,13 @@ msgstr "Đăng nhập"
 msgid "Login attempt failed"
 msgstr "Nỗ lực đăng nhập thất bại"
 
-#: src/components/command-palette.tsx
 #: src/components/containers-table/containers-table.tsx
-#: src/components/navbar.tsx
 msgid "Logs"
 msgstr "Nhật ký"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Logs cleared"
+msgstr ""
 
 #: src/components/routes/settings/notifications.tsx
 msgid "Looking instead for where to create alerts? Click the bell <0/> icons in the systems table."
@@ -1046,6 +1404,7 @@ msgid "Max 1 min"
 msgstr "Tối đa 1 phút"
 
 #: src/components/containers-table/containers-table-columns.tsx
+#: src/components/containers-table/containers-table.tsx
 #: src/components/routes/system/info-bar.tsx
 #: src/components/systemd-table/systemd-table-columns.tsx
 #: src/components/systemd-table/systemd-table.tsx
@@ -1076,15 +1435,30 @@ msgstr "Sử dụng bộ nhớ của các container Docker"
 msgid "Model"
 msgstr "Mô hình"
 
+#: src/components/routes/settings/about.tsx
+msgid "Modified by"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Most recently reporting systems."
+msgstr ""
+
 #: src/components/add-system.tsx
 #: src/components/alerts-history-columns.tsx
 #: src/components/containers-table/containers-table-columns.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
 #: src/components/systemd-table/systemd-table-columns.tsx
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Name"
 msgstr "Tên"
 
+#: src/components/routes/settings/users.tsx
+msgid "Name (optional)"
+msgstr ""
+
 #: src/components/containers-table/containers-table-columns.tsx
+#: src/components/containers-table/containers-table.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Net"
 msgstr "Mạng"
@@ -1105,11 +1479,39 @@ msgstr "Lưu lượng mạng của các giao diện công cộng"
 msgid "Network unit"
 msgstr "Đơn vị mạng"
 
+#: src/components/routes/settings/users.tsx
+msgid "New password (optional)"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "Next"
+msgstr ""
+
+#: src/components/routes/system/info-bar.tsx
+msgid "NICs"
+msgstr ""
+
 #: src/components/systemd-table/systemd-table.tsx
 #: src/components/systemd-table/systemd-table.tsx
 #: src/components/systemd-table/systemd-table.tsx
 msgid "No"
 msgstr "Không"
+
+#: src/components/routes/settings/logs.tsx
+msgid "No additional details for this entry."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "No backups yet. Click \"Backup now\" to create your first one."
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "No data yet."
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "No log entries match your filters."
+msgstr ""
 
 #: src/components/command-palette.tsx
 #: src/components/systemd-table/systemd-table.tsx
@@ -1134,6 +1536,18 @@ msgstr "Không có thuộc tính S.M.A.R.T. nào khả dụng cho thiết bị n
 msgid "No systems found."
 msgstr "Không tìm thấy hệ thống."
 
+#: src/components/routes/dashboard.tsx
+msgid "No systems registered yet. Add a system from the sidebar to get started."
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "No systems yet."
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "No users yet."
+msgstr ""
+
 #: src/components/command-palette.tsx
 #: src/components/routes/settings/layout.tsx
 #: src/components/routes/settings/notifications.tsx
@@ -1143,6 +1557,10 @@ msgstr "Thông báo"
 #: src/components/login/auth-form.tsx
 msgid "OAuth 2 / OIDC support"
 msgstr "Hỗ trợ OAuth 2 / OIDC"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Off uses STARTTLS if available."
+msgstr ""
 
 #: src/components/routes/settings/config-yaml.tsx
 msgid "On each restart, systems in the database will be updated to match the systems defined in the file."
@@ -1161,6 +1579,7 @@ msgstr "Mật khẩu một lần"
 #: src/components/routes/settings/tokens-fingerprints.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
 #: src/components/routes/system/smart-table.tsx
+#: src/components/sidebar.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Open menu"
 msgstr "Mở menu"
@@ -1168,6 +1587,10 @@ msgstr "Mở menu"
 #: src/components/login/auth-form.tsx
 msgid "Or continue with"
 msgstr "Hoặc tiếp tục với"
+
+#: src/components/routes/settings/about.tsx
+msgid "Original author"
+msgstr ""
 
 #: src/components/routes/system/cpu-sheet.tsx
 msgid "Other"
@@ -1180,6 +1603,7 @@ msgstr "Ghi đè các cảnh báo hiện có"
 #: src/components/command-palette.tsx
 #: src/components/command-palette.tsx
 #: src/components/command-palette.tsx
+#: src/components/command-palette.tsx
 msgid "Page"
 msgstr "Trang"
 
@@ -1189,12 +1613,18 @@ msgstr "Trang"
 msgid "Page {0} of {1}"
 msgstr "Trang {0} trên {1}"
 
+#: src/components/routes/settings/logs.tsx
+msgid "Page {page}"
+msgstr ""
+
 #: src/components/command-palette.tsx
 msgid "Pages / Settings"
 msgstr "Trang / Cài đặt"
 
 #: src/components/login/auth-form.tsx
 #: src/components/login/auth-form.tsx
+#: src/components/routes/settings/mail.tsx
+#: src/components/routes/settings/users.tsx
 msgid "Password"
 msgstr "Mật khẩu"
 
@@ -1206,9 +1636,17 @@ msgstr "Mật khẩu phải có ít nhất 8 ký tự."
 msgid "Password must be less than 72 bytes."
 msgstr "Mật khẩu phải nhỏ hơn 72 byte."
 
+#: src/components/routes/settings/users.tsx
+msgid "Password reset email sent"
+msgstr ""
+
 #: src/components/login/forgot-pass-form.tsx
 msgid "Password reset request received"
 msgstr "Yêu cầu đặt lại mật khẩu đã được nhận"
+
+#: src/components/routes/settings/users.tsx
+msgid "Password updated"
+msgstr ""
 
 #: src/components/routes/settings/quiet-hours.tsx
 msgid "Past"
@@ -1218,6 +1656,7 @@ msgstr "Quá khứ"
 msgid "Pause"
 msgstr "Tạm dừng"
 
+#: src/components/routes/dashboard.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Paused"
 msgstr "Đã tạm dừng"
@@ -1252,8 +1691,12 @@ msgid "Persistence"
 msgstr "Tính bền vững"
 
 #: src/components/routes/settings/notifications.tsx
-msgid "Please <0>configure an SMTP server</0> to ensure alerts are delivered."
-msgstr "Vui lòng <0>cấu hình máy chủ SMTP</0> để đảm bảo cảnh báo được gửi đi."
+#~ msgid "Please <0>configure an SMTP server</0> to ensure alerts are delivered."
+#~ msgstr "Vui lòng <0>cấu hình máy chủ SMTP</0> để đảm bảo cảnh báo được gửi đi."
+
+#: src/components/routes/settings/notifications.tsx
+msgid "Please <0>configure your email server</0> to ensure alerts are delivered."
+msgstr ""
 
 #: src/components/alerts/alerts-sheet.tsx
 msgid "Please check logs for more details."
@@ -1280,13 +1723,22 @@ msgstr "Vui lòng đăng nhập lại"
 msgid "Please see <0>the documentation</0> for instructions."
 msgstr "Vui lòng xem <0>tài liệu</0> để biết hướng dẫn."
 
+#: src/components/routes/settings/users.tsx
+msgid "Please sign in again with your new password."
+msgstr ""
+
 #: src/components/login/login.tsx
 msgid "Please sign in to your account"
 msgstr "Vui lòng đăng nhập vào tài khoản của bạn"
 
 #: src/components/add-system.tsx
+#: src/components/routes/settings/mail.tsx
 msgid "Port"
 msgstr "Cổng"
+
+#: src/components/containers-table/containers-table.tsx
+msgid "Ports"
+msgstr ""
 
 #: src/components/containers-table/containers-table-columns.tsx
 msgctxt "Container ports"
@@ -1304,8 +1756,12 @@ msgid "Precise utilization at the recorded time"
 msgstr "Sử dụng chính xác tại thời điểm ghi nhận"
 
 #: src/components/routes/settings/general.tsx
-msgid "Preferred Language"
-msgstr "Ngôn ngữ Ưa thích"
+#~ msgid "Preferred Language"
+#~ msgstr "Ngôn ngữ Ưa thích"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Previous"
+msgstr ""
 
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Process started"
@@ -1333,19 +1789,50 @@ msgstr "Giờ yên tĩnh"
 msgid "Read"
 msgstr "Đọc"
 
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Read only"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Read only — view only, cannot edit"
+msgstr ""
+
 #: src/components/routes/system/charts/network-charts.tsx
 msgid "Received"
 msgstr "Đã nhận"
 
+#: src/components/routes/dashboard.tsx
+msgid "Recent activity"
+msgstr ""
+
 #: src/components/containers-table/containers-table.tsx
 #: src/components/containers-table/containers-table.tsx
+#: src/components/routes/settings/logs.tsx
 #: src/components/routes/system/smart-table.tsx
 msgid "Refresh"
 msgstr "Làm mới"
 
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Regular"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "Regular — manage own systems"
+msgstr ""
+
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Relationships"
 msgstr "Mối quan hệ"
+
+#: src/components/routes/settings/about.tsx
+msgid "Released under the MIT License (inherited from upstream Beszel). See the LICENSE file in the source distribution for the full text and original copyright notices."
+msgstr ""
+
+#: src/components/routes/settings/about.tsx
+#~ msgid "Released under the MIT License. See the LICENSE file in the source distribution for the full text and copyright notices."
+#~ msgstr ""
 
 #: src/components/login/login.tsx
 msgid "Request a one-time password"
@@ -1373,13 +1860,54 @@ msgstr "Đặt lại Mật khẩu"
 msgid "Resolved"
 msgstr "Đã giải quyết"
 
+#: src/components/routes/system/info-bar.tsx
+#: src/components/routes/system/info-bar.tsx
+#: src/components/routes/system/info-bar.tsx
+msgid "Restart agent"
+msgstr ""
+
+#. placeholder {0}: system.name
+#: src/components/routes/system/info-bar.tsx
+msgid "Restart agent on {0}?"
+msgstr ""
+
+#: src/components/routes/system/info-bar.tsx
+msgid "Restart failed"
+msgstr ""
+
+#: src/components/routes/system/info-bar.tsx
+msgid "Restart requested"
+msgstr ""
+
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Restarts"
 msgstr "Khởi động lại"
 
+#: src/components/routes/settings/backups.tsx
+msgid "Restore"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Restore from this backup"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Restore from this backup?"
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "Restoring"
+msgstr ""
+
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Resume"
 msgstr "Tiếp tục"
+
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/routes/settings/users.tsx
+msgid "Role"
+msgstr ""
 
 #: src/components/systems-table/systems-table-columns.tsx
 msgctxt "Root disk label"
@@ -1414,6 +1942,14 @@ msgstr "Lưu {foo}"
 msgid "Save address using enter key or comma. Leave blank to disable email notifications."
 msgstr "Lưu địa chỉ bằng cách sử dụng phím enter hoặc dấu phẩy. Để trống để vô hiệu hóa thông báo email."
 
+#: src/components/routes/settings/users.tsx
+msgid "Save changes"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Save settings"
+msgstr ""
+
 #: src/components/routes/settings/general.tsx
 #: src/components/routes/settings/notifications.tsx
 msgid "Save Settings"
@@ -1436,12 +1972,21 @@ msgid "Schedule quiet hours where notifications will not be sent."
 msgstr "Lên lịch giờ yên tĩnh nơi thông báo sẽ không được gửi."
 
 #: src/components/navbar.tsx
+#: src/components/routes/settings/logs.tsx
+#: src/components/sidebar.tsx
+#: src/components/sidebar.tsx
+#: src/components/sidebar.tsx
+#: src/components/sidebar.tsx
 msgid "Search"
 msgstr "Tìm kiếm"
 
 #: src/components/command-palette.tsx
 msgid "Search for systems or settings..."
 msgstr "Tìm kiếm hệ thống hoặc cài đặt..."
+
+#: src/components/routes/settings/logs.tsx
+msgid "Search messages..."
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Seconds between pings (default: 60)"
@@ -1459,13 +2004,37 @@ msgstr "Chọn {foo}"
 msgid "Send a single heartbeat ping to verify your endpoint is working."
 msgstr "Gửi một ping heartbeat duy nhất để xác minh điểm cuối của bạn đang hoạt động."
 
+#: src/components/routes/settings/users.tsx
+msgid "Send password reset email"
+msgstr ""
+
 #: src/components/routes/settings/heartbeat.tsx
-msgid "Send periodic outbound pings to an external monitoring service so you can monitor Beszel without exposing it to the internet."
-msgstr "Gửi các ping gửi đi định kỳ đến dịch vụ giám sát bên ngoài để bạn có thể giám sát Beszel mà không cần để lộ nó với internet."
+msgid "Send periodic outbound pings to an external monitoring service so you can monitor Bantay without exposing it to the internet."
+msgstr ""
+
+#: src/components/routes/settings/heartbeat.tsx
+#~ msgid "Send periodic outbound pings to an external monitoring service so you can monitor Beszel without exposing it to the internet."
+#~ msgstr "Gửi các ping gửi đi định kỳ đến dịch vụ giám sát bên ngoài để bạn có thể giám sát Beszel mà không cần để lộ nó với internet."
+
+#: src/components/routes/settings/mail.tsx
+msgid "Send test"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Send test email to"
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Send test heartbeat"
 msgstr "Gửi heartbeat thử nghiệm"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Sender email"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Sender name"
+msgstr ""
 
 #: src/components/routes/system/charts/network-charts.tsx
 msgid "Sent"
@@ -1480,7 +2049,6 @@ msgid "Service Details"
 msgstr "Chi tiết dịch vụ"
 
 #: src/components/routes/system.tsx
-#: src/components/systems-table/systems-table-columns.tsx
 msgid "Services"
 msgstr "Dịch vụ"
 
@@ -1489,8 +2057,12 @@ msgid "Set percentage thresholds for meter colors."
 msgstr "Đặt ngưỡng cho màu sắc đồng hồ."
 
 #: src/components/routes/settings/heartbeat.tsx
-msgid "Set the following environment variables on your Beszel hub to enable heartbeat monitoring:"
-msgstr "Thiết lập các biến môi trường sau trên hub Beszel của bạn để bật giám sát heartbeat:"
+msgid "Set the following environment variables on your Bantay hub to enable heartbeat monitoring:"
+msgstr ""
+
+#: src/components/routes/settings/heartbeat.tsx
+#~ msgid "Set the following environment variables on your Beszel hub to enable heartbeat monitoring:"
+#~ msgstr "Thiết lập các biến môi trường sau trên hub Beszel của bạn để bật giám sát heartbeat:"
 
 #: src/components/command-palette.tsx
 #: src/components/command-palette.tsx
@@ -1499,8 +2071,13 @@ msgstr "Thiết lập các biến môi trường sau trên hub Beszel của bạ
 #: src/components/routes/settings/layout.tsx
 #: src/components/routes/settings/layout.tsx
 #: src/components/routes/system/info-bar.tsx
+#: src/components/sidebar.tsx
 msgid "Settings"
 msgstr "Cài đặt"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Settings are locked to prevent accidental changes."
+msgstr ""
 
 #: src/components/routes/settings/layout.tsx
 msgid "Settings saved"
@@ -1510,9 +2087,21 @@ msgstr "Cài đặt đã được lưu"
 msgid "Sign in"
 msgstr "Đăng nhập"
 
+#: src/components/routes/settings/backups.tsx
+msgid "Size"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "SMTP server"
+msgstr ""
+
 #: src/components/command-palette.tsx
-msgid "SMTP settings"
-msgstr "Cài đặt SMTP"
+#~ msgid "SMTP settings"
+#~ msgstr "Cài đặt SMTP"
+
+#: src/components/routes/settings/backups.tsx
+msgid "Snapshots of all your data: users, systems, alerts, history. Take one before any risky change. Restore puts your hub back the way it was when the backup was taken."
+msgstr ""
 
 #: src/components/systems-table/systems-table.tsx
 msgid "Sort By"
@@ -1550,6 +2139,11 @@ msgstr "Không gian hoán đổi được sử dụng bởi hệ thống"
 msgid "Swap Usage"
 msgstr "Sử dụng Hoán đổi"
 
+#: src/components/mode-toggle.tsx
+#: src/components/mode-toggle.tsx
+msgid "Switch theme"
+msgstr ""
+
 #: src/components/add-system.tsx
 #: src/components/alerts-history-columns.tsx
 #: src/components/containers-table/containers-table-columns.tsx
@@ -1569,11 +2163,16 @@ msgstr "Hệ thống"
 msgid "System load averages over time"
 msgstr "Tải trung bình của hệ thống theo thời gian"
 
+#: src/components/routes/settings/logs.tsx
+msgid "System:"
+msgstr ""
+
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Systemd Services"
 msgstr "Dịch vụ Systemd"
 
-#: src/components/navbar.tsx
+#: src/components/command-palette.tsx
+#: src/components/sidebar.tsx
 msgid "Systems"
 msgstr "Các hệ thống"
 
@@ -1581,6 +2180,7 @@ msgstr "Các hệ thống"
 msgid "Systems may be managed in a <0>config.yml</0> file inside your data directory."
 msgstr "Các hệ thống có thể được quản lý trong tệp <0>config.yml</0> bên trong thư mục dữ liệu của bạn."
 
+#: src/components/containers-table/containers-table.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "Table"
 msgstr "Bảng"
@@ -1614,16 +2214,37 @@ msgid "Temperatures of system sensors"
 msgstr "Nhiệt độ của các cảm biến hệ thống"
 
 #: src/components/routes/settings/notifications.tsx
-msgid "Test <0>URL</0>"
-msgstr "Kiểm tra <0>URL</0>"
+#~ msgid "Test <0>URL</0>"
+#~ msgstr "Kiểm tra <0>URL</0>"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Test email sent"
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Test heartbeat"
 msgstr "Thử nghiệm heartbeat"
 
 #: src/components/routes/settings/notifications.tsx
-msgid "Test notification sent"
-msgstr "Thông báo thử nghiệm đã được gửi"
+#~ msgid "Test notification sent"
+#~ msgstr "Thông báo thử nghiệm đã được gửi"
+
+#: src/components/routes/system/info-bar.tsx
+msgid "The agent process will exit and its supervisor (Docker or systemd) will start it again. Metrics for this system will be unavailable for a few seconds."
+msgstr ""
+
+#. placeholder {0}: backup.key
+#: src/components/routes/settings/backups.tsx
+msgid "The file <0>{0}</0> will be permanently removed. This does not affect your live data."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "The hub will restart in a moment. Refresh the page after about 30 seconds."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+msgid "The new backup is now in the list."
+msgstr ""
 
 #: src/components/routes/settings/heartbeat.tsx
 msgid "The overall status is <0>ok</0> when all systems are up, <1>warn</1> when alerts are triggered, and <2>error</2> when any system is down."
@@ -1636,6 +2257,20 @@ msgstr "Sau đó đăng nhập vào backend và đặt lại mật khẩu tài k
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "This action cannot be undone. This will permanently delete all current records for {name} from the database."
 msgstr "Hành động này không thể hoàn tác. Điều này sẽ xóa vĩnh viễn tất cả các bản ghi hiện tại cho {name} khỏi cơ sở dữ liệu."
+
+#: src/components/routes/settings/logs.tsx
+msgid "This permanently deletes every entry in the activity log. This cannot be undone."
+msgstr ""
+
+#. placeholder {0}: user.email
+#: src/components/routes/settings/users.tsx
+msgid "This permanently removes <0>{0}</0> and any systems they own. This cannot be undone."
+msgstr ""
+
+#. placeholder {0}: backup.key
+#: src/components/routes/settings/backups.tsx
+msgid "This replaces all current data with the contents of <0>{0}</0>. The hub will restart. Anything added since this backup was taken will be lost."
+msgstr ""
 
 #: src/components/routes/settings/alerts-history-data-table.tsx
 msgid "This will permanently delete all selected records from the database."
@@ -1659,8 +2294,8 @@ msgstr "Đến email(s)"
 
 #: src/components/mode-toggle.tsx
 #: src/components/mode-toggle.tsx
-msgid "Toggle theme"
-msgstr "Chuyển đổi chủ đề"
+#~ msgid "Toggle theme"
+#~ msgstr "Chuyển đổi chủ đề"
 
 #: src/components/add-system.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
@@ -1681,6 +2316,23 @@ msgstr "Token cho phép các tác nhân kết nối và đăng ký. Vân tay là
 msgid "Tokens and fingerprints are used to authenticate WebSocket connections to the hub."
 msgstr "Token và vân tay được sử dụng để xác thực các kết nối WebSocket đến trung tâm."
 
+#: src/components/routes/settings/logs.tsx
+msgid "Took"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Top CPU usage"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Top Disk usage"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "Top Memory usage"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
 #: src/components/ui/chart.tsx
 #: src/components/ui/chart.tsx
 msgid "Total"
@@ -1786,7 +2438,16 @@ msgstr "Không xác định"
 msgid "Unlimited"
 msgstr "Không giới hạn"
 
+#: src/components/routes/settings/mail.tsx
+msgid "Unlock to edit"
+msgstr ""
+
+#: src/components/routes/dashboard.tsx
+msgid "up"
+msgstr ""
+
 #. Context: System is up
+#: src/components/routes/dashboard.tsx
 #: src/components/routes/system/info-bar.tsx
 #: src/components/systems-table/systems-table-columns.tsx
 msgid "Up"
@@ -1836,8 +2497,27 @@ msgstr "Sử dụng phân vùng gốc"
 msgid "Used"
 msgstr "Đã sử dụng"
 
+#: src/components/routes/settings/users.tsx
+msgid "User created"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "User deleted"
+msgstr ""
+
+#: src/components/routes/settings/users.tsx
+msgid "User updated"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Username"
+msgstr ""
+
 #: src/components/command-palette.tsx
 #: src/components/navbar.tsx
+#: src/components/routes/settings/layout.tsx
+#: src/components/routes/settings/users.tsx
+#: src/components/sidebar.tsx
 msgid "Users"
 msgstr "Người dùng"
 
@@ -1850,6 +2530,7 @@ msgstr "Sử dụng"
 msgid "Value"
 msgstr "Giá trị"
 
+#: src/components/containers-table/containers-table.tsx
 #: src/components/systems-table/systems-table.tsx
 msgid "View"
 msgstr "Xem"
@@ -1873,12 +2554,16 @@ msgid "Waiting for enough records to display"
 msgstr "Đang chờ đủ bản ghi để hiển thị"
 
 #: src/components/routes/settings/general.tsx
-msgid "Want to help improve our translations? Check <0>Crowdin</0> for details."
-msgstr "Muốn giúp chúng tôi cải thiện bản dịch của mình? Xem <0>Crowdin</0> để biết thêm chi tiết."
+#~ msgid "Want to help improve our translations? Check <0>Crowdin</0> for details."
+#~ msgstr "Muốn giúp chúng tôi cải thiện bản dịch của mình? Xem <0>Crowdin</0> để biết thêm chi tiết."
 
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Wants"
 msgstr "Muốn"
+
+#: src/components/routes/settings/logs.tsx
+msgid "Warning"
+msgstr ""
 
 #: src/components/routes/settings/general.tsx
 msgid "Warning (%)"
@@ -1888,17 +2573,42 @@ msgstr "Cảnh báo (%)"
 msgid "Warning thresholds"
 msgstr "Ngưỡng cảnh báo"
 
+#: src/components/routes/settings/logs.tsx
+msgid "Warnings only"
+msgstr ""
+
 #: src/components/routes/settings/notifications.tsx
-msgid "Webhook / Push notifications"
-msgstr "Thông báo Webhook / Push"
+#~ msgid "Webhook / Push notifications"
+#~ msgstr "Thông báo Webhook / Push"
+
+#: src/components/routes/settings/logs.tsx
+msgid "What happened"
+msgstr ""
+
+#: src/components/routes/settings/logs.tsx
+msgid "What happened recently inside Bantay — useful when something looks wrong or an alert didn't fire. Click a row to see full details."
+msgstr ""
+
+#: src/components/routes/settings/backups.tsx
+#: src/components/routes/settings/logs.tsx
+msgid "When"
+msgstr ""
 
 #: src/components/routes/settings/tokens-fingerprints.tsx
 msgid "When enabled, this token allows agents to self-register without prior system creation."
 msgstr "Khi được bật, token này cho phép các tác nhân tự đăng ký mà không cần tạo hệ thống trước."
 
+#: src/components/routes/settings/mail.tsx
+msgid "When off, no emails are sent (alerts still appear in the UI)."
+msgstr ""
+
 #: src/components/routes/settings/heartbeat.tsx
 msgid "When using POST, each heartbeat includes a JSON payload with system status summary, list of down systems, and triggered alerts."
 msgstr "Khi sử dụng POST, mỗi heartbeat bao gồm một tải trọng JSON với bản tóm tắt trạng thái hệ thống, danh sách các hệ thống bị hỏng và các cảnh báo đã được kích hoạt."
+
+#: src/components/routes/settings/mail.tsx
+msgid "Who emails from Bantay appear to come from."
+msgstr ""
 
 #: src/components/add-system.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
@@ -1927,6 +2637,10 @@ msgstr "Cấu hình YAML"
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Yes"
 msgstr "Có"
+
+#: src/components/routes/settings/users.tsx
+msgid "You cannot change your own role. Ask another admin."
+msgstr ""
 
 #: src/components/routes/settings/layout.tsx
 msgid "Your user settings have been updated."

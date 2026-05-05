@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/henrygd/beszel/internal/entities/system"
-	beszelTests "github.com/henrygd/beszel/internal/tests"
+	"bantay/internal/entities/system"
+	beszelTests "bantay/internal/tests"
 
 	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase/tools/types"

@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	beszelTests "github.com/henrygd/beszel/internal/tests"
+	beszelTests "bantay/internal/tests"
 	"github.com/stretchr/testify/assert"
 )
 
