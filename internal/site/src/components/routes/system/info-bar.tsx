@@ -2,6 +2,7 @@ import { plural } from "@lingui/core/macro"
 import { Trans, useLingui } from "@lingui/react/macro"
 import {
 	AppleIcon,
+	ArrowLeftIcon,
 	ChevronRightSquareIcon,
 	ClockArrowUp,
 	CpuIcon,
@@ -14,7 +15,9 @@ import {
 	Settings2Icon,
 } from "lucide-react"
 import { useMemo, useState } from "react"
+import { getPagePath } from "@nanostores/router"
 import ChartTimeSelect from "@/components/charts/chart-time-select"
+import { $router, navigate } from "@/components/router"
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -74,6 +77,23 @@ export default function InfoBar({
 	const [restartOpen, setRestartOpen] = useState(false)
 	const [restarting, setRestarting] = useState(false)
 	const showRestart = isAdmin()
+
+	const handleBack = () => {
+		const sameOrigin =
+			!!document.referrer &&
+			(() => {
+				try {
+					return new URL(document.referrer).origin === window.location.origin
+				} catch {
+					return false
+				}
+			})()
+		if (sameOrigin && window.history.length > 1) {
+			window.history.back()
+		} else {
+			navigate(getPagePath($router, "systems"))
+		}
+	}
 
 	async function handleRestartConfirm() {
 		setRestarting(true)
@@ -181,7 +201,25 @@ export default function InfoBar({
 		<Card>
 			<div className="grid xl:flex xl:gap-4 px-4 sm:px-6 pt-3 sm:pt-4 pb-5">
 				<div className="min-w-0">
-					<h1 className="text-2xl sm:text-[1.6rem] font-semibold mb-1.5">{system.name}</h1>
+					<div className="flex items-center gap-2 mb-1.5">
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<Button
+									aria-label={t`Back`}
+									variant="ghost"
+									size="icon"
+									className="size-8 -ms-1.5 text-muted-foreground hover:text-primary"
+									onClick={handleBack}
+								>
+									<ArrowLeftIcon className="size-4" />
+								</Button>
+							</TooltipTrigger>
+							<TooltipContent>
+								<Trans>Back</Trans>
+							</TooltipContent>
+						</Tooltip>
+						<h1 className="text-2xl sm:text-[1.6rem] font-semibold">{system.name}</h1>
+					</div>
 					<div className="flex xl:flex-wrap items-center py-4 xl:p-0 -mt-3 xl:mt-1 gap-3 text-sm text-nowrap opacity-90 overflow-x-auto scrollbar-hide -mx-4 px-4 xl:mx-0">
 						<Tooltip>
 							<TooltipTrigger asChild>

@@ -107,9 +107,11 @@ func (a *Agent) refreshSystemDetails() {
 	}
 }
 
-// attachSystemDetails returns details only for fresh default-interval responses.
+// attachSystemDetails returns details when the hub explicitly asks for them,
+// or piggybacks dirty details on the next fresh default-interval response so
+// short-cache "burst" requests don't shunt them through prematurely.
 func (a *Agent) attachSystemDetails(data *system.CombinedData, cacheTimeMs uint16, includeRequested bool) *system.CombinedData {
-	if cacheTimeMs != defaultDataCacheTimeMs || (!includeRequested && !a.detailsDirty) {
+	if !includeRequested && (cacheTimeMs != defaultDataCacheTimeMs || !a.detailsDirty) {
 		return data
 	}
 
