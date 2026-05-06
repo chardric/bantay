@@ -167,6 +167,14 @@ func (sys *System) update() error {
 		}
 	}
 
+	// Push agent binary if the agent is older than the hub. shouldAttempt is
+	// nil-safe and applies its own cooldown so we can call it on every tick.
+	if sys.detailsFetched.Load() {
+		if bin, ok := sys.manager.agentUpdater.shouldAttempt(sys); ok {
+			go sys.pushUpdate(bin)
+		}
+	}
+
 	return err
 }
 

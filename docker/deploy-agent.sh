@@ -78,6 +78,10 @@ cat >> "$COMPOSE" <<'EOF'
       KEY: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBZJC06qMGWLHq8nGCS5ykgdC+MLJKL32y0uuDvZAR8u beszel-hub"
       LISTEN: "45876"
       LOG_LEVEL: "info"
+      # Self-update path. Hub pushes new binaries here; the Dockerfile.thin
+      # entrypoint shim prefers this file over image-baked /agent.embedded
+      # so updates persist across container restarts and recreations.
+      BANTAY_AGENT_INSTALL_PATH: "/var/lib/bantay-agent/agent"
 EOF
 
 echo ">>> [$HOST] generated compose:"

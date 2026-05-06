@@ -24,6 +24,8 @@ const (
 	GetSystemdInfo
 	// Request the agent process to exit so its supervisor restarts it
 	RestartAgent
+	// Push a new agent binary; agent verifies sha256 then atomic-swaps and exits
+	PushAgentBinary
 	// Add new actions here...
 )
 
@@ -75,4 +77,14 @@ type ContainerInfoRequest struct {
 
 type SystemdInfoRequest struct {
 	ServiceName string `cbor:"0,keyasint"`
+}
+
+// PushAgentBinaryRequest carries a replacement agent binary from the hub.
+// The agent must verify SHA256 before swapping, then exit so its supervisor
+// (systemd or docker restart policy) relaunches it from the new file.
+type PushAgentBinaryRequest struct {
+	Arch    string `cbor:"0,keyasint"` // "amd64" | "arm64" | "armv7"
+	Version string `cbor:"1,keyasint"` // semver, e.g. "1.0.1"
+	Sha256  string `cbor:"2,keyasint"` // hex-encoded
+	Binary  []byte `cbor:"3,keyasint"`
 }

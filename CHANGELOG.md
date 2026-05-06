@@ -4,6 +4,26 @@ All notable changes to **Bantay** (the fork) are documented here. The upstream B
 
 This project follows [Semantic Versioning](https://semver.org/) for the fork's own version line, independent of upstream.
 
+## [1.0.1] — 2026-05-06
+
+### Added
+
+- **Hub-driven agent auto-update.** Hub embeds cross-compiled agent binaries (amd64 / arm64 / armv7) at `/agents/agent-<arch>` and pushes the matching binary to any agent reporting an older `bantay.Version`. New WebSocket action `PushAgentBinary` (`internal/common/common-ws.go`) carries `{Arch, Version, Sha256, Binary}`. Agent handler (`agent/handler_push_binary.go`) verifies SHA256, atomic-swaps via `<install>.new` → `.bak` → live, sends ack, then `os.Exit(0)`; supervisor relaunches from the new file.
+- **Per-system 1 h cooldown** on push attempts (`internal/hub/systems/agent_update.go`) so a wedged agent doesn't get hammered.
+- **Docker writable-binary entrypoint shim.** `docker/Dockerfile.thin` now ships the image-baked binary at `/agent.embedded` and uses an entrypoint that prefers `/var/lib/bantay-agent/agent` (bind-mounted from host's `./data`) so self-updates persist across `docker compose down` and host reboots without rebuilding the image. `docker/deploy-agent.sh` sets `BANTAY_AGENT_INSTALL_PATH=/var/lib/bantay-agent/agent` so the agent writes to the same path the shim reads.
+- **Back button** on the system detail info bar (`internal/site/src/components/routes/system/info-bar.tsx`). Uses `history.back()` when the previous page is same-origin, falls back to `/systems`.
+- **Disable knob** `BANTAY_DISABLE_AUTO_UPDATE=true` for the hub when you want full manual control.
+
+### Fixed
+
+- **`attachSystemDetails` honors `IncludeDetails` regardless of cacheTimeMs** (`agent/system.go`). Original logic gated Details on the 60 s default cache time; the fork's 5 s poll interval meant Details were silently dropped on every fetch, which left `system_details` rows uncreated (404s on the InfoBar detail load) and SMART scans never triggered (the hub-side gate is `sys.detailsFetched`). The dirty-flag piggyback path stays gated on the default cache time so short-cache burst requests don't shunt details through.
+
+### Operational notes
+
+- **One-time docker conversion required.** The new Dockerfile.thin shim entrypoint means existing docker agents must be redeployed once via `docker/deploy-agent.sh` to pick up the writable-binary path. After that, future bumps of `bantay.Version` will roll out automatically the next time each agent connects.
+- **Native systemd agents** (e.g. ORANGEPI-NFS) need the install path writable by the unit's User. We `chown -R beszel:beszel /opt/bantay-agent` so the service user can swap in new binaries from the hub push.
+- **Backwards-incompat actions:** agents older than 1.0.1 (without `PushAgentBinaryHandler`) will reject the push with `unknown action: 7`; the hub logs a warning and retries after the cooldown. Manual re-deploy is still needed for the very first jump from <1.0.1 to ≥1.0.1.
+
 ## [1.0.0] — 2026-05-05
 
 Initial fork release. Diverged from upstream Beszel as of upstream commit `c1c1cd1b` ("ui: fix temperature chart filtering"), then full rebrand and feature work.

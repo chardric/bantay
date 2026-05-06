@@ -1,5 +1,8 @@
 # Local-stack hub image. Differs from internal/dockerfile_hub by:
 #   - building the React UI inside Docker (upstream expects it pre-built)
+#   - cross-compiling agent binaries for amd64/arm64/armv7 and embedding
+#     them at /agents/agent-<arch> so the hub can auto-push them to
+#     outdated agents (see internal/hub/systems/agent_update.go)
 #   - using alpine final stage so HEALTHCHECK can shell out
 # Build context must be the repo root.
 
@@ -21,9 +24,27 @@ ARG TARGETOS TARGETARCH
 RUN CGO_ENABLED=0 GOGC=75 GOOS=$TARGETOS GOARCH=$TARGETARCH \
     go build -ldflags "-w -s" -o /bantay ./internal/cmd/hub
 
+# Cross-compile agent binaries for the architectures we ship from the hub.
+# Done in a separate stage so the hub binary build cache isn't busted by
+# every agent change. Output lives at /agents/agent-<arch>; the hub reads
+# this directory at startup (agent_update.go).
+FROM --platform=$BUILDPLATFORM golang:1.26-alpine AS agents
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . ./
+RUN mkdir -p /agents && \
+    CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+        go build -ldflags "-w -s" -o /agents/agent-amd64 ./internal/cmd/agent && \
+    CGO_ENABLED=0 GOOS=linux GOARCH=arm64 \
+        go build -ldflags "-w -s" -o /agents/agent-arm64 ./internal/cmd/agent && \
+    CGO_ENABLED=0 GOOS=linux GOARCH=arm GOARM=7 \
+        go build -ldflags "-w -s" -o /agents/agent-armv7 ./internal/cmd/agent
+
 FROM alpine:3.20
 RUN apk add --no-cache ca-certificates wget tzdata
 COPY --from=builder /bantay /bantay
+COPY --from=agents /agents /agents
 VOLUME ["/bantay_data"]
 EXPOSE 8090
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \

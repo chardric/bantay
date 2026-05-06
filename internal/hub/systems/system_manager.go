@@ -44,6 +44,7 @@ type SystemManager struct {
 	systems       *store.Store[string, *System]         // Thread-safe store of active systems
 	sshConfig     *ssh.ClientConfig                     // SSH client configuration for system connections
 	smartFetchMap *expirymap.ExpiryMap[smartFetchState] // Stores last SMART fetch time/result; TTL is only for cleanup
+	agentUpdater  *agentUpdater                         // Pushes newer agent binaries to outdated agents (nil-safe when disabled)
 }
 
 // hubLike defines the interface requirements for the hub dependency.
@@ -63,6 +64,7 @@ func NewSystemManager(hub hubLike) *SystemManager {
 		systems:       store.New(map[string]*System{}),
 		hub:           hub,
 		smartFetchMap: expirymap.New[smartFetchState](time.Hour),
+		agentUpdater:  newAgentUpdater(),
 	}
 }
 

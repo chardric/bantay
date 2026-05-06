@@ -10,6 +10,13 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         smartmontools nvtop ca-certificates && \
     rm -rf /var/lib/apt/lists/*
-COPY agent /agent
+
+# Image-baked binary lives at /agent.embedded. The shim entrypoint prefers
+# a hub-pushed binary at /var/lib/bantay-agent/agent (bind-mounted from the
+# host) so self-updates persist across container restarts and recreations
+# without rebuilding the image. Compose must set
+# BANTAY_AGENT_INSTALL_PATH=/var/lib/bantay-agent/agent so the agent writes
+# to the same path the shim reads from.
+COPY agent /agent.embedded
 VOLUME ["/var/lib/bantay-agent"]
-ENTRYPOINT ["/agent"]
+ENTRYPOINT ["/bin/sh", "-c", "if [ -x /var/lib/bantay-agent/agent ]; then exec /var/lib/bantay-agent/agent \"$@\"; else exec /agent.embedded \"$@\"; fi", "--"]

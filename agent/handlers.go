@@ -54,6 +54,7 @@ func NewHandlerRegistry() *HandlerRegistry {
 	registry.Register(common.GetSmartData, &GetSmartDataHandler{})
 	registry.Register(common.GetSystemdInfo, &GetSystemdInfoHandler{})
 	registry.Register(common.RestartAgent, &RestartAgentHandler{})
+	registry.Register(common.PushAgentBinary, &PushAgentBinaryHandler{})
 
 	return registry
 }
