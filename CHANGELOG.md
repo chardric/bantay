@@ -4,6 +4,16 @@ All notable changes to **Bantay** (the fork) are documented here. The upstream B
 
 This project follows [Semantic Versioning](https://semver.org/) for the fork's own version line, independent of upstream.
 
+## [1.0.2] — 2026-05-06
+
+### Validation
+
+- End-to-end test of the v1.0.1 auto-update path: bumped `bantay.Version` to `1.0.2`, rebuilt only the hub, and confirmed all 7 reachable agents (6 docker + 1 native) self-updated and re-registered without manual intervention.
+
+### Operational notes
+
+- Native systemd units with `ProtectSystem=strict` (e.g. ORANGEPI-NFS) need an explicit `ReadWritePaths=/opt/bantay-agent` so the agent can write the staging file. Permission denials surface as `install binary: open ... .new: read-only file system` in the hub `_logs`.
+
 ## [1.0.1] — 2026-05-06
 
 ### Added
