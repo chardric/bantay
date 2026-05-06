@@ -4,6 +4,12 @@ All notable changes to **Bantay** (the fork) are documented here. The upstream B
 
 This project follows [Semantic Versioning](https://semver.org/) for the fork's own version line, independent of upstream.
 
+## [1.0.3] — 2026-05-06
+
+### Added
+
+- **Auto-prune of stale agent `.bak`** (`agent/handler_push_binary.go`). Five minutes after the agent successfully starts, it removes `<install>.bak` if present. The delay preserves a short manual-rollback window in case the freshly-pushed binary crashes during startup; the supervisor restart loop keeps the binary down in that case so an operator can `mv .bak` back. Once the agent has been alive for 5 min the new binary is considered good and the backup is swept. Works for both the docker shim path (`/var/lib/bantay-agent/agent.bak`) and the native systemd path (`/opt/bantay-agent/bantay-agent.bak`).
+
 ## [1.0.2] — 2026-05-06
 
 ### Validation

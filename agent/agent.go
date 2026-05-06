@@ -148,6 +148,11 @@ func NewAgent(dataDir ...string) (agent *Agent, err error) {
 		slog.Debug("Stats", "data", agent.gatherStats(common.DataRequestOptions{CacheTimeMs: defaultDataCacheTimeMs, IncludeDetails: true}))
 	}
 
+	// Sweep <install>.bak from a previous hub-pushed update. Delayed so a
+	// short manual-rollback window survives if the new binary crashes
+	// during startup.
+	schedulePruneOldBackup(5 * time.Minute)
+
 	return agent, nil
 }
 

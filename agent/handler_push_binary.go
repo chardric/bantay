@@ -112,6 +112,30 @@ func resolveInstallPath() (string, error) {
 	return filepath.EvalSymlinks(exe)
 }
 
+// schedulePruneOldBackup removes <install>.bak after the given delay if the
+// current install path resolves and the backup exists. The delay gives a
+// brief manual-rollback window after a hub-pushed update before the .bak
+// is swept; if the new binary crashes within the window, the supervisor
+// loop keeps the agent down and the operator can `mv .bak` back.
+func schedulePruneOldBackup(after time.Duration) {
+	go func() {
+		time.Sleep(after)
+		path, err := resolveInstallPath()
+		if err != nil {
+			return
+		}
+		bak := path + ".bak"
+		if _, err := os.Stat(bak); err != nil {
+			return
+		}
+		if err := os.Remove(bak); err != nil {
+			slog.Debug("prune .bak failed", "path", bak, "err", err)
+			return
+		}
+		slog.Info("pruned old agent backup", "path", bak)
+	}()
+}
+
 // installBinary writes data to <path>.new (same dir for atomic rename),
 // fsyncs, then promotes: current → .bak, .new → current. Mode 0755.
 func installBinary(path string, data []byte) error {
