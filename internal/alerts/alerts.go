@@ -222,18 +222,33 @@ func (am *AlertManager) SendAlert(data AlertMessageData) error {
 			am.hub.Logger().Error("Failed to send shoutrrr alert", "err", err)
 		}
 	}
-	// send alerts via email
-	if len(userAlertSettings.Emails) == 0 {
+	// Global override: when admins configure recipient users in Email settings,
+	// every alert email goes to those users' account emails — per-user
+	// notification email lists are bypassed. Empty override falls back to the
+	// per-user list so existing setups keep working.
+	emailList := userAlertSettings.Emails
+	if override := resolveGlobalRecipientEmails(am.hub); len(override) > 0 {
+		emailList = override
+	}
+	if len(emailList) == 0 {
 		return nil
 	}
 	addresses := []mail.Address{}
-	for _, email := range userAlertSettings.Emails {
+	for _, email := range emailList {
 		addresses = append(addresses, mail.Address{Address: email})
 	}
+	// Prefix body with the wall-clock time the alert fired so the recipient
+	// can correlate against logs even if SMTP delivery is delayed.
+	firedAt := time.Now().Format("2006-01-02 15:04:05 MST")
 	message := mailer.Message{
 		To:      addresses,
-		Subject: data.Title,
-		Text:    data.Message + fmt.Sprintf("\n\n%s", data.Link),
+		Subject: fmt.Sprintf("[%s] %s", firedAt, data.Title),
+		Text: fmt.Sprintf(
+			"Time: %s\n\n%s\n\n%s",
+			firedAt,
+			data.Message,
+			data.Link,
+		),
 		From: mail.Address{
 			Address: am.hub.Settings().Meta.SenderAddress,
 			Name:    am.hub.Settings().Meta.SenderName,

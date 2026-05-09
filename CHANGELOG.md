@@ -4,6 +4,25 @@ All notable changes to **Bantay** (the fork) are documented here. The upstream B
 
 This project follows [Semantic Versioning](https://semver.org/) for the fork's own version line, independent of upstream.
 
+## [1.0.4] — 2026-05-09
+
+### Added
+
+- **Global alert recipient picker** (`internal/alerts/recipients.go`, `internal/hub/admin.go`, `internal/site/src/components/routes/settings/mail.tsx`). Admins now configure alert recipients from **Settings → Email → Alert recipients**. Two parallel inputs: a checkbox list of existing users (sends to each user's `users.email`) and a chip input for free-form addresses that don't have to belong to a user. Both sources combine into the recipient list (deduped). When the combined list is non-empty the per-user `user_settings.emails` lists are bypassed; when empty, per-user lists are used as fallback. Persists as JSON in a `_params` row id=`bantay_settings`. Operator-friendly env-var fallback `BANTAY_ALERT_RECIPIENT` (comma-separated raw addresses) only kicks in when both UI lists are empty.
+
+### Why
+
+- The fork's single-admin homelab pattern made the original per-user `Settings → Notifications → Email` list a footgun — the admin's account email isn't auto-used, so alerts silently no-op until each user populates their own list. Centralizing recipient selection on the SMTP page surfaces the routing in the obvious place and fits the single-operator workflow.
+
+### Fixed
+
+- **Misleading "email may already be in use" error** when creating/updating users (`internal/hub/admin.go`). The handler returned a guessed-at duplicate message for *any* save failure — including format rejections like `test@local` (PocketBase requires a TLD). Now surfaces the actual ozzo-validation field errors so the operator sees the real reason (e.g. "email: must be a valid email address") and only reports "already exists" when the email is genuinely a duplicate.
+
+### Changed
+
+- **Alert emails carry the firing time** (`internal/alerts/alerts.go`). Subject is now `[YYYY-MM-DD HH:MM:SS TZ] <title>` and the body has a leading `Time: …` line so the recipient can correlate against the activity log even when SMTP delivery is delayed. Activity log entries already display time in the "When" column — unchanged.
+- **Suppress noisy "System down" Error logs during auto-update and hub startup** (`internal/hub/systems/system.go`, `internal/hub/systems/agent_update.go`). When a system goes briefly unreachable within 30 s of a hub-pushed `PushAgentBinary` to it (agent self-restart window), or within 30 s of hub start (every agent reconnects), the log is downgraded to Warn with a clarifying message instead of firing a red Error entry. Real outages still log Error.
+
 ## [1.0.3] — 2026-05-06
 
 ### Added

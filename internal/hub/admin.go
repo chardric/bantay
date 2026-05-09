@@ -4,15 +4,50 @@ import (
 	"context"
 	"net/http"
 	"net/mail"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
 
+	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/mails"
 	"github.com/pocketbase/pocketbase/tools/mailer"
+
+	"bantay/internal/alerts"
 )
+
+// formatSaveError turns a PocketBase save error into a user-facing message.
+// PocketBase returns ozzo-validation maps for field-level failures (e.g.
+// "email: must be a valid email address"); we concat them so the operator
+// sees the actual reason instead of a guessed-at default.
+func formatSaveError(err error, fallback string) string {
+	if err == nil {
+		return fallback
+	}
+	if vErrs, ok := err.(validation.Errors); ok && len(vErrs) > 0 {
+		fields := make([]string, 0, len(vErrs))
+		for f := range vErrs {
+			fields = append(fields, f)
+		}
+		sort.Strings(fields)
+		parts := make([]string, 0, len(vErrs))
+		for _, f := range fields {
+			fe := vErrs[f]
+			emsg := strings.ToLower(fe.Error())
+			if f == "email" && (strings.Contains(emsg, "already") || strings.Contains(emsg, "duplicate") || strings.Contains(emsg, "exists") || strings.Contains(emsg, "unique")) {
+				return "A user with that email already exists."
+			}
+			parts = append(parts, f+": "+fe.Error())
+		}
+		return strings.Join(parts, "; ")
+	}
+	if msg := strings.TrimSpace(err.Error()); msg != "" {
+		return msg
+	}
+	return fallback
+}
 
 // Admin endpoints proxy PocketBase superuser-only operations through Beszel's
 // own auth so that a Bantay user with role="admin" can manage users, backups,
@@ -90,7 +125,7 @@ func (h *Hub) createUser(e *core.RequestEvent) error {
 	rec.Set("verified", true)
 	rec.SetPassword(req.Password)
 	if err := h.Save(rec); err != nil {
-		return e.BadRequestError("Failed to create user. The email may already be in use.", err)
+		return e.BadRequestError(formatSaveError(err, "Failed to create user."), err)
 	}
 	return e.JSON(http.StatusOK, toAdminUser(rec))
 }
@@ -153,7 +188,7 @@ func (h *Hub) updateUser(e *core.RequestEvent) error {
 		rec.SetPassword(*req.Password)
 	}
 	if err := h.Save(rec); err != nil {
-		return e.BadRequestError("Failed to update user.", err)
+		return e.BadRequestError(formatSaveError(err, "Failed to update user."), err)
 	}
 	return e.JSON(http.StatusOK, toAdminUser(rec))
 }
@@ -298,46 +333,53 @@ func (h *Hub) deleteBackup(e *core.RequestEvent) error {
 // ----- SMTP settings -----
 
 type smtpResponse struct {
-	Enabled       bool   `json:"enabled"`
-	Host          string `json:"host"`
-	Port          int    `json:"port"`
-	Username      string `json:"username"`
-	HasPassword   bool   `json:"hasPassword"`
-	AuthMethod    string `json:"authMethod"`
-	TLS           bool   `json:"tls"`
-	LocalName     string `json:"localName"`
-	SenderName    string `json:"senderName"`
-	SenderAddress string `json:"senderAddress"`
+	Enabled               bool     `json:"enabled"`
+	Host                  string   `json:"host"`
+	Port                  int      `json:"port"`
+	Username              string   `json:"username"`
+	HasPassword           bool     `json:"hasPassword"`
+	AuthMethod            string   `json:"authMethod"`
+	TLS                   bool     `json:"tls"`
+	LocalName             string   `json:"localName"`
+	SenderName            string   `json:"senderName"`
+	SenderAddress         string   `json:"senderAddress"`
+	AlertRecipientUserIds []string `json:"alertRecipientUserIds"`
+	AlertRecipientEmails  []string `json:"alertRecipientEmails"`
 }
 
 func (h *Hub) getSMTP(e *core.RequestEvent) error {
 	s := h.Settings()
+	params := alerts.LoadBantayAlertParams(h)
 	resp := smtpResponse{
-		Enabled:       s.SMTP.Enabled,
-		Host:          s.SMTP.Host,
-		Port:          s.SMTP.Port,
-		Username:      s.SMTP.Username,
-		HasPassword:   s.SMTP.Password != "",
-		AuthMethod:    s.SMTP.AuthMethod,
-		TLS:           s.SMTP.TLS,
-		LocalName:     s.SMTP.LocalName,
-		SenderName:    s.Meta.SenderName,
-		SenderAddress: s.Meta.SenderAddress,
+		Enabled:               s.SMTP.Enabled,
+		Host:                  s.SMTP.Host,
+		Port:                  s.SMTP.Port,
+		Username:              s.SMTP.Username,
+		HasPassword:           s.SMTP.Password != "",
+		AuthMethod:            s.SMTP.AuthMethod,
+		TLS:                   s.SMTP.TLS,
+		LocalName:             s.SMTP.LocalName,
+		SenderName:            s.Meta.SenderName,
+		SenderAddress:         s.Meta.SenderAddress,
+		AlertRecipientUserIds: params.AlertRecipientUserIds,
+		AlertRecipientEmails:  params.AlertRecipientEmails,
 	}
 	return e.JSON(http.StatusOK, resp)
 }
 
 type smtpUpdateRequest struct {
-	Enabled       bool   `json:"enabled"`
-	Host          string `json:"host"`
-	Port          int    `json:"port"`
-	Username      string `json:"username"`
-	Password      string `json:"password"`
-	AuthMethod    string `json:"authMethod"`
-	TLS           bool   `json:"tls"`
-	LocalName     string `json:"localName"`
-	SenderName    string `json:"senderName"`
-	SenderAddress string `json:"senderAddress"`
+	Enabled               bool     `json:"enabled"`
+	Host                  string   `json:"host"`
+	Port                  int      `json:"port"`
+	Username              string   `json:"username"`
+	Password              string   `json:"password"`
+	AuthMethod            string   `json:"authMethod"`
+	TLS                   bool     `json:"tls"`
+	LocalName             string   `json:"localName"`
+	SenderName            string   `json:"senderName"`
+	SenderAddress         string   `json:"senderAddress"`
+	AlertRecipientUserIds []string `json:"alertRecipientUserIds"`
+	AlertRecipientEmails  []string `json:"alertRecipientEmails"`
 }
 
 func (h *Hub) updateSMTP(e *core.RequestEvent) error {
@@ -372,6 +414,51 @@ func (h *Hub) updateSMTP(e *core.RequestEvent) error {
 	}
 	if err := h.Save(settings); err != nil {
 		return e.BadRequestError("Failed to save SMTP settings.", err)
+	}
+
+	// Persist alert recipient list. Validate that each id resolves to a real
+	// user record so a stale or typo'd id can't silently swallow alerts.
+	cleanIds := make([]string, 0, len(req.AlertRecipientUserIds))
+	if len(req.AlertRecipientUserIds) > 0 {
+		records, err := h.FindRecordsByIds("users", req.AlertRecipientUserIds)
+		if err != nil {
+			return e.BadRequestError("Failed to validate recipient users.", err)
+		}
+		validIds := make(map[string]struct{}, len(records))
+		for _, r := range records {
+			validIds[r.Id] = struct{}{}
+		}
+		for _, id := range req.AlertRecipientUserIds {
+			if _, ok := validIds[id]; ok {
+				cleanIds = append(cleanIds, id)
+			}
+		}
+		if len(cleanIds) != len(req.AlertRecipientUserIds) {
+			return e.BadRequestError("One or more recipient users were not found.", nil)
+		}
+	}
+	cleanEmails := make([]string, 0, len(req.AlertRecipientEmails))
+	seenEmail := map[string]struct{}{}
+	for _, raw := range req.AlertRecipientEmails {
+		addr := strings.TrimSpace(raw)
+		if addr == "" {
+			continue
+		}
+		if _, err := mail.ParseAddress(addr); err != nil {
+			return e.BadRequestError("Invalid recipient email address: "+addr, err)
+		}
+		key := strings.ToLower(addr)
+		if _, dup := seenEmail[key]; dup {
+			continue
+		}
+		seenEmail[key] = struct{}{}
+		cleanEmails = append(cleanEmails, addr)
+	}
+	if err := alerts.SaveBantayAlertParams(h, alerts.BantayAlertParams{
+		AlertRecipientUserIds: cleanIds,
+		AlertRecipientEmails:  cleanEmails,
+	}); err != nil {
+		return e.BadRequestError("Failed to save alert recipients.", err)
 	}
 	return h.getSMTP(e)
 }

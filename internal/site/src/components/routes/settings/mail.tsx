@@ -1,10 +1,11 @@
 import { t } from "@lingui/core/macro"
 import { Trans } from "@lingui/react/macro"
 import { redirectPage } from "@nanostores/router"
-import { Loader2Icon, LockIcon, MailIcon, SaveIcon, SendIcon, UnlockIcon } from "lucide-react"
+import { Loader2Icon, LockIcon, MailIcon, PlusIcon, SaveIcon, SendIcon, UnlockIcon, UsersIcon, XIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { $router } from "@/components/router"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -24,6 +25,17 @@ type SmtpConfig = {
 	localName: string
 	senderName: string
 	senderAddress: string
+	alertRecipientUserIds: string[]
+	alertRecipientEmails: string[]
+}
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+type RecipientUser = {
+	id: string
+	email: string
+	name: string
+	role: string
 }
 
 function showApiError(err: unknown, fallback: string) {
@@ -36,16 +48,26 @@ export default function MailSettings() {
 		redirectPage($router, "settings", { name: "general" })
 	}
 	const [cfg, setCfg] = useState<SmtpConfig | null>(null)
+	const [users, setUsers] = useState<RecipientUser[]>([])
 	const [password, setPassword] = useState("")
 	const [saving, setSaving] = useState(false)
 	const [testing, setTesting] = useState(false)
 	const [testTo, setTestTo] = useState("")
 	const [locked, setLocked] = useState(true)
+	const [emailDraft, setEmailDraft] = useState("")
 
 	async function load() {
 		try {
-			const res = await pb.send<SmtpConfig>("/api/bantay/admin/settings/smtp", {})
-			setCfg(res)
+			const [cfgRes, usersRes] = await Promise.all([
+				pb.send<SmtpConfig>("/api/bantay/admin/settings/smtp", {}),
+				pb.send<{ items: RecipientUser[] }>("/api/bantay/admin/users", {}),
+			])
+			setCfg({
+				...cfgRes,
+				alertRecipientUserIds: cfgRes.alertRecipientUserIds ?? [],
+				alertRecipientEmails: cfgRes.alertRecipientEmails ?? [],
+			})
+			setUsers(usersRes.items ?? [])
 			setTestTo(pb.authStore.record?.email ?? "")
 		} catch (err) {
 			showApiError(err, t`Failed to load SMTP settings.`)
@@ -55,6 +77,39 @@ export default function MailSettings() {
 	useEffect(() => {
 		load()
 	}, [])
+
+	function toggleRecipient(id: string, checked: boolean) {
+		if (!cfg) return
+		const current = cfg.alertRecipientUserIds ?? []
+		const next = checked ? Array.from(new Set([...current, id])) : current.filter((x) => x !== id)
+		setCfg({ ...cfg, alertRecipientUserIds: next })
+	}
+
+	function addEmailChip() {
+		if (!cfg) return
+		const v = emailDraft.trim()
+		if (!v) return
+		if (!emailRegex.test(v)) {
+			toast({ title: t`Invalid email address`, description: v, variant: "destructive" })
+			return
+		}
+		const lower = v.toLowerCase()
+		const current = cfg.alertRecipientEmails ?? []
+		if (current.some((x) => x.toLowerCase() === lower)) {
+			setEmailDraft("")
+			return
+		}
+		setCfg({ ...cfg, alertRecipientEmails: [...current, v] })
+		setEmailDraft("")
+	}
+
+	function removeEmailChip(addr: string) {
+		if (!cfg) return
+		setCfg({
+			...cfg,
+			alertRecipientEmails: (cfg.alertRecipientEmails ?? []).filter((x) => x !== addr),
+		})
+	}
 
 	async function handleSave(e: React.FormEvent) {
 		e.preventDefault()
@@ -288,6 +343,112 @@ export default function MailSettings() {
 								disabled={locked}
 								onChange={(e) => setCfg({ ...cfg, senderAddress: e.target.value })}
 							/>
+						</div>
+					</div>
+				</div>
+
+				<Separator />
+
+				<div>
+					<h4 className="text-base font-medium mb-1 flex items-center gap-2">
+						<UsersIcon className="size-4" />
+						<Trans>Alert recipients</Trans>
+					</h4>
+					<p className="text-sm text-muted-foreground mb-3">
+						<Trans>
+							Pick users from the list and/or add extra email addresses below. When the combined list is non-empty,
+							all alert emails go there and per-user notification email lists are bypassed.
+						</Trans>
+					</p>
+
+					<Label className="text-xs text-muted-foreground mb-1.5 block">
+						<Trans>Users</Trans>
+					</Label>
+					{users.length === 0 ? (
+						<p className="text-sm text-muted-foreground italic">
+							<Trans>No users found.</Trans>
+						</p>
+					) : (
+						<div className="rounded-md border divide-y">
+							{users.map((u) => {
+								const checked = (cfg.alertRecipientUserIds ?? []).includes(u.id)
+								return (
+									<label
+										key={u.id}
+										htmlFor={`recipient-${u.id}`}
+										className={`flex items-center gap-3 px-3 py-2 ${locked ? "cursor-default" : "cursor-pointer hover:bg-muted/40"}`}
+									>
+										<Checkbox
+											id={`recipient-${u.id}`}
+											checked={checked}
+											disabled={locked}
+											onCheckedChange={(v) => toggleRecipient(u.id, v === true)}
+										/>
+										<div className="flex-1 min-w-0">
+											<div className="text-sm font-medium truncate">{u.name || u.email}</div>
+											<div className="text-xs text-muted-foreground truncate">
+												{u.email}
+												{u.role ? ` · ${u.role}` : ""}
+											</div>
+										</div>
+									</label>
+								)
+							})}
+						</div>
+					)}
+
+					<Label className="text-xs text-muted-foreground mt-4 mb-1.5 block">
+						<Trans>Additional emails</Trans>
+					</Label>
+					<div className="rounded-md border p-2 space-y-2">
+						{(cfg.alertRecipientEmails ?? []).length > 0 && (
+							<div className="flex flex-wrap gap-1.5">
+								{(cfg.alertRecipientEmails ?? []).map((addr) => (
+									<span
+										key={addr}
+										className="inline-flex items-center gap-1 rounded-md border bg-muted/40 px-2 py-1 text-xs"
+									>
+										{addr}
+										<button
+											type="button"
+											aria-label={t`Remove ${addr}`}
+											disabled={locked}
+											onClick={() => removeEmailChip(addr)}
+											className="text-muted-foreground hover:text-foreground disabled:opacity-50"
+										>
+											<XIcon className="size-3" />
+										</button>
+									</span>
+								))}
+							</div>
+						)}
+						<div className="flex items-center gap-2">
+							<Input
+								type="email"
+								placeholder={t`Type an email and press Enter`}
+								value={emailDraft}
+								disabled={locked}
+								onChange={(e) => setEmailDraft(e.target.value)}
+								onKeyDown={(e) => {
+									if (e.key === "Enter" || e.key === "," || e.key === "Tab") {
+										if (emailDraft.trim()) {
+											e.preventDefault()
+											addEmailChip()
+										}
+									}
+								}}
+							/>
+							<Button
+								type="button"
+								variant="outline"
+								size="sm"
+								disabled={locked || !emailDraft.trim()}
+								onClick={addEmailChip}
+								className="gap-1"
+							>
+								<PlusIcon className="size-4" />
+								<Trans>Add</Trans>
+							</Button>
 						</div>
 					</div>
 				</div>

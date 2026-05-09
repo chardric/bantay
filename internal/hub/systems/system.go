@@ -382,6 +382,11 @@ func (sys *System) HasUser(app core.App, user *core.Record) bool {
 	return strings.Contains(recordData.Users, user.Id)
 }
 
+// hubStartedAt is set once when the systems package initializes (process start).
+// Used by setDown to suppress noisy "System down" Error logs during the brief
+// reconnect window after the hub container restarts.
+var hubStartedAt = time.Now()
+
 // setDown marks a system as down in the database.
 // It takes the original error that caused the system to go down and returns any error
 // encountered during the process of updating the system status.
@@ -394,7 +399,21 @@ func (sys *System) setDown(originalError error) error {
 		return err
 	}
 	if originalError != nil {
-		sys.manager.hub.Logger().Error("System down", "system", record.GetString("name"), "err", originalError)
+		// Suppress the Error log when the disconnect is expected: agent
+		// briefly restarts itself after a hub-pushed binary update, or the
+		// hub itself just started and is reconnecting to every agent. Both
+		// resolve within seconds and would otherwise flood the activity log.
+		logger := sys.manager.hub.Logger()
+		switch {
+		case sys.manager.agentUpdater.RecentlyPushed(sys.Id, 30*time.Second):
+			logger.Warn("System briefly down (agent self-update in progress)",
+				"system", record.GetString("name"), "err", originalError)
+		case time.Since(hubStartedAt) < 30*time.Second:
+			logger.Warn("System briefly down (hub startup reconnect)",
+				"system", record.GetString("name"), "err", originalError)
+		default:
+			logger.Error("System down", "system", record.GetString("name"), "err", originalError)
+		}
 	}
 	record.Set("status", down)
 	return sys.manager.hub.SaveNoValidate(record)

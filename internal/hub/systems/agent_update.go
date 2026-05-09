@@ -38,6 +38,7 @@ type agentUpdater struct {
 	cooldown    *expirymap.ExpiryMap[time.Time]
 	cooldownTtl time.Duration
 	pushing     sync.Map // systemID -> *atomic.Bool, set while a push is in flight
+	pushedAt    sync.Map // systemID -> time.Time, most recent push start time
 }
 
 // agentBinariesDir is where the hub Dockerfile drops the cross-compiled agent
@@ -181,6 +182,25 @@ func (u *agentUpdater) markAttempted(systemID string) {
 		return
 	}
 	u.cooldown.Set(systemID, time.Now(), u.cooldownTtl+5*time.Minute)
+	u.pushedAt.Store(systemID, time.Now())
+}
+
+// RecentlyPushed reports whether a binary push to this system started within
+// the given window. Used by setDown to suppress noisy "System down" Error logs
+// during the brief reconnect gap when the agent restarts itself after install.
+func (u *agentUpdater) RecentlyPushed(systemID string, within time.Duration) bool {
+	if u == nil {
+		return false
+	}
+	v, ok := u.pushedAt.Load(systemID)
+	if !ok {
+		return false
+	}
+	t, ok := v.(time.Time)
+	if !ok {
+		return false
+	}
+	return time.Since(t) < within
 }
 
 // claim returns true if this is the first push attempt for the system; the

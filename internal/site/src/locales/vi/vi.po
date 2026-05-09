@@ -208,6 +208,10 @@ msgstr ""
 msgid "Alert History"
 msgstr "Lịch sử Cảnh báo"
 
+#: src/components/routes/settings/mail.tsx
+msgid "Alert recipients"
+msgstr ""
+
 #: src/components/alerts/alert-button.tsx
 #: src/components/alerts/alerts-sheet.tsx
 msgid "Alerts"
@@ -319,6 +323,11 @@ msgstr ""
 
 #: src/components/routes/dashboard.tsx
 msgid "Avg Memory"
+msgstr ""
+
+#: src/components/routes/system/info-bar.tsx
+#: src/components/routes/system/info-bar.tsx
+msgid "Back"
 msgstr ""
 
 #: src/components/routes/settings/backups.tsx
@@ -1544,6 +1553,10 @@ msgstr ""
 msgid "No systems yet."
 msgstr ""
 
+#: src/components/routes/settings/mail.tsx
+msgid "No users found."
+msgstr ""
+
 #: src/components/routes/settings/users.tsx
 msgid "No users yet."
 msgstr ""
@@ -2592,6 +2605,10 @@ msgstr ""
 #: src/components/routes/settings/backups.tsx
 #: src/components/routes/settings/logs.tsx
 msgid "When"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "When at least one user is selected, all alert emails go to those users' account emails. When none are selected, the per-user notification email lists are used as a fallback."
 msgstr ""
 
 #: src/components/routes/settings/tokens-fingerprints.tsx

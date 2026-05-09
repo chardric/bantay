@@ -203,6 +203,10 @@ msgstr "Agent did not respond."
 msgid "Alert History"
 msgstr "Alert History"
 
+#: src/components/routes/settings/mail.tsx
+msgid "Alert recipients"
+msgstr "Alert recipients"
+
 #: src/components/alerts/alert-button.tsx
 #: src/components/alerts/alerts-sheet.tsx
 msgid "Alerts"
@@ -315,6 +319,11 @@ msgstr "Avg Disk"
 #: src/components/routes/dashboard.tsx
 msgid "Avg Memory"
 msgstr "Avg Memory"
+
+#: src/components/routes/system/info-bar.tsx
+#: src/components/routes/system/info-bar.tsx
+msgid "Back"
+msgstr "Back"
 
 #: src/components/routes/settings/backups.tsx
 msgid "Backup created"
@@ -1539,6 +1548,10 @@ msgstr "No systems registered yet. Add a system from the sidebar to get started.
 msgid "No systems yet."
 msgstr "No systems yet."
 
+#: src/components/routes/settings/mail.tsx
+msgid "No users found."
+msgstr "No users found."
+
 #: src/components/routes/settings/users.tsx
 msgid "No users yet."
 msgstr "No users yet."
@@ -2588,6 +2601,10 @@ msgstr "What happened recently inside Bantay — useful when something looks wro
 #: src/components/routes/settings/logs.tsx
 msgid "When"
 msgstr "When"
+
+#: src/components/routes/settings/mail.tsx
+msgid "When at least one user is selected, all alert emails go to those users' account emails. When none are selected, the per-user notification email lists are used as a fallback."
+msgstr "When at least one user is selected, all alert emails go to those users' account emails. When none are selected, the per-user notification email lists are used as a fallback."
 
 #: src/components/routes/settings/tokens-fingerprints.tsx
 msgid "When enabled, this token allows agents to self-register without prior system creation."
