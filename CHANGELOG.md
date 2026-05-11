@@ -4,6 +4,17 @@ All notable changes to **Bantay** (the fork) are documented here. The upstream B
 
 This project follows [Semantic Versioning](https://semver.org/) for the fork's own version line, independent of upstream.
 
+## [1.0.5] — 2026-05-11
+
+### Added
+
+- **Daily digest email** (`internal/alerts/digest.go`, `internal/alerts/recipients.go`, `internal/hub/admin.go`, `internal/site/src/components/routes/settings/mail.tsx`). One summary email per day listing every system with currently active alerts (CPU, memory, disk, GPU, status, battery, bandwidth, **temperature**). Configured from **Settings → Email → Daily digest** with an enable toggle and an hour-of-day picker (00:00–23:00 in the hub's local time). Recipients are the same global list used by per-event alerts; quiet days send nothing (no inbox noise when everything is healthy). Persists `dailyDigestLastSent` (YYYY-MM-DD) so a hub restart at the digest hour cannot re-send the same day. Catch-up behavior: if the hub was down at the configured hour and starts later that day, the digest fires immediately on the next 60 s tick.
+- **Temperature safety reference** in every digest containing a Temperature alert. Each affected system gets a per-class hint (Raspberry Pi, NAS, network gear, mini-PC, generic CPU) and the email footer carries a standing legend with safe operating ranges sourced from Backblaze HDD reliability reports, ASHRAE TC9.9 datacenter classes, RPi BCM2837/2711/2712 datasheets, and Intel/AMD CPU TjMax tables — so the recipient can sanity-check the threshold against vendor limits without leaving the inbox.
+
+### Why
+
+- Per-event alerts already cover acute incidents but offer no daily heartbeat — an admin who is away for a day has no easy summary of what is currently broken. The digest closes that gap with a single deterministic email per day, no inbox noise on healthy days, and embedded temperature reference data so unfamiliar device classes (e.g. a new RPi 5 or Synology) can be triaged without a separate spec lookup.
+
 ## [1.0.4] — 2026-05-09
 
 ### Added

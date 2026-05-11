@@ -15,6 +15,15 @@ import (
 type BantayAlertParams struct {
 	AlertRecipientUserIds []string `json:"alertRecipientUserIds"`
 	AlertRecipientEmails  []string `json:"alertRecipientEmails"`
+	// DailyDigestEnabled toggles the once-per-day summary of currently-active
+	// alerts. Recipients are the same global list above (or the per-user fallback
+	// when the global list is empty), so it never goes to nobody.
+	DailyDigestEnabled bool `json:"dailyDigestEnabled"`
+	// DailyDigestHour is the local-time hour (0-23) the scheduler fires at.
+	DailyDigestHour int `json:"dailyDigestHour"`
+	// DailyDigestLastSent is set after a successful send (YYYY-MM-DD in local
+	// time) so a hub restart at the digest hour cannot re-send the same day.
+	DailyDigestLastSent string `json:"dailyDigestLastSent"`
 }
 
 const bantaySettingsParamsID = "bantay_settings"

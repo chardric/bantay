@@ -345,6 +345,8 @@ type smtpResponse struct {
 	SenderAddress         string   `json:"senderAddress"`
 	AlertRecipientUserIds []string `json:"alertRecipientUserIds"`
 	AlertRecipientEmails  []string `json:"alertRecipientEmails"`
+	DailyDigestEnabled    bool     `json:"dailyDigestEnabled"`
+	DailyDigestHour       int      `json:"dailyDigestHour"`
 }
 
 func (h *Hub) getSMTP(e *core.RequestEvent) error {
@@ -363,6 +365,8 @@ func (h *Hub) getSMTP(e *core.RequestEvent) error {
 		SenderAddress:         s.Meta.SenderAddress,
 		AlertRecipientUserIds: params.AlertRecipientUserIds,
 		AlertRecipientEmails:  params.AlertRecipientEmails,
+		DailyDigestEnabled:    params.DailyDigestEnabled,
+		DailyDigestHour:       params.DailyDigestHour,
 	}
 	return e.JSON(http.StatusOK, resp)
 }
@@ -380,6 +384,8 @@ type smtpUpdateRequest struct {
 	SenderAddress         string   `json:"senderAddress"`
 	AlertRecipientUserIds []string `json:"alertRecipientUserIds"`
 	AlertRecipientEmails  []string `json:"alertRecipientEmails"`
+	DailyDigestEnabled    bool     `json:"dailyDigestEnabled"`
+	DailyDigestHour       int      `json:"dailyDigestHour"`
 }
 
 func (h *Hub) updateSMTP(e *core.RequestEvent) error {
@@ -454,9 +460,19 @@ func (h *Hub) updateSMTP(e *core.RequestEvent) error {
 		seenEmail[key] = struct{}{}
 		cleanEmails = append(cleanEmails, addr)
 	}
+	if req.DailyDigestHour < 0 || req.DailyDigestHour > 23 {
+		return e.BadRequestError("Daily digest hour must be between 0 and 23.", nil)
+	}
+	// Preserve LastSent across this update — it's a server-side bookkeeping
+	// field and should never be reset by a config save (otherwise editing the
+	// recipient list at the digest hour would re-send today's email).
+	existing := alerts.LoadBantayAlertParams(h)
 	if err := alerts.SaveBantayAlertParams(h, alerts.BantayAlertParams{
 		AlertRecipientUserIds: cleanIds,
 		AlertRecipientEmails:  cleanEmails,
+		DailyDigestEnabled:    req.DailyDigestEnabled,
+		DailyDigestHour:       req.DailyDigestHour,
+		DailyDigestLastSent:   existing.DailyDigestLastSent,
 	}); err != nil {
 		return e.BadRequestError("Failed to save alert recipients.", err)
 	}

@@ -1,7 +1,7 @@
 import { t } from "@lingui/core/macro"
 import { Trans } from "@lingui/react/macro"
 import { redirectPage } from "@nanostores/router"
-import { Loader2Icon, LockIcon, MailIcon, PlusIcon, SaveIcon, SendIcon, UnlockIcon, UsersIcon, XIcon } from "lucide-react"
+import { ClockIcon, Loader2Icon, LockIcon, MailIcon, PlusIcon, SaveIcon, SendIcon, UnlockIcon, UsersIcon, XIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { $router } from "@/components/router"
 import { Button } from "@/components/ui/button"
@@ -27,6 +27,8 @@ type SmtpConfig = {
 	senderAddress: string
 	alertRecipientUserIds: string[]
 	alertRecipientEmails: string[]
+	dailyDigestEnabled: boolean
+	dailyDigestHour: number
 }
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -66,6 +68,8 @@ export default function MailSettings() {
 				...cfgRes,
 				alertRecipientUserIds: cfgRes.alertRecipientUserIds ?? [],
 				alertRecipientEmails: cfgRes.alertRecipientEmails ?? [],
+				dailyDigestEnabled: cfgRes.dailyDigestEnabled ?? false,
+				dailyDigestHour: typeof cfgRes.dailyDigestHour === "number" ? cfgRes.dailyDigestHour : 8,
 			})
 			setUsers(usersRes.items ?? [])
 			setTestTo(pb.authStore.record?.email ?? "")
@@ -450,6 +454,58 @@ export default function MailSettings() {
 								<Trans>Add</Trans>
 							</Button>
 						</div>
+					</div>
+				</div>
+
+				<Separator />
+
+				<div>
+					<h4 className="text-base font-medium mb-1 flex items-center gap-2">
+						<ClockIcon className="size-4" />
+						<Trans>Daily digest</Trans>
+					</h4>
+					<p className="text-sm text-muted-foreground mb-3">
+						<Trans>
+							Send one summary email per day listing every system with currently active alerts. Quiet days send
+							nothing. Goes to the same recipient list above.
+						</Trans>
+					</p>
+					<div className="flex items-center justify-between gap-4 rounded-md border p-4">
+						<div>
+							<Label htmlFor="digest-enabled" className="text-sm font-medium">
+								<Trans>Enable daily digest</Trans>
+							</Label>
+							<p className="text-xs text-muted-foreground">
+								<Trans>Includes temperature, CPU, memory, disk, GPU, status, battery, and bandwidth alerts.</Trans>
+							</p>
+						</div>
+						<Switch
+							id="digest-enabled"
+							checked={cfg.dailyDigestEnabled}
+							disabled={locked}
+							onCheckedChange={(v) => setCfg({ ...cfg, dailyDigestEnabled: v })}
+						/>
+					</div>
+					<div className="grid gap-1.5 mt-3 max-w-xs">
+						<Label htmlFor="digest-hour">
+							<Trans>Send at hour (server local time, 0–23)</Trans>
+						</Label>
+						<Select
+							value={String(cfg.dailyDigestHour)}
+							disabled={locked || !cfg.dailyDigestEnabled}
+							onValueChange={(v) => setCfg({ ...cfg, dailyDigestHour: parseInt(v, 10) })}
+						>
+							<SelectTrigger id="digest-hour">
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								{Array.from({ length: 24 }, (_, h) => (
+									<SelectItem key={h} value={String(h)}>
+										{`${String(h).padStart(2, "0")}:00`}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
 					</div>
 				</div>
 

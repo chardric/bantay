@@ -130,6 +130,10 @@ msgstr "Активно състояние"
 msgid "Activity log"
 msgstr ""
 
+#: src/components/routes/settings/mail.tsx
+msgid "Add"
+msgstr ""
+
 #: src/components/add-system.tsx
 #: src/components/add-system.tsx
 #: src/components/navbar.tsx
@@ -159,6 +163,10 @@ msgstr ""
 
 #: src/components/routes/settings/users.tsx
 msgid "Add user"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Additional emails"
 msgstr ""
 
 #: src/components/routes/settings/general.tsx
@@ -724,6 +732,10 @@ msgstr "Цикли"
 msgid "Daily"
 msgstr "Дневно"
 
+#: src/components/routes/settings/mail.tsx
+msgid "Daily digest"
+msgstr ""
+
 #: src/components/command-palette.tsx
 #: src/components/routes/dashboard.tsx
 #: src/components/routes/dashboard.tsx
@@ -917,6 +929,10 @@ msgstr ""
 #: src/lib/i18n.ts
 msgid "Empty"
 msgstr "Празна"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Enable daily digest"
+msgstr ""
 
 #: src/components/routes/settings/mail.tsx
 msgid "Enable email sending"
@@ -1274,6 +1290,10 @@ msgstr "Образ"
 msgid "Inactive"
 msgstr "Неактивен"
 
+#: src/components/routes/settings/mail.tsx
+msgid "Includes temperature, CPU, memory, disk, GPU, status, battery, and bandwidth alerts."
+msgstr ""
+
 #: src/components/routes/settings/logs.tsx
 msgid "Info"
 msgstr ""
@@ -1285,6 +1305,10 @@ msgstr ""
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Interval"
 msgstr "Интервал"
+
+#: src/components/routes/settings/mail.tsx
+msgid "Invalid email address"
+msgstr ""
 
 #: src/components/login/auth-form.tsx
 msgid "Invalid email address."
@@ -1703,6 +1727,10 @@ msgstr "Постоянен"
 msgid "Persistence"
 msgstr "Устойчивост"
 
+#: src/components/routes/settings/mail.tsx
+msgid "Pick users from the list and/or add extra email addresses below. When the combined list is non-empty, all alert emails go there and per-user notification email lists are bypassed."
+msgstr ""
+
 #: src/components/routes/settings/notifications.tsx
 #~ msgid "Please <0>configure an SMTP server</0> to ensure alerts are delivered."
 #~ msgstr "Моля <0>конфигурурай SMTP сървър</0> за да се подсигуриш, че тревогите са доставени."
@@ -1846,6 +1874,10 @@ msgstr ""
 #: src/components/routes/settings/about.tsx
 #~ msgid "Released under the MIT License. See the LICENSE file in the source distribution for the full text and copyright notices."
 #~ msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Remove {addr}"
+msgstr ""
 
 #: src/components/login/login.tsx
 msgid "Request a one-time password"
@@ -2016,6 +2048,14 @@ msgstr "Избери {foo}"
 #: src/components/routes/settings/heartbeat.tsx
 msgid "Send a single heartbeat ping to verify your endpoint is working."
 msgstr "Изпратете единичен heartbeat пинг, за да се уверите, че крайната Ви точка работи."
+
+#: src/components/routes/settings/mail.tsx
+msgid "Send at hour (server local time, 0–23)"
+msgstr ""
+
+#: src/components/routes/settings/mail.tsx
+msgid "Send one summary email per day listing every system with currently active alerts. Quiet days send nothing. Goes to the same recipient list above."
+msgstr ""
 
 #: src/components/routes/settings/users.tsx
 msgid "Send password reset email"
@@ -2427,6 +2467,10 @@ msgstr "Задейства се, когато употребата на няко
 msgid "Type"
 msgstr "Тип"
 
+#: src/components/routes/settings/mail.tsx
+msgid "Type an email and press Enter"
+msgstr ""
+
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Unit file"
 msgstr "Файл на единица"
@@ -2529,6 +2573,7 @@ msgstr ""
 #: src/components/command-palette.tsx
 #: src/components/navbar.tsx
 #: src/components/routes/settings/layout.tsx
+#: src/components/routes/settings/mail.tsx
 #: src/components/routes/settings/users.tsx
 #: src/components/sidebar.tsx
 msgid "Users"
@@ -2608,8 +2653,8 @@ msgid "When"
 msgstr ""
 
 #: src/components/routes/settings/mail.tsx
-msgid "When at least one user is selected, all alert emails go to those users' account emails. When none are selected, the per-user notification email lists are used as a fallback."
-msgstr ""
+#~ msgid "When at least one user is selected, all alert emails go to those users' account emails. When none are selected, the per-user notification email lists are used as a fallback."
+#~ msgstr ""
 
 #: src/components/routes/settings/tokens-fingerprints.tsx
 msgid "When enabled, this token allows agents to self-register without prior system creation."

@@ -121,6 +121,7 @@ func (am *AlertManager) bindEvents() {
 		if err := am.restorePendingStatusAlerts(); err != nil {
 			e.App.Logger().Error("Failed to restore pending status alerts", "err", err)
 		}
+		am.startDigestScheduler()
 		return e.Next()
 	})
 }
